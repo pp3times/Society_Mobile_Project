@@ -1,38 +1,30 @@
-import express from 'express'
-import bodyParser from 'body-parser'
+import bodyParser from "body-parser";
+import express from "express";
 import cors from "cors";
-import adaptRequest from './helpers/adapt-request'
-import UserRoute from './routes/UserRoute'
+import * as dotenv from "dotenv";
+dotenv.config();
 
-const app = express()
+import route from "./routes";
+
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use("/api", route);
 
 const PORT = process.env.API_PORT || 8080;
 
-var whitelist = ['http://localhost:3000']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
+// var whitelist = ["*"];
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+// };
 
-app.use(cors(corsOptions));
-app.use(express.json())
-app.user(UserRoute);
+// app.use(cors(corsOptions));
 
-// const usersController = (req, res) => {
-// 	const httpRequest = adaptRequest(req)
-//   handleContactsRequest(httpRequest)
-//     .then(({ headers, statusCode, data }) =>
-//       res
-//         .set(headers)
-//         .status(statusCode)
-//         .send(data)
-//     )
-//     .catch(e => res.status(500).end())
-// }
-
-app.listen(PORT, () => console.log(`🚀 Listening on port ${PORT}`))
+app.listen(PORT, () => console.log(`🚀 Listening on port ${PORT}`));

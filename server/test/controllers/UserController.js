@@ -1,11 +1,10 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
 
 export const getUsers = async (req, res) => {
   try {
     const response = await prisma.user.findMany();
-    res.status(200).json(response);
+    res.status(200).json({status: "200", payload: response});
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
@@ -18,7 +17,7 @@ export const getUserById = async (req, res) => {
         id: Number(req.params.id),
       },
     });
-    res.status(200).json(response);
+    res.status(200).json({status: "200", payload: response});
   } catch (error) {
     res.status(404).json({ msg: error.message });
   }
@@ -35,7 +34,7 @@ export const createUser = async (req, res) => {
         password: password,
       },
     });
-    res.status(201).json(user);
+    res.status(201).json({status: "201", payload: user});
   } catch (error) {
     res.status(400).json({ msg: error.message });
   }
@@ -55,7 +54,7 @@ export const updateUser = async (req, res) => {
         password: password,
       },
     });
-    res.status(200).json(user);
+    res.status(200).json({status: "200", payload: user});
   } catch (error) {
     res.status(400).json({ msg: error.message });
   }
@@ -68,7 +67,7 @@ export const deleteUser = async (req, res) => {
         id: Number(req.params.id),
       },
     });
-    res.status(200).json(user);
+    res.status(200).json({status: "200", payload: user});
   } catch (error) {
     res.status(400).json({ msg: error.message });
   }
