@@ -3,17 +3,46 @@ import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { BottomNavigation, BottomNavigationTab, Layout, Text } from "@ui-kitten/components";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { HomeIcon, BookIcon, UserIcon } from "../../components/GetIcon";
-import UserInfoScreen from "./UserInfoScreen";
-import HomeScreen from "./HomeScreen";
+import UserInfoScreen from "./userinfo/UserInfoScreen";
+import HomeScreen from "./home/HomeScreen";
+import BookingScreen from "./booking/BookingScreen";
+import QrcodeScreen from "./booking/QrcodeScreen";
+import BarDetailScreen from "./home/BarDetailScreen";
 
+const Stack = createNativeStackNavigator();
 const { Navigator, Screen } = createBottomTabNavigator();
 
-const OrdersScreen = () => (
-  <Layout style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-    <Text category="h1">ORDERS</Text>
-  </Layout>
-);
+const HomeStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Main"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Main" component={HomeScreen} />
+      <Stack.Screen name="BarDeatil" component={BarDetailScreen} />
+      {/* <Stack.Screen name="CustomerRegis" component={CustomerRegisScreen} />
+      <Stack.Screen name="BarRegis" component={BarRegisScreen} /> */}
+    </Stack.Navigator>
+  );
+};
+
+const BookStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Booking"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Booking" component={BookingScreen} />
+      <Stack.Screen name="Qrcode" component={QrcodeScreen} />
+    </Stack.Navigator>
+  );
+};
 
 const BottomTabBar = ({ navigation, state }) => (
   <BottomNavigation
@@ -35,22 +64,23 @@ const TabNavigator = () => (
       headerShown: false,
     }}
   >
-    <Screen name="Home" component={HomeScreen} />
-    <Screen name="Book" component={OrdersScreen} />
+    <Screen name="Home" component={HomeStack} />
+    <Screen name="Book" component={BookStack} />
     <Screen name="UserInfo" component={UserInfoScreen} />
   </Navigator>
 );
 
-const UserScreen = () => (
-  <NavigationContainer>
-    <TabNavigator />
-  </NavigationContainer>
-);
+export default UserScreen = () => {
+  return (
+    <NavigationContainer>
+      <TabNavigator />
+    </NavigationContainer>
+  );
+};
 
 const styles = StyleSheet.create({
   bottomNavigation: {
     paddingVertical: "5%",
+    backgroundColor: "black",
   },
 });
-
-export default UserScreen;

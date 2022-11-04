@@ -1,4 +1,4 @@
-import AppLayout from "../../components/AppLayout";
+import { AppLayout } from "../../..//components";
 import { Layout, Text } from "@ui-kitten/components";
 const UserInfoScreen = () => {
   return (

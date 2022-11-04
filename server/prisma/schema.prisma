@@ -2,30 +2,30 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  phoneNumber String
-	email        String @unique
-	password String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    id          Int      @id @default(autoincrement())
+    name        String
+    phoneNumber String
+    email       String   @unique
+    password    String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
 }
 
 model Bar {
-	id Int @id @default(autoincrement())
-	name String @unique
-	seat Int
-	description String
-	openTime DateTime
-	closeTime DateTime
-	Address String
+    id          Int      @id @default(autoincrement())
+    name        String   @unique
+    seat        Int
+    description String
+    openTime    DateTime
+    closeTime   DateTime
+    Address     String
 }

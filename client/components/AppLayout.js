@@ -10,7 +10,9 @@ const styles = StyleSheet.create({
     paddingTop:'15%',
     justifyContent: "start",
     alignItems: "center",
-    flexDirection:"column"
+    flexDirection:"column",
+    backgroundColor: '#101010',
+    paddingHorizontal: '5%'
   },
 });
 
