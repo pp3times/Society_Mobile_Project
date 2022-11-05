@@ -4,12 +4,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { BottomNavigation, BottomNavigationTab, Layout, Text } from "@ui-kitten/components";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { HomeIcon, BookIcon, UserIcon } from "../../components/GetIcon";
+import { HomeIcon, BookIcon, UserIcon } from "@/components/GetIcon";
 import UserInfoScreen from "./userinfo/UserInfoScreen";
 import HomeScreen from "./home/HomeScreen";
 import BookingScreen from "./booking/BookingScreen";
 import QrcodeScreen from "./booking/QrcodeScreen";
 import BarDetailScreen from "./home/BarDetailScreen";
+import SuccessScreen from "./home/SuccessScreen";
+import ConfirmScreen from "./home/ConfirmScreen"
+import UserBookingScreen from "./home/UserBookingScreen";
 
 const Stack = createNativeStackNavigator();
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -24,8 +27,9 @@ const HomeStack = () => {
     >
       <Stack.Screen name="Main" component={HomeScreen} />
       <Stack.Screen name="BarDeatil" component={BarDetailScreen} />
-      {/* <Stack.Screen name="CustomerRegis" component={CustomerRegisScreen} />
-      <Stack.Screen name="BarRegis" component={BarRegisScreen} /> */}
+      <Stack.Screen name="Confirm" component={ConfirmScreen} />
+      <Stack.Screen name="Success" component={SuccessScreen} />
+      <Stack.Screen name="UserBooking" component={UserBookingScreen} />
     </Stack.Navigator>
   );
 };
@@ -65,7 +69,15 @@ const TabNavigator = () => (
     }}
   >
     <Screen name="Home" component={HomeStack} />
-    <Screen name="Book" component={BookStack} />
+    <Screen
+      name="Book"
+      component={BookStack}
+      listeners={({ navigation }) => ({
+        tabPress: () => {
+          navigation.navigate("Book", { screen: "Qrcode" });
+        },
+      })}
+    />
     <Screen name="UserInfo" component={UserInfoScreen} />
   </Navigator>
 );
