@@ -1,4 +1,5 @@
 import React from "react";
+import 'expo-dev-menu';
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider, IconRegistry, Layout, Text } from "@ui-kitten/components";
 import { NavigationContainer } from "@react-navigation/native";
@@ -6,7 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { FeatherIconsPack } from "./components/feather-icons.js";
 import LoginScreen from "./pages/LoginScreen";
 import UserScreen from "./pages/user/UserScreen";
-import AdminScreen from "./pages/admin/AdminScreen";
+import AdminScreen from "./pages/admin/AdminScreen"
 import CustomerRegisScreen from "./pages/register/CustomerRegisScreen.js";
 import BarRegisScreen from "./pages/register/BarRegisScreen.js";
 import ChooseRegisterScreen from "./pages/register/ChooseRegisterScreen.js";

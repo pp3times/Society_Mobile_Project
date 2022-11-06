@@ -11,7 +11,7 @@ import BookingScreen from "./booking/BookingScreen";
 import QrcodeScreen from "./booking/QrcodeScreen";
 import BarDetailScreen from "./home/BarDetailScreen";
 import SuccessScreen from "./home/SuccessScreen";
-import ConfirmScreen from "./home/ConfirmScreen"
+import ConfirmScreen from "./home/ConfirmScreen";
 import UserBookingScreen from "./home/UserBookingScreen";
 
 const Stack = createNativeStackNavigator();
@@ -53,7 +53,10 @@ const BottomTabBar = ({ navigation, state }) => (
     appearance="noIndicator"
     selectedIndex={state.index}
     style={[styles.bottomNavigation]}
-    onSelect={(index) => navigation.navigate(state.routeNames[index])}
+    onSelect={(index) => {
+      const screen = state.routeNames[index] == "Home" ? "Main" : "Booking"
+      navigation.navigate(state.routeNames[index], { screen: screen, initial: false });
+    }}
   >
     <BottomNavigationTab title="หน้าหลัก" icon={HomeIcon} />
     <BottomNavigationTab title="การจอง" icon={BookIcon} />
@@ -69,15 +72,7 @@ const TabNavigator = () => (
     }}
   >
     <Screen name="Home" component={HomeStack} />
-    <Screen
-      name="Book"
-      component={BookStack}
-      listeners={({ navigation }) => ({
-        tabPress: () => {
-          navigation.navigate("Book", { screen: "Qrcode" });
-        },
-      })}
-    />
+    <Screen name="Book" component={BookStack} />
     <Screen name="UserInfo" component={UserInfoScreen} />
   </Navigator>
 );
