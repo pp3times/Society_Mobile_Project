@@ -10,22 +10,13 @@ const UserBookingScreen = ({ route, navigation }) => {
     day: "numeric",
   });
 
-  const data = [
-    { id: 1, type: "ปกติ (2-4 คน)" },
-    { id: 2, type: "กลาง (4-8 คน)" },
-    { id: 3, type: "ใหญ่ (8-12 คน)" },
-  ];
-  const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
-  const displayValue = data[selectedIndex.row].type;
-  const renderOption = (items) => <SelectItem key={items.id} title={items.type} />;
-
   const [numChair, setNumChair] = useState(0);
 
   const barName = "โสดซิง";
   const barLocation = "ลาดกระบัง";
 
   const submit = () => {
-    const detail = { barName: barName, dateBook: today, type: data[selectedIndex.row], number: numChair };
+    const detail = { barName: barName, dateBook: today, number: numChair };
     navigation.navigate("Confirm", { detail: detail });
   };
   return (
@@ -45,16 +36,6 @@ const UserBookingScreen = ({ route, navigation }) => {
             value={numChair}
             onChangeText={(nextValue) => setNumChair(nextValue)}
           />
-          <Select
-            label="ประเภทโต๊ะ"
-            style={[styles.select, styles.input]}
-            status="control"
-            value={displayValue}
-            selectedIndex={selectedIndex}
-            onSelect={(index) => setSelectedIndex(index)}
-          >
-            {data.map(renderOption)}
-          </Select>
         </Layout>
         <Layout style={styles.inputGroup}>
           <Button style={{ marginTop: "5%" }} onPress={submit} status="control">

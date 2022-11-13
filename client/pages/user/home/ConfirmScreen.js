@@ -22,10 +22,6 @@ const ConfirmScreen = ({ route, navigation }) => {
             <Text>{detail.dateBook}</Text>
           </Layout>
           <Layout style={styles.dataGroup}>
-            <Text>ประเภทโต๊ะ</Text>
-            <Text>{detail.type.type}</Text>
-          </Layout>
-          <Layout style={styles.dataGroup}>
             <Text>จำนวนที่นั่ง</Text>
             <Text>{detail.number}</Text>
           </Layout>
