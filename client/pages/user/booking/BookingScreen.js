@@ -103,11 +103,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "medium",
   },
-  titleBox:{
-     borderBottomColor: "white", 
-     borderBottomWidth: 2,
-     backgroundColor: "black",
-     marginBottom: 5
+  titleBox: {
+    borderBottomColor: "white",
+    borderBottomWidth: 2,
+    backgroundColor: "black",
+    marginBottom: 5,
   },
   container: {
     flex: 1,

@@ -9,7 +9,7 @@ const QrcodeScreen = ({ route, navigation }) => {
   const data = [{ data: detail.data }];
   return (
     <AppLayout>
-      <Backbutton route="Booking" navigation={navigation} />
+      <Backbutton navigation={navigation} />
       <Layout style={styles.qrcode}>
         <QRCode size={250} value={data} />
       </Layout>

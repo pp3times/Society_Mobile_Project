@@ -13,6 +13,7 @@ import BarDetailScreen from "./home/BarDetailScreen";
 import SuccessScreen from "./home/SuccessScreen";
 import ConfirmScreen from "./home/ConfirmScreen";
 import UserBookingScreen from "./home/UserBookingScreen";
+import AllBar from "./home/AllBar";
 
 const Stack = createNativeStackNavigator();
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -30,6 +31,7 @@ const HomeStack = () => {
       <Stack.Screen name="Confirm" component={ConfirmScreen} />
       <Stack.Screen name="Success" component={SuccessScreen} />
       <Stack.Screen name="UserBooking" component={UserBookingScreen} />
+      <Stack.Screen name="AllBar" component={AllBar} />
     </Stack.Navigator>
   );
 };
@@ -54,7 +56,7 @@ const BottomTabBar = ({ navigation, state }) => (
     selectedIndex={state.index}
     style={[styles.bottomNavigation]}
     onSelect={(index) => {
-      const screen = state.routeNames[index] == "Home" ? "Main" : "Booking"
+      const screen = state.routeNames[index] == "Home" ? "Main" : "Booking";
       navigation.navigate(state.routeNames[index], { screen: screen, initial: false });
     }}
   >

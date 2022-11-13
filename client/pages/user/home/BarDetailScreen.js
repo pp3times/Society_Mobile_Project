@@ -19,7 +19,7 @@ const BarDetailScreen = ({ route, navigation }) => {
   return (
     <AppLayout>
       <ScrollView style={styles.container}>
-        <Backbutton route="Main" navigation={navigation} style={{ position: "absolute", zIndex: 99 }} />
+        <Backbutton navigation={navigation} style={{ position: "absolute", zIndex: 99 }} />
         <Image
           style={styles.img}
           source={{

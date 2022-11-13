@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 import { useState } from "react";
 import Logo from "../../components/Svg/Logo";
 
-const CustomerRegisScreen = ({ navigation }) => {
+const InfoBarScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -25,7 +25,7 @@ const CustomerRegisScreen = ({ navigation }) => {
           style={[styles.input, { backgroundColor: "black" }]}
           size="large"
           status="control"
-          placeholder="ชื่อเล่น"
+          placeholder="ชื่อร้าน"
           value={name}
           onChangeText={(nextValue) => setName(nextValue)}
         />
@@ -33,7 +33,7 @@ const CustomerRegisScreen = ({ navigation }) => {
           style={[styles.input, { backgroundColor: "black" }]}
           size="large"
           status="control"
-          placeholder="เบอร์โทรศัพท์"
+          placeholder="เบอร์โทร"
           value={phone}
           onChangeText={(nextValue) => setPhone(nextValue)}
         />
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomerRegisScreen;
+export default InfoBarScreen;

@@ -60,13 +60,13 @@ const HomeScreen = ({ navigation }) => {
         />
         <Layout style={[styles.bar, { marginVertical: "10%" }]}>
           <Text style={styles.title}>ร้าน และบาร์ใกล้ฉัน</Text>
-          <Text onPress={() => navigation.navigate("AllBar")}>เพิ่มเติม</Text>
+          <Button onPress={()=>navigation.navigate("AllBar")} status="basic" appearance="ghost">เพิ่มเติม</Button>
         </Layout>
         <ScrollView horizontal={true} style={[styles.scrollHorizontal]}>
           {listBar.map((bar) => {
             return (
               <TouchableOpacity key={bar.id} style={styles.boxNear} onPress={() => navigation.navigate("BarDeatil", { barId: bar.id })}>
-                <Text style={{ color:'white', fontWeight: 'bold'  }}>{bar.barName}</Text>
+                <Text style={{ color: "white", fontWeight: "bold" }}>{bar.barName}</Text>
                 <Image
                   style={styles.NearBarImg}
                   source={{
@@ -80,19 +80,19 @@ const HomeScreen = ({ navigation }) => {
         <Layout style={[styles.bar, { marginVertical: "10%" }]}>
           <Text style={styles.title}>ร้านยอดนิยม</Text>
         </Layout>
-          {listBar.map((bar) => {
-            return (
-              <TouchableOpacity key={bar.id} style={styles.boxHit} onPress={() => navigation.navigate("BarDeatil", { barId: bar.id })}>
-                <Text style={{ color:'white', fontWeight: 'bold'  }}>{bar.barName}</Text>
-                <Image
-                  style={styles.tinyLogo}
-                  source={{
-                    uri: bar.img,
-                  }}
-                />
-              </TouchableOpacity>
-            );
-          })}
+        {listBar.map((bar) => {
+          return (
+            <TouchableOpacity key={bar.id} style={styles.boxHit} onPress={() => navigation.navigate("BarDeatil", { barId: bar.id })}>
+              <Text style={{ color: "white", fontWeight: "bold" }}>{bar.barName}</Text>
+              <Image
+                style={styles.tinyLogo}
+                source={{
+                  uri: bar.img,
+                }}
+              />
+            </TouchableOpacity>
+          );
+        })}
       </ScrollView>
     </AppLayout>
   );

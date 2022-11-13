@@ -1,14 +1,16 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Layout } from "@ui-kitten/components";
-import { StatusBar } from "react-native";
+import { StatusBar,SafeAreaView } from "react-native";
 
-const AppLayout = ({ children }) => (
-  <Layout style={styles.container}>
-    <StatusBar barStyle="light-content" translucent={true} />
-    {children}
-  </Layout>
-);
+const AppLayout = ({ children }) => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" translucent={true} />
+      {children}
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
