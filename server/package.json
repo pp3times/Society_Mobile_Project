@@ -9,7 +9,7 @@
     "dev": "nodemon --exec babel-node src/index.js"
   },
   "dependencies": {
-    "@babel/core": "^7.19.6",
+    "@babel/core  ": "^7.19.6",
     "@babel/node": "^7.20.0",
     "@babel/preset-env": "^7.19.4",
     "@prisma/client": "^4.5.0",
