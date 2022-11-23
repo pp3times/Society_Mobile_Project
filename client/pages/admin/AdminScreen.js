@@ -3,12 +3,14 @@ import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { BottomNavigation, BottomNavigationTab, Layout, Tab, Text } from "@ui-kitten/components";
-import { SettingIcon, BookIcon, UserIcon } from "../../components/GetIcon";
+import { SettingIcon, BookIcon, UserIcon } from "@/components";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Register from "./register/Register";
 import ManageScreen from "./manageBar/ManageScreen";
 import BookingScreen from "./booking/BookingScreen";
 import InfoBarScreen from "./barInfo/InfoBarScreen";
+import InfoUserScreen from "./barInfo/InfoUserScreen";
+import ScanScreen from "./booking/Scanner";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -22,7 +24,7 @@ const InfoStack = () => {
       }}
     >
       <Stack.Screen name="Bar" component={InfoBarScreen} />
-      <Stack.Screen name="User" component={InfoBarScreen} />
+      <Stack.Screen name="User" component={InfoUserScreen} />
     </Stack.Navigator>
   );
 };
@@ -36,7 +38,6 @@ const BottomTabBar = ({ navigation, state }) => (
       // const screen = state.routeNames[index] == "Home" ? "Main" : "Booking";
       // { screen: screen, initial: false }
       navigation.navigate(state.routeNames[index]);
-      console.log(state.routeNames[index]);
     }}
   >
     <BottomNavigationTab title="จัดการร้าน" icon={SettingIcon} />
@@ -44,6 +45,20 @@ const BottomTabBar = ({ navigation, state }) => (
     <BottomNavigationTab title="ข้อมูลส่วนตัว" icon={UserIcon} />
   </BottomNavigation>
 );
+
+const BookingStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Booking"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Booking" component={BookingScreen} />
+      <Stack.Screen name="BookScan" component={ScanScreen} />
+    </Stack.Navigator>
+  );
+};
 
 const TabNavigator = () => (
   <Navigator
@@ -53,7 +68,7 @@ const TabNavigator = () => (
     tabBar={(props) => <BottomTabBar {...props} />}
   >
     <Screen name="Manage" component={ManageScreen} />
-    <Screen name="Book" component={BookingScreen} />
+    <Screen name="Book" component={BookingStack} />
     <Screen name="UserInfo" component={InfoStack} />
   </Navigator>
 );

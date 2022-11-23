@@ -19,7 +19,16 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationUsageDescription":
+          "The app needs permission to access your location, if you want to be located on the map.",
+        "NSLocationWhenInUseUsageDescription": "The app needs permission to access your location, if you want to be located on the map",
+        "NSLocationAlwaysUsageDescription": "The app needs permission to access your location, if you want to be located on the map",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "The app needs permission to access your location, if you want to be located on the map",
+        "NSPhotoLibraryUsageDescription": "The app needs permission to your camera roll, if you want to upload pictures.",
+        "NSCameraUsageDescription": "The app needs permission to your camera, if you want to take pictures from the app."
+      }
     },
     "android": {
       "adaptiveIcon": {

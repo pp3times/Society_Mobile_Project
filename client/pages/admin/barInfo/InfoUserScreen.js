@@ -1,11 +1,9 @@
-import AppLayout from "../../components/AppLayout";
-import Backbutton from "../../components/button/BackButton";
+import { AppLayout, Backbutton, Logo } from "@/components";
 import { Text, Layout, Input, Button } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
 import { useState } from "react";
-import Logo from "../../components/Svg/Logo";
 
-const InfoBarScreen = ({ navigation }) => {
+const InfoUserScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -65,7 +63,7 @@ const InfoBarScreen = ({ navigation }) => {
           สมัครสมาชิก
         </Button>
       </Layout>
-      <Text style={{ marginBottom: '10%' }}>Terms & conditions and privacy policy</Text>
+      <Text style={{ marginBottom: "10%" }}>Terms & conditions and privacy policy</Text>
     </AppLayout>
   );
 };
@@ -82,4 +80,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InfoBarScreen;
+export default InfoUserScreen;

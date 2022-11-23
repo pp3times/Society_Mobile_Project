@@ -58,9 +58,29 @@ const InfoBarScreen = ({ navigation }) => {
 
   return (
     <AppLayout>
-      <Text style={{ fontSize: 40, fontWeight: "400" }}>กรอกข้อมูลร้าน</Text>
-      <Text style={{ fontSize: 20, marginTop: 10 }}>(กรอกเพียงครั้งแรก)</Text>
-      <Layout style={{ width: "80%", flexDirection: "row", marginTop: 30, backgroundColor: "#101010", justifyContent: "space-between" }}>
+      <Text style={{ fontSize: 40, fontWeight: "400", marginTop:20 }}>อัพเดตข้อมูลร้าน</Text>
+      <Layout style={{ backgroundColor: "#101010", marginTop: 30 }}>
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              size="large"
+              style={[{ backgroundColor: "black", width: "80%" }]}
+              status="control"
+              placeholder="ชื่อร้าน"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name="detail"
+        />
+        {errors.detail && <Text>This is required.</Text>}
+      </Layout>
+      <Layout style={{ width: "80%", flexDirection: "row", marginTop: 20, backgroundColor: "#101010", justifyContent: "space-between" }}>
         <Layout style={{ backgroundColor: "#101010", width: "48%" }}>
           <Controller
             control={control}
@@ -147,7 +167,6 @@ const InfoBarScreen = ({ navigation }) => {
         />
         {errors.address && <Text>This is required.</Text>}
       </Layout>
-
       <Layout style={{ width: "80%", flexDirection: "row", backgroundColor: "#101010", justifyContent: "space-between" }}>
         <Layout style={{ backgroundColor: "#101010", width: "48%", marginTop: 20 }}>
           <Controller
@@ -243,7 +262,10 @@ const InfoBarScreen = ({ navigation }) => {
         {image && <Image source={{ uri: image }} style={{ width: "100%", height: 200 }} />}
       </Layout>
       <Button style={{ marginTop: "5%", width: "80%" }} onPress={handleSubmit(onSubmit)} status="control">
-        สร้างร้าน
+        บันทึก
+      </Button>
+      <Button style={{ marginTop: "5%", width: "80%" }} onPress={()=>navigation.navigate("User")} status="control">
+        หน้าถัดไป
       </Button>
     </AppLayout>
   );
