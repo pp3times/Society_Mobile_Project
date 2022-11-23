@@ -33,9 +33,9 @@ const Header = () => {
     },
   ];
   return (
-    <SafeAreaView>
+    <View>
       <ImageBackground
-        style={{ aspectRatio: 5 / 2, height: 170 }}
+        style={{ aspectRatio: 5 / 2, height: 200 }}
         source={{ url: "https://api.lorem.space/image/movie?w=1460&h=600" }}
       >
         <Pressable
@@ -47,10 +47,33 @@ const Header = () => {
             borderRadius: 6,
             top: 140,
             left: 20,
-            width: "82%",
+            width: "70%",
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 11,
+            },
+            shadowOpacity: 0.55,
+            shadowRadius: 14.78,
+            elevation: 5,
           }}
         >
-          <Text style={{ fontSize: 14, fontWeight: "500", color: "gray" }}>
+          <View
+            style={{
+              height: "100%",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text style={{ fontSize: 24, fontWeight: "700" }}>
+              ยังไม่มีรายการจองไว้จ้า
+            </Text>
+            <Text style={{ fontSize: 14, fontWeight: "400" }}>
+              สามารถเลือกจองร้านทางด้านล่างได้เลย
+            </Text>
+          </View>
+          {/* <Text style={{ fontSize: 14, fontWeight: "500", color: "gray" }}>
             ร้านที่จองไว้
           </Text>
           <View
@@ -93,7 +116,7 @@ const Header = () => {
           </View>
           <Text style={{ marginTop: 8, fontSize: 15, fontWeight: "500" }}>
             นั่งชิล, สังสรรค์, เดท
-          </Text>
+          </Text> */}
         </Pressable>
       </ImageBackground>
       <View style={{ marginTop: 100 }} />
@@ -119,7 +142,7 @@ const Header = () => {
           );
         })}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

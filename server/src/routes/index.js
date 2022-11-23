@@ -1,5 +1,6 @@
 import auth from "./auth";
 import user from "./user";
+import payment from "./payment";
 import express from "express";
 import createHttpError from "http-errors";
 
@@ -10,6 +11,7 @@ router.get("/", (req, res) => {
 
 router.use("/auth", auth);
 router.use("/user", user);
+router.use("/payment", payment);
 
 router.use(async (req, res, next) => {
   next(createHttpError.NotFound("Route not Found"));

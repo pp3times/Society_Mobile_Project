@@ -5,9 +5,9 @@ import BarCards from "../components/BarCards";
 
 const HomeScreen = () => {
   return (
-    <SafeAreaView style={{ backgroundColor: "#E0E0E0", flex: 1 }}>
+    <View style={{ backgroundColor: "#fff", flex: 1 }}>
       <BarCards />
-    </SafeAreaView>
+    </View>
   );
 };
 

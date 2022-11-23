@@ -4,8 +4,13 @@ import { StyleSheet, Text, View } from "react-native";
 import { BarContext } from "./Context";
 import HomeScreen from "./screens/HomeScreen";
 import StackNavigator from "./StackNavigator";
+// import { useFonts } from "expo-font";
 
 export default function App() {
+	// const [fontsLoaded] = useFonts({
+  //   Lin: require("./assets/fonts/LINESeedSans/LINESeedSansTH_W_Bd.woff2"),
+  // });
+
   return (
     <>
       <BarContext>

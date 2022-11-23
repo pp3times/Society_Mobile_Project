@@ -7,7 +7,7 @@ const BarContext = ({ children }) => {
 
   const [occupied, setOccupied] = useState([]);
 
-  const [ticket, setTicket] = useState([]);
+  const [ticket, setTicket] = useState(null);
   return (
     <BarsCards.Provider
       value={{ seats, setSeats, occupied, setOccupied, ticket, setTicket }}

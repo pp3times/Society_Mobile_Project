@@ -6,7 +6,7 @@ import {
   View,
   Image,
 } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import bars from "../data/bars";
 import Header from "./Header";
 import { useNavigation } from "@react-navigation/native";
@@ -17,13 +17,22 @@ const BarCards = () => {
   const data = bars;
   const navigation = useNavigation();
   const { ticket } = useContext(BarsCards);
-	console.log(ticket, "is ticket");
+	useEffect(() => {
+		console.log(ticket, "is ticket");
+		console.log(typeof ticket)
+	}, [ticket])
   return (
     <View>
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        ListHeaderComponent={ticket.length > 0 ? TicketComponent : Header}
+        // ListHeaderComponent={Header}
+        ListHeaderComponent={ticket ? TicketComponent : Header}
+        // ListHeaderComponent={
+        //   Object.keys(ticket).length === 0 && ticket.constructor === Object
+        //     ? Header
+        //     : TicketComponent
+        // }
         data={data}
         renderItem={({ item }) => (
           <Pressable style={{ margin: 10, marginHorizontal: 15 }}>

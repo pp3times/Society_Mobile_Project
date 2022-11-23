@@ -13,15 +13,16 @@ import { AntDesign } from "@expo/vector-icons";
 import { BarsCards } from "../components/BarCards";
 import moment from "moment";
 import { useStripe } from "@stripe/stripe-react-native";
-
+import { BarsCards as Context } from "../Context";
 
 const SummaryScreen = () => {
+  const { setTicket } = useContext(Context);
   const route = useRoute();
   const navigation = useNavigation();
   const total = 10;
-	console.log(route.params);
-	console.log(total)
-	const stripe = useStripe();
+  console.log(route.params);
+  console.log(total);
+  const stripe = useStripe();
   const subscribe = async () => {
     const response = await fetch("http://localhost:8000/payment", {
       method: "POST",
@@ -34,7 +35,7 @@ const SummaryScreen = () => {
       },
     });
     const data = await response.json();
-    // console.log(data)
+
     if (!response.ok) return Alert.alert(data.message);
     const clientSecret = data.clientSecret;
     const initSheet = await stripe.initPaymentSheet({
@@ -47,6 +48,18 @@ const SummaryScreen = () => {
     if (presentSheet.error) return Alert.alert(presentSheet.error);
     else {
       // occupied.push(...seats);
+      setTicket({
+        name: route.params.name,
+        option: route.params.option,
+        minSeat: route.params.minSeat,
+        maxSeat: route.params.maxSeat,
+        tableName: route.params.tableName,
+        date: route.params.date,
+        tableName: route.params.tableName,
+        total: total,
+        image: route.params.image,
+        tableId: route.params.tableId,
+      });
       navigation.navigate("Ticket", {
         name: route.params.name,
         option: route.params.option,

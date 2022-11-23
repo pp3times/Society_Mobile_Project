@@ -19,12 +19,7 @@ const TicketScreen = () => {
   const route = useRoute();
   const ticketId = nanoid(13);
   const ticketDetails = route.params;
-  useEffect(() => {
-    const loadTicket = () => {
-      ticket.push(ticketDetails);
-    };
-    loadTicket();
-  }, []);
+
   return (
     <SafeAreaView>
       <View
@@ -97,7 +92,6 @@ const TicketScreen = () => {
               DATE & TIME
             </Text>
             <Text>{route.params.date}</Text>
-            {/* <Text>{route.params.date}</Text> */}
           </View>
           <Image
             style={{
