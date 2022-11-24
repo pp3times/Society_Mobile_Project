@@ -5,18 +5,18 @@ import { ApplicationProvider, IconRegistry, Layout, Text } from "@ui-kitten/comp
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { FeatherIconsPack } from "./components/feather-icons.js";
-import LoginScreen from "./pages/LoginScreen";
-import UserScreen from "./pages/user/UserScreen";
-import AdminScreen from "./pages/admin/AdminScreen"
-import CustomerRegisScreen from "./pages/register/CustomerRegisScreen.js";
-import BarRegisScreen from "./pages/register/BarRegisScreen.js";
-import ChooseRegisterScreen from "./pages/register/ChooseRegisterScreen.js";
+import LoginScreen from "./screens/LoginScreen";
+import UserScreen from "./screens/user/UserScreen";
+import AdminScreen from "./screens/admin/AdminScreen"
+import CustomerRegisScreen from "./screens/register/CustomerRegisScreen";
+import BarRegisScreen from "./screens/register/BarRegisScreen";
+import ChooseRegisterScreen from "./screens/register/ChooseRegisterScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default App = () => {
   const [isLogin, setIsLogin] = React.useState(true);
-  const [isAdmin, setIsAdmin] = React.useState(true);
+  const [isAdmin, setIsAdmin] = React.useState(false);
   return (
     <>
       <IconRegistry icons={FeatherIconsPack} />

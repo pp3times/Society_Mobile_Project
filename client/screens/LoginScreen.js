@@ -3,7 +3,7 @@ import Svg, { Path } from "react-native-svg";
 import { StyleSheet } from "react-native";
 import { Input, Layout, Button } from "@ui-kitten/components";
 import { useState } from "react";
-import Logo from "../components/Svg/Logo";
+import Logo from "@/components/Svg/Logo";
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
