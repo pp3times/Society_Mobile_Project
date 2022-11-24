@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "name": "client",
+    "slug": "client",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "success": {
+      "image": "./assets/success.svg"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationUsageDescription":
+          "The app needs permission to access your location, if you want to be located on the map.",
+        "NSLocationWhenInUseUsageDescription": "The app needs permission to access your location, if you want to be located on the map",
+        "NSLocationAlwaysUsageDescription": "The app needs permission to access your location, if you want to be located on the map",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "The app needs permission to access your location, if you want to be located on the map",
+        "NSPhotoLibraryUsageDescription": "The app needs permission to your camera roll, if you want to upload pictures.",
+        "NSCameraUsageDescription": "The app needs permission to your camera, if you want to take pictures from the app."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ]
+  }
+}
