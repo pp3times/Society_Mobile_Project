@@ -35,7 +35,7 @@ const ManageScreen = () => {
   };
   return (
     <AppLayout>
-      <Layout style={{ backgroundColor: "#101010", flexDirection: "column", width: "80%" }}>
+      <Layout style={{ backgroundColor: "#101010", flexDirection: "column", width: "90%" }}>
         <Layout style={{ borderBottomWidth: 1, borderBottomColor: "white", backgroundColor: "#101010", width: "100%", marginBottom: 20 }}>
           <Text style={{ fontSize: 40, fontWeight: "500", marginVertical: 20, textAlign: "center" }}>จัดการร้าน</Text>
         </Layout>

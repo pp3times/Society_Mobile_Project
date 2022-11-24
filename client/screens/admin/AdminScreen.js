@@ -8,26 +8,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Register from "./register/Register";
 import ManageScreen from "./manageBar/ManageScreen";
 import BookingScreen from "./booking/BookingScreen";
-import InfoBarScreen from "./barInfo/InfoBarScreen";
-import InfoUserScreen from "./barInfo/InfoUserScreen";
+
+import barInfo from "./barInfo/barInfo";
 import ScanScreen from "./booking/Scanner";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
-const InfoStack = () => {
-  return (
-    <Stack.Navigator
-      initialRouteName="Bar"
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="Bar" component={InfoBarScreen} />
-      <Stack.Screen name="User" component={InfoUserScreen} />
-    </Stack.Navigator>
-  );
-};
 
 const BottomTabBar = ({ navigation, state }) => (
   <BottomNavigation
@@ -69,7 +55,7 @@ const TabNavigator = () => (
   >
     <Screen name="Manage" component={ManageScreen} />
     <Screen name="Book" component={BookingStack} />
-    <Screen name="UserInfo" component={InfoStack} />
+    <Screen name="UserInfo" component={barInfo} />
   </Navigator>
 );
 

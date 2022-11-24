@@ -31,7 +31,7 @@ export default UserScreen = () => {
     <BarContext>
       <StripeProvider publishableKey="pk_test_51M3dwME1vH1H0ffZQAG2WptnObD6NY86T24kRlf7eLitO6EvkV1YkAGDEiw7tI5qv0j4WNete7t8Jtotl9FjHZkr00upzaGewz">
         <StackNavigator />
-        <StatusBar style="auto" />
+        <StatusBar style="auto"/>
       </StripeProvider>
     </BarContext>
   );

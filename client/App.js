@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator();
 
 export default App = () => {
   const [isLogin, setIsLogin] = React.useState(true);
-  const [isAdmin, setIsAdmin] = React.useState(false);
+  const [isAdmin, setIsAdmin] = React.useState(true);
   return (
     <>
       <IconRegistry icons={FeatherIconsPack} />
