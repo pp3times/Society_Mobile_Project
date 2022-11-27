@@ -29,12 +29,12 @@ model Bar {
   password     String
   tableCount   Int
   description  String
-  openTime     DateTime
-  closeTime    DateTime
+  openTime     String
+  closeTime    String
   Address      String
   district     String
   sub_district String
-  provice      String
+  province      String
   phoneNumber  String
   bannerImage  String
   rating       Float @default(0)

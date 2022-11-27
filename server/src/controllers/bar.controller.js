@@ -18,7 +18,7 @@ export const registerBarControl = async (req, res, next) => {
     }
     res.status(200).json({
       status: status,
-      message: user === 0 ? "User created successfully" : response,
+      message: user === 0 ? "Bar Create successfully" : response,
       data: user === 0 ? response : "Nothing Return.",
     });
   } catch (e) {
@@ -31,7 +31,7 @@ export const loginBarControl = async (req, res, next) => {
     const data = await login(req.body);
     res.status(200).json({
       status: true,
-      message: "Bar created successfully",
+      message: "Bar Login Success",
       data,
     });
   } catch (e) {
