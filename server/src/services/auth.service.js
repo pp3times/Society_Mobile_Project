@@ -52,7 +52,7 @@ export const login = async (data) => {
 
   delete user.password;
 
-  const accessToken = await jwt.signAccessToken(user);
+  const accessToken = await signAccessToken(user);
 
   return { ...user, accessToken };
 };

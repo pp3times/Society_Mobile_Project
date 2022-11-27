@@ -8,7 +8,7 @@ import auth from "../middlewares/auth";
 const router = express.Router();
 
 // register
-router.post("/", registerControl);
+router.post("/register", registerControl);
 
 // login
 router.post("/login", loginControl);

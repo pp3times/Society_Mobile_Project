@@ -12,23 +12,23 @@ datasource db {
 
 model User {
   id          Int      @id @default(autoincrement())
-  name        String @unique
+  name        String   @unique
   phoneNumber String
-  email       String @unique
+  email       String   @unique
   password    String
-  bar         Bar?
+  bar         Bar?     @relation(fields: [barId], references: [id])
   isOwner     Boolean  @default(false)
   Review      Review[]
   Order       Order[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
+  barId       Int?
 }
 
 model Bar {
   id           Int      @id @default(autoincrement())
   name         String   @unique
-  seat         Int
+  tableCount   Int
   description  String
   openTime     DateTime
   closeTime    DateTime
@@ -40,11 +40,13 @@ model Bar {
   bannerImage  String
   rating       Float
   isClose      Boolean  @default(false)
-  owner        User     @relation(fields: [ownerId], references: [id])
-  ownerId      Int      @unique
+  // owner        User     @relation(fields: [ownerId], references: [id])
+  // ownerId      Int      @unique
+  userId       Int      @unique
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   Review       Review[]
+  User         User[]
 }
 
 model Review {
