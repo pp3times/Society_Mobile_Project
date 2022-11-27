@@ -16,18 +16,17 @@ model User {
   phoneNumber String
   email       String   @unique
   password    String
-  bar         Bar?     @relation(fields: [barId], references: [id])
-  isOwner     Boolean  @default(false)
   Review      Review[]
   Order       Order[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  barId       Int?
 }
 
 model Bar {
   id           Int      @id @default(autoincrement())
   name         String   @unique
+  email        String   @unique
+  password     String
   tableCount   Int
   description  String
   openTime     DateTime
@@ -38,15 +37,11 @@ model Bar {
   provice      String
   phoneNumber  String
   bannerImage  String
-  rating       Float
+  rating       Float @default(0)
   isClose      Boolean  @default(false)
-  // owner        User     @relation(fields: [ownerId], references: [id])
-  // ownerId      Int      @unique
-  userId       Int      @unique
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   Review       Review[]
-  User         User[]
 }
 
 model Review {
