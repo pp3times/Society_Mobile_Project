@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { BottomNavigation, BottomNavigationTab, Layout, Tab, Text } from "@ui-kitten/components";
 import { SettingIcon, BookIcon, UserIcon } from "@/components";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Register from "./register/Register";
 import ManageScreen from "./manageBar/ManageScreen";
 import BookingScreen from "./booking/BookingScreen";
 
@@ -46,32 +45,18 @@ const BookingStack = () => {
   );
 };
 
-const TabNavigator = () => (
-  <Navigator
-    screenOptions={{
-      headerShown: false,
-    }}
-    tabBar={(props) => <BottomTabBar {...props} />}
-  >
-    <Screen name="Manage" component={ManageScreen} />
-    <Screen name="Book" component={BookingStack} />
-    <Screen name="UserInfo" component={barInfo} />
-  </Navigator>
-);
-
-export default AdminScreen = () => {
+const AdminScreen = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="Home" component={TabNavigator} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      tabBar={(props) => <BottomTabBar {...props} />}
+    >
+      <Screen name="Manage" component={ManageScreen} />
+      <Screen name="Book" component={BookingStack} />
+      <Screen name="UserInfo" component={barInfo} />
+    </Navigator>
   );
 };
 
@@ -81,3 +66,5 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
 });
+
+export { AdminScreen };

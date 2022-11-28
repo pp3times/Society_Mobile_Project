@@ -1,33 +1,105 @@
 import AppLayout from "../components/AppLayout";
-import Svg, { Path } from "react-native-svg";
-import { StyleSheet } from "react-native";
-import { Input, Layout, Button } from "@ui-kitten/components";
+import { StyleSheet, Alert, View, Text } from "react-native";
+import { Input, Layout, Button, Icon } from "@ui-kitten/components";
 import { useState } from "react";
+import axios from "axios";
+import { BACKEND_URL } from "@env";
 import Logo from "@/components/Svg/Logo";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BackIcon } from "../components/GetIcon";
 const LoginScreen = ({ navigation }) => {
+  const [chooseLogin, setChooseLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const login = () => {
-    console.log("login");
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const login = async () => {
+    try {
+      const data = {
+        email: email,
+        password: password,
+      };
+      const res = await axios.post(`${BACKEND_URL}/api/auth/${chooseLogin == "user" ? "login" : "barlog"}`, data);
+      const token = res.data.data.accessToken;
+      await AsyncStorage.setItem("accesstoken", token);
+      if (chooseLogin == "admin") {
+        const check = 
+        await navigation.navigate('admin');
+      } else {
+        await navigation.navigate('user');
+      }
+    } catch (error) {
+      console.log(error);
+      Alert.alert("การเข้าสู่ระบบผิดพลาด", error?.response.data.msg, [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+      ]);
+    }
   };
+
+  const toggleSecureEntry = () => {
+    setSecureTextEntry(!secureTextEntry);
+  };
+
+  const renderIcon = (props) => (
+    <Text appearance="ghost" status="control" onPress={toggleSecureEntry} style={{ alignItems: "center" }}>
+      <Icon onPress={toggleSecureEntry} {...props} name={secureTextEntry ? "eye-off" : "eye"} />
+    </Text>
+  );
   return (
     <AppLayout>
+      {chooseLogin && (
+        <Layout style={styles.nav}>
+          <Button appearance="ghost" onPress={() => setChooseLogin("")}>
+            <BackIcon />
+          </Button>
+        </Layout>
+      )}
+
       <Logo style={styles.logo} />
-      <Layout style={styles.inputGroup}>
+      {!chooseLogin && (
+        <Layout style={{ flexDirection: "column", justifyContent: "center", alignItem: "center", width: "80%", backgroundColor: "#101010" }}>
+          <Button
+            onPress={() => {
+              setChooseLogin("user");
+            }}
+            status="control"
+          >
+            สำหรับลูกค้า
+          </Button>
+          <Button
+            style={{ marginTop: 10, backgroundColor: "black" }}
+            appearance="outline"
+            status="control"
+            onPress={() => {
+              setChooseLogin("admin");
+            }}
+          >
+            สำหรับร้านค้า
+          </Button>
+        </Layout>
+      )}
+      <Layout style={[styles.inputGroup, { display: !chooseLogin ? "none" : "flex" }]}>
         <Input
           style={[styles.input, { backgroundColor: "black" }]}
           size="large"
-          status='control'
+          status="control"
           placeholder="Place your Email"
           value={email}
+          autoCapitalize="none"
           onChangeText={(nextValue) => setEmail(nextValue)}
         />
         <Input
           style={[styles.input, { backgroundColor: "black" }]}
           size="large"
-          status='control'
+          status="control"
           placeholder="Place your Password"
+          accessoryRight={renderIcon}
           value={password}
+          autoCapitalize="none"
+          secureTextEntry={secureTextEntry}
           onChangeText={(nextValue) => setPassword(nextValue)}
         />
         <Button style={{ marginTop: "5%" }} onPress={login} status="control">
@@ -45,6 +117,12 @@ const styles = StyleSheet.create({
   logo: {
     marginVertical: "20%",
   },
+  invisible: {
+    display: "none",
+  },
+  visible: {
+    display: "flex",
+  },
   inputGroup: {
     flex: 1,
     width: "80%",
@@ -54,6 +132,13 @@ const styles = StyleSheet.create({
   },
   input: {
     marginTop: "7%",
+  },
+  nav: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "start",
+    backgroundColor: "transparent",
+    marginLeft: 10,
   },
 });
 
