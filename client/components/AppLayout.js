@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Layout } from "@ui-kitten/components";
-import { StatusBar,SafeAreaView } from "react-native";
+import { StatusBar, SafeAreaView } from "react-native";
 
 const AppLayout = ({ children }) => {
   return (

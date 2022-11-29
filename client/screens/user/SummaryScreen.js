@@ -184,7 +184,7 @@ const SummaryScreen = () => {
         >
           * กรุณามาก่อนเวลาจอง 5-10 นาที
         </Text>
-        <View style={{ marginVertical: 200 }} />
+        <View style={{ marginVertical: 180 }} />
         <View
           style={{
             alignItems: "center",

@@ -9,3 +9,4 @@ export const BackIcon = (props) => <Icon {...props} style={{ width: 25, height: 
 export const CloseIcon = (props) => <Icon {...props} style={{ width: 20, height: 20, color: "white" }} name="x" />;
 export const StarIcon = (props) => <Icon {...props} style={{ width: 20, height: 20, color: "yellow" }} name="star" />;
 export const UploadIcon = (props) => <Icon {...props} style={{ width: 20, height: 20, color: "white" }} name="upload" />;
+export const Logout = (props) => <Icon {...props} style={{ width: 20, height: 20, color: "black" }} name="signout" />;

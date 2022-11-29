@@ -1,11 +1,4 @@
-import {
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-} from "react-native";
+import { FlatList, Pressable, StyleSheet, Text, View, Image } from "react-native";
 import React, { useContext, useEffect } from "react";
 import bars from "../data/bars";
 import Header from "./Header";
@@ -17,10 +10,10 @@ const BarCards = () => {
   const data = bars;
   const navigation = useNavigation();
   const { ticket } = useContext(BarsCards);
-	useEffect(() => {
-		console.log(ticket, "is ticket");
-		console.log(typeof ticket)
-	}, [ticket])
+  useEffect(() => {
+    console.log(ticket, "is ticket");
+    console.log(typeof ticket);
+  }, [ticket]);
   return (
     <View>
       <FlatList
@@ -54,9 +47,7 @@ const BarCards = () => {
             >
               {item.name.substring(0.16) + "..."}
             </Text>
-            <Text style={{ marginTop: 4, fontSize: 15, color: "gray" }}>
-              {item.genre}
-            </Text>
+            <Text style={{ marginTop: 4, fontSize: 15, color: "gray" }}>{item.genre}</Text>
             <Pressable
               onPress={() =>
                 navigation.navigate("Bars", {
@@ -92,5 +83,3 @@ const BarCards = () => {
 };
 
 export default BarCards;
-
-const styles = StyleSheet.create({});

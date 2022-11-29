@@ -1,6 +1,6 @@
 import AppLayout from "./AppLayout";
 import Backbutton from "./button/BackButton";
-import { StarIcon, UploadIcon, HomeIcon, BookIcon, UserIcon, SettingIcon, AlertIcon, BackIcon, CloseIcon } from "./GetIcon";
+import { StarIcon, UploadIcon, HomeIcon, BookIcon, UserIcon, SettingIcon, AlertIcon, BackIcon, CloseIcon, Logout } from "./GetIcon";
 import { SuccessImg } from "./Svg/SuccessImg";
 import Header from "./Header";
 import BarCards from "./BarCards";
@@ -24,4 +24,5 @@ export {
   TicketComponent,
   BarsCards,
   BarContext,
+  Logout,
 };

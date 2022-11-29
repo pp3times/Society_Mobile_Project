@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { BottomNavigation, BottomNavigationTab, Layout, Tab, Text } from "@ui-kitten/components";
@@ -7,10 +7,13 @@ import { SettingIcon, BookIcon, UserIcon } from "@/components";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ManageScreen from "./manageBar/ManageScreen";
 import BookingScreen from "./booking/BookingScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 
 import barInfo from "./barInfo/barInfo";
 import ScanScreen from "./booking/Scanner";
 
+const Drawer = createDrawerNavigator();
 const { Navigator, Screen } = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -45,7 +48,7 @@ const BookingStack = () => {
   );
 };
 
-const AdminScreen = () => {
+const AdminTabs = () => {
   return (
     <Navigator
       screenOptions={{
@@ -57,6 +60,33 @@ const AdminScreen = () => {
       <Screen name="Book" component={BookingStack} />
       <Screen name="UserInfo" component={barInfo} />
     </Navigator>
+  );
+};
+
+const LogoutHandler = async (navigation) => {
+  await AsyncStorage.removeItem("accesstoken");
+  await navigation.navigate("Login");
+};
+
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem label="logout" onPress={() => LogoutHandler(props.navigation)} />
+    </DrawerContentScrollView>
+  );
+}
+
+const AdminScreen = ({ navigation }) => {
+  return (
+    <Drawer.Navigator
+      initialRouteName="Home"
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      ƒ
+      screenOptions={{ headerStyle: { backgroundColor: "#101010" }, headerTintColor: "white" }}
+    >
+      <Drawer.Screen name="Home" component={AdminTabs} />
+    </Drawer.Navigator>
   );
 };
 

@@ -12,15 +12,10 @@ const BarRegisScreen = ({ navigation }) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      phonefirstName: "",
-      lastName: "",
-    },
-  });
+  } = useForm({});
   const onSubmit = (data) => {
     // const datas = new FormData();
-
+    
     // datas.append("images", {
     //   name: image.fileName,
     //   type: image.type,
@@ -58,7 +53,7 @@ const BarRegisScreen = ({ navigation }) => {
 
   return (
     <AppLayout>
-      <Text style={{ fontSize: 25, fontWeight: "400", marginTop:10 }}>สมัครสมาชิกร้าน</Text>
+      <Text style={{ fontSize: 25, fontWeight: "400", marginTop: 10 }}>สมัครสมาชิกร้าน</Text>
       <Layout style={{ width: "80%", flexDirection: "column", alignItems: "center", backgroundColor: "#101010", marginBottom: "30%" }}>
         <ScrollView style={{ width: "100%" }}>
           <Layout style={{ backgroundColor: "#101010", width: "100%" }}>
@@ -332,7 +327,7 @@ const BarRegisScreen = ({ navigation }) => {
             {image && <Image source={{ uri: image }} style={{ width: "100%", height: 200 }} />}
           </Layout>
           <Button style={{ marginTop: "5%", width: "100%" }} onPress={handleSubmit(onSubmit)} status="control">
-            สร้างร้าน
+            สมัครสมาชิกร้าน
           </Button>
         </ScrollView>
       </Layout>
