@@ -22,10 +22,9 @@ const LoginScreen = ({ navigation }) => {
       const token = res.data.data.accessToken;
       await AsyncStorage.setItem("accesstoken", token);
       if (chooseLogin == "admin") {
-        const check = 
-        await navigation.navigate('admin');
+        await navigation.navigate("admin");
       } else {
-        await navigation.navigate('user');
+        await navigation.navigate("user");
       }
     } catch (error) {
       console.log(error);

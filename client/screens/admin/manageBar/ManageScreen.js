@@ -1,7 +1,10 @@
 import { AppLayout } from "@/components/";
 import { Text, Layout, Toggle, Input, Button } from "@ui-kitten/components";
 import { ScrollView } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { BACKEND_URL } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ManageScreen = () => {
   const [table, setTable] = useState([
@@ -30,9 +33,50 @@ const ManageScreen = () => {
   const [numChair, setNumChair] = useState("");
   const [numTable, setNumTable] = useState("");
 
-  const onCheckedChange = (isChecked) => {
-    setChecked(isChecked);
+  useEffect(() => {
+    console.log(AsyncStorage.getItem("accesstoken"));
+    const fetchTable = async () => {
+      const res = await axios.get(`${BACKEND_URL}/api/bar/Table`);
+    };
+    fetchTable();
+  }, []);
+
+  const onCheckedChange = async (isChecked) => {
+    try {
+      const data = {
+        isOpen: isChecked,
+      };
+      const res = await axios.post(`${BACKEND_URL}/api/bar/openBar`, data);
+      console.log(res);
+      setChecked(isChecked);
+    } catch (e) {
+      console.log(e);
+    }
   };
+
+  const handlerAddTable = async () => {
+    try {
+      const data = {
+        type: type,
+        numChair: numChair,
+        numTable: numTable,
+      };
+      const res = await axios.post(`${BACKEND_URL}/api/bar/Table`, data);
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handlerDeleteTable = async (id) => {
+    try {
+      const res = await axios.delete(`${BACKEND_URL}/api/bar/Table/${id}`);
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <AppLayout>
       <Layout style={{ backgroundColor: "#101010", flexDirection: "column", width: "90%" }}>
@@ -86,7 +130,7 @@ const ManageScreen = () => {
                 />
               </Layout>
             </Layout>
-            <Button status="control" style={{ height: "100%" }}>
+            <Button status="control" onPress={handlerAddTable} style={{ height: "100%" }}>
               เพิ่ม
             </Button>
           </Layout>
@@ -120,10 +164,14 @@ const ManageScreen = () => {
                     จำนวนโต๊ะ : {table.numTable}
                   </Text>
                 </Layout>
-                <Button status="warning" size="small">
-                  แก้ไข
-                </Button>
-                <Button status="danger" size="small">
+                <Button
+                  status="danger"
+                  onPress={() => {
+                    handlerDeleteTable(table.id);
+                  }}
+                  size="small"
+                  style={{ width: "30%" }}
+                >
                   ลบ
                 </Button>
               </Layout>

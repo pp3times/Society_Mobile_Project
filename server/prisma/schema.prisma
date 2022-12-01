@@ -34,10 +34,10 @@ model Bar {
   Address      String
   district     String
   sub_district String
-  province      String
+  province     String
   phoneNumber  String
   bannerImage  String
-  rating       Float @default(0)
+  rating       Float    @default(0)
   isClose      Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

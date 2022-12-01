@@ -1,6 +1,4 @@
 import React from "react";
-import { StatusBar } from "expo-status-bar";
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./HomeScreen";
 import BarScreen from "./BarScreen";
@@ -21,8 +19,8 @@ const LogoutHandler = async (navigation) => {
 function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-      <DrawerItem label="logout" onPress={() => LogoutHandler(props.navigation)} />
+      <DrawerItemList label="" {...props} />
+      <DrawerItem label="ออกจากระบบ" onPress={() => LogoutHandler(props.navigation)} />
     </DrawerContentScrollView>
   );
 }
@@ -38,12 +36,9 @@ const UserStack = () => {
     </Stack.Navigator>
   );
 };
-const UserScreen = ({ navigation }) => {
+const UserScreen = () => {
   return (
-    <Drawer.Navigator
-      initialRouteName="main"
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
-    >
+    <Drawer.Navigator initialRouteName="main" drawerContent={(props) => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="main" component={UserStack} />
     </Drawer.Navigator>
   );

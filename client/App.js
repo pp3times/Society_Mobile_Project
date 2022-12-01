@@ -24,7 +24,7 @@ export default App = () => {
         <ApplicationProvider {...eva} theme={eva.dark}>
           <NavigationContainer>
             <Stack.Navigator
-              initialRouteName="user"
+              initialRouteName="Login"
               screenOptions={{
                 headerShown: false,
               }}

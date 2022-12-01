@@ -6,7 +6,7 @@ import UserLayout from "../../components/UserLayout";
 const HomeScreen = () => {
   return (
     <UserLayout>
-      <View style={{ backgroundColor: "#fff", flex: 1 }}>
+      <View style={{ backgroundColor: "#fff", flex: 1, marginBottom:10 }}>
         <BarCards />
       </View>
     </UserLayout>
