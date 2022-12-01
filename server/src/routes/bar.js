@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.get('/all', controller.getAllBarsController);
 router.post('/create', controller.registerBarControl);
+router.post('/reserve', controller.createReservationController);
 
 export default router;

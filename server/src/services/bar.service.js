@@ -26,7 +26,7 @@ export const create = async (data) => {
   if (!await barSchema.isValid(data)) {
     throw new Error('Bad request');
   }
-  
+
 
   const { name, email, password, tableCount, description, openTime, closeTime, Address, district, sub_district, province, phoneNumber } = data;
 
@@ -74,7 +74,7 @@ export const login = async (data) => {
   return { ...user, accessToken };
 };
 
-export const allBars = async (body) => {
+export const allBars = async () => {
   const bars = await prisma.bar.findMany({
     select: {
       id: true,
@@ -96,4 +96,28 @@ export const allBars = async (body) => {
   });
 
   return bars;
+}
+
+export const createReservation = async (data) => {
+  const barSchema = yup.object().shape({
+    userId: yup.number().required().integer(),
+    tableId: yup.number().required().integer(),
+    orderDate: yup.date().required()
+  });
+
+  if (!await barSchema.isValid(data)) {
+    throw new Error('Bad request');
+  }
+
+  const { userId, tableId, orderDate } = data;
+
+  const reservation = await prisma.order.create({
+    data: {
+      userId: userId,
+      tableId: tableId,
+      orderDate: orderDate
+    }
+  });
+
+  return reservation;
 }

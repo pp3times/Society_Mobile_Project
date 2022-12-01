@@ -1,4 +1,4 @@
-import { login, allBars, create } from "../services/bar.service";
+import { login, allBars, create, createReservation } from "../services/bar.service";
 import createHttpError from "http-errors";
 
 export const registerBarControl = async (req, res, next) => {
@@ -37,6 +37,19 @@ export const getAllBarsController = async (req, res) => {
       status: true,
       message: "Get All Bars Success",
       data: bars
+    });
+  } catch (e) {
+    return res.status(400).json({ msg: e.message });
+  }
+}
+
+export const createReservationController = async (req, res) => {
+  try {
+    const reservation = await createReservation(req.body);
+    return res.status(200).json({
+      status: true,
+      message: "Create Reservation Success",
+      data: reservation
     });
   } catch (e) {
     return res.status(400).json({ msg: e.message });
