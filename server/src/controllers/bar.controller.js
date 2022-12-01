@@ -1,25 +1,16 @@
-import { register, login } from "../services/bar.service";
+import { login, allBars, create } from "../services/bar.service";
 import createHttpError from "http-errors";
 
 export const registerBarControl = async (req, res, next) => {
   try {
-    const user = await register(req.body);
-    let response = "";
-    let status = false;
-    if (user === 1) {
-      response = "Email and Name is already used.";
-    } else if (user === 2) {
-      response = "This email is already used.";
-    } else if (user === 3) {
-      response = "This name is already used.";
-    } else {
-      response = user;
-      status = true;
-    }
+    // call create bar account service.
+    const account = await create(req.body);
+
+    // response
     res.status(200).json({
-      status: status,
-      message: user === 0 ? "Bar Create successfully" : response,
-      data: user === 0 ? response : "Nothing Return.",
+      status: true,
+      message: 'Bar account was created.',
+      data: account
     });
   } catch (e) {
     res.status(500).json({ msg: e.message });
@@ -38,3 +29,16 @@ export const loginBarControl = async (req, res, next) => {
     res.status(500).json({ msg: e.message });
   }
 };
+
+export const getAllBarsController = async (req, res) => {
+  try {
+    const bars = await allBars(req.body);
+    return res.status(200).json({
+      status: true,
+      message: "Get All Bars Success",
+      data: bars
+    });
+  } catch (e) {
+    return res.status(400).json({ msg: e.message });
+  }
+}

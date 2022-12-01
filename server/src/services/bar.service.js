@@ -5,33 +5,50 @@ require("dotenv").config();
 const bcrypt = require("bcryptjs");
 import createHttpError from "http-errors";
 import { signAccessToken } from "../utils/jwt";
+import * as yup from 'yup';
 
-export const register = async (data) => {
-  const { email, name } = data;
-  let status = 0;
+export const create = async (data) => {
+  const barSchema = yup.object().shape({
+    name: yup.string().required(),
+    email: yup.string().email().required(),
+    password: yup.string().required(),
+    tableCount: yup.number().required().integer(),
+    description: yup.string().required(),
+    openTime: yup.string().required(),
+    closeTime: yup.string().required(),
+    Address: yup.string().required(),
+    district: yup.string().required(),
+    sub_district: yup.string().required(),
+    province: yup.string().required(),
+    phoneNumber: yup.string().required(),
+  });
 
-  const emailCheck = await prisma.bar.findUnique({
-    where: { email: email },
-  });
-  const nameCheck = await prisma.bar.findUnique({
-    where: { name: name },
-  });
-  console.log(emailCheck);
-  if (emailCheck && nameCheck) {
-    status = 1;
-  } else if (emailCheck) {
-    status = 2;
-  } else if (nameCheck) {
-    status = 3;
-  } else {
-    data.password = bcrypt.hashSync(data.password, 8);
-    const user = await prisma.bar.create({
-      data,
-    });
-    data.accessToken = await signAccessToken(user);
-    status = data;
+  if (!await barSchema.isValid(data)) {
+    throw new Error('Bad request');
   }
-  return status;
+  
+
+  const { name, email, password, tableCount, description, openTime, closeTime, Address, district, sub_district, province, phoneNumber } = data;
+
+  const bar = await prisma.bar.create({
+    data: {
+      name: name,
+      email: email,
+      password: bcrypt.hashSync(password, 1),
+      tableCount: parseInt(tableCount),
+      description: description,
+      openTime: openTime,
+      closeTime: closeTime,
+      Address: Address,
+      district: district,
+      sub_district: sub_district,
+      province: province,
+      phoneNumber: phoneNumber,
+      bannerImage: ''
+    }
+  });
+
+  return bar;
 };
 
 export const login = async (data) => {
@@ -56,3 +73,27 @@ export const login = async (data) => {
 
   return { ...user, accessToken };
 };
+
+export const allBars = async (body) => {
+  const bars = await prisma.bar.findMany({
+    select: {
+      id: true,
+      name: true,
+      tableCount: true,
+      description: true,
+      openTime: true,
+      closeTime: true,
+      Address: true,
+      district: true,
+      sub_district: true,
+      province: true,
+      phoneNumber: true,
+      bannerImage: true,
+      rating: true,
+      isClose: true,
+      updatedAt: true
+    }
+  });
+
+  return bars;
+}
