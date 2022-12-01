@@ -4,6 +4,7 @@ import auth from "../middlewares/auth";
 
 const router = express.Router();
 
-router.get("/get", auth, getUsersControl);
+router.get("/get", getUsersControl);
+// router.get("/get", auth, getUsersControl);
 
 export default router;
