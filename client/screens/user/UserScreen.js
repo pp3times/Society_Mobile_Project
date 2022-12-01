@@ -5,14 +5,14 @@ import BarScreen from "./BarScreen";
 import TableScreen from "./TableScreen";
 import TicketScreen from "./TicketScreen";
 import SummaryScreen from "./SummaryScreen";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
 const LogoutHandler = async (navigation) => {
-  await AsyncStorage.removeItem("accesstoken");
+  await SecureStore.deleteItemAsync("accesstoken");
   await navigation.navigate("Login");
 };
 

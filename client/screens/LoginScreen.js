@@ -5,7 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "@env";
 import Logo from "@/components/Svg/Logo";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 import { BackIcon } from "../components/GetIcon";
 const LoginScreen = ({ navigation }) => {
   const [chooseLogin, setChooseLogin] = useState("");
@@ -20,7 +20,9 @@ const LoginScreen = ({ navigation }) => {
       };
       const res = await axios.post(`${BACKEND_URL}/api/auth/${chooseLogin == "user" ? "login" : "barlog"}`, data);
       const token = res.data.data.accessToken;
-      await AsyncStorage.setItem("accesstoken", token);
+      const uid = res.data.data.id;
+      await SecureStore.setItemAsync("accesstoken", token);
+      await SecureStore.setItemAsync("uid", `${uid}`);
       if (chooseLogin == "admin") {
         await navigation.navigate("admin");
       } else {

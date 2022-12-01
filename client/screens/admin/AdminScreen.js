@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -7,7 +7,7 @@ import { SettingIcon, BookIcon, UserIcon } from "@/components";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ManageScreen from "./manageBar/ManageScreen";
 import BookingScreen from "./booking/BookingScreen";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 
 import barInfo from "./barInfo/barInfo";
@@ -64,7 +64,7 @@ const AdminTabs = () => {
 };
 
 const LogoutHandler = async (navigation) => {
-  await AsyncStorage.removeItem("accesstoken");
+  await SecureStore.deleteItemAsync("accesstoken");
   await navigation.navigate("Login");
 };
 

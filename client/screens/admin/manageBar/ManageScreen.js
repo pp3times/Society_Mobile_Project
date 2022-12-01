@@ -4,7 +4,7 @@ import { ScrollView } from "react-native";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "@env";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 
 const ManageScreen = () => {
   const [table, setTable] = useState([
@@ -32,11 +32,18 @@ const ManageScreen = () => {
   const [type, setType] = useState("");
   const [numChair, setNumChair] = useState("");
   const [numTable, setNumTable] = useState("");
+  const token = SecureStore.getItemAsync("accesstoken");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
 
   useEffect(() => {
-    console.log(AsyncStorage.getItem("accesstoken"));
     const fetchTable = async () => {
-      const res = await axios.get(`${BACKEND_URL}/api/bar/Table`);
+      const uid = SecureStore.getItemAsync("uid");
+      console.log(uid);
+      // const res = await axios.get(`${BACKEND_URL}/api/bar/Table/${uid}`, headers);
+      // console.log(res);
     };
     fetchTable();
   }, []);
