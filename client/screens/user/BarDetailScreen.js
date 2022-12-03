@@ -6,7 +6,10 @@ import { useState } from "react";
 const BarDetailScreen = ({ route, navigation }) => {
   const [visible, setVisible] = useState(false);
   const { id, name, image } = route.params;
-  const reviewList = [{ id: 2 }, { id: 1 }];
+  const reviewList = [
+    { id: 2, review: 2 },
+    { id: 1, review: 5 },
+  ];
   const [score, setScore] = useState();
   const [textReview, setTextReview] = useState("");
 
@@ -16,6 +19,17 @@ const BarDetailScreen = ({ route, navigation }) => {
     setTextReview("");
     console.log("submitReview", score, textReview);
   };
+
+  const ReviewStar = ({ time }) => {
+    let star = [];
+
+    for (let index = 0; index < time; index++) {
+      star.push(<StarIcon />);
+    }
+
+    return star;
+  };
+
   return (
     <AppLayout>
       <StatusBar barStyle="dark-content" translucent={true} />
@@ -56,11 +70,7 @@ const BarDetailScreen = ({ route, navigation }) => {
                 <Layout key={review.id} style={{ borderRadius: "10%", backgroundColor: "black", padding: 15, marginTop: 20 }}>
                   <Layout style={{ backgroundColor: "black", flexDirection: "row", alignItems: "center" }}>
                     <Text style={{ marginRight: 10 }}>คุณ thun</Text>
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
+                    <ReviewStar time={review.review} />
                   </Layout>
                   <Text style={{ fontSize: 10, marginVertical: 10 }}>1 มกราคม 2565</Text>
                   <Text>บรรยากาศเป็นกันเองมากครับ นั่งแล้วชิลดี เหมาะสำหรับมากับคู่รัก กลุ่มเพื่อน หรือมาคนเดียวก็ยังได้ครับ</Text>

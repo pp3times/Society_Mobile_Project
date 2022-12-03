@@ -37,7 +37,7 @@ const UserInfoScreen = ({ navigation }) => {
           />
         </Layout>
         <Layout style={styles.group}>
-          <Button style={{ marginTop: "5%", width: "100%" }} onPress={edit} status="basic">
+          <Button style={{ marginTop: "5%", width: "100%", backgroundColor: 'black' }} onPress={edit}>
             แก้ไข
           </Button>
         </Layout>

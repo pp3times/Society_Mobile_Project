@@ -52,7 +52,7 @@ const BottomTabBar = ({ navigation, state }) => (
     selectedIndex={state.index}
     style={[styles.bottomNavigation]}
     onSelect={(index) => {
-      const screen = state.routeNames[index] == "Home" ? "Main" : "Booking";
+      const screen = state.routeNames[index] == "s1" ? "Home" : "Booking";
       navigation.navigate(state.routeNames[index], { screen: screen, initial: false });
     }}
   >
@@ -69,7 +69,7 @@ const TabNavigator = () => (
     }}
   >
     <Screen name="s1" component={UserStack} />
-    <Screen name="Home" component={UserInfoScreen} />
+    <Screen name="User" component={UserInfoScreen} />
   </Navigator>
 );
 const UserScreen = () => {
