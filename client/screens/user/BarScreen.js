@@ -1,29 +1,36 @@
-import { FlatList, Pressable, StyleSheet, Text, View, ScrollView } from "react-native";
-import React, { useState } from "react";
-import HorizontalDatepicker from "@awrminkhodaei/react-native-horizontal-datepicker";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import tables from "../../data/table";
-import UserLayout from "../../components/UserLayout";
+import {
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+} from 'react-native'
+import React, {useState} from 'react'
+import HorizontalDatepicker from '@awrminkhodaei/react-native-horizontal-datepicker'
+import {SafeAreaView} from 'react-native-safe-area-context'
+import {useNavigation, useRoute} from '@react-navigation/native'
+import {Ionicons} from '@expo/vector-icons'
+import {AntDesign} from '@expo/vector-icons'
+import tables from '../../data/table'
+import UserLayout from '../../components/UserLayout'
 
 const BarScreen = () => {
-  const route = useRoute();
+  const route = useRoute()
   // console.log(route.params);
-  const navigation = useNavigation();
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [table, setTable] = useState([]);
-  const [seatsData, setSeatsData] = useState([]);
-  const [maxSeat, setMaxSeat] = useState(0);
-  const [minSeat, setMinSeat] = useState(0);
-  const [tableId, setTableId] = useState(0);
-  const [tableName, setTableName] = useState("");
-	let monthDate = new Date();
-	monthDate.setDate(monthDate.getDate() + 30);
-	let dateString = monthDate.toISOString().split('T')[0];
-  const tableData = tables;
-  const options = ["จองให้ตัวเอง", "จองให้เพื่อน"];
+  const navigation = useNavigation()
+  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [table, setTable] = useState([])
+  const [seatsData, setSeatsData] = useState([])
+  const [maxSeat, setMaxSeat] = useState(0)
+  const [minSeat, setMinSeat] = useState(0)
+  const [tableId, setTableId] = useState(0)
+  const [tableName, setTableName] = useState('')
+  let monthDate = new Date()
+  monthDate.setDate(monthDate.getDate() + 30)
+  let dateString = monthDate.toISOString().split('T')[0]
+  const tableData = tables
+  const options = ['จองให้ตัวเอง', 'จองให้เพื่อน']
   // console.log(table, "selected");
   // console.log(selectedDate);
   // console.log(new Date());
@@ -96,11 +103,11 @@ const BarScreen = () => {
           unselectedItemTextStyle={styles.selectedItemTextStyle}
           selectedItemBackgroundColor="#222831"
           unselectedItemBackgroundColor="#ececec"
-          flatListContainerStyle={styles.flatListContainerStyle}
+          flatListContainerStyle={{backgroundColor: '#171717'}}
           style={{backgroundColor: '#171717'}}
         />
       </View>
-      <ScrollView>
+      <ScrollView style={{backgroundColor: '#171717'}}>
         {tableData.map((item, index) => {
           return (
             <Pressable
@@ -115,7 +122,7 @@ const BarScreen = () => {
               style={{
                 margin: 10,
                 paddingVertical: 14,
-                backgroundColor: '#FFC40C',
+                backgroundColor: '#303030',
                 paddingHorizontal: 10,
                 borderRadius: 6,
               }}
@@ -127,11 +134,12 @@ const BarScreen = () => {
                   // backgroundColor: "red",
                   fontSize: 16,
                   fontWeight: '500',
+                  color: 'white',
                 }}
               >
                 {item.name}
               </Text>
-              <Text style={{fontSize: 14, fontWeight: '400'}}>
+              <Text style={{fontSize: 14, fontWeight: '400', color: 'white'}}>
                 ว่างทั้งหมด {item.tableCount} โต๊ะ
               </Text>
               {table.includes(item.name) ? (
@@ -147,7 +155,6 @@ const BarScreen = () => {
                             date: selectedDate.toDateString(),
                             minSeat: minSeat,
                             maxSeat: maxSeat,
-                            table: seatsData,
                             tableName: tableName,
                             image: route.params.image,
                             tableId: tableId,
@@ -184,8 +191,8 @@ const BarScreen = () => {
       </ScrollView>
     </UserLayout>
   )
-};
+}
 
-export default BarScreen;
+export default BarScreen
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({})

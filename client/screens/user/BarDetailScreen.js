@@ -1,38 +1,54 @@
-import { AppLayout, Backbutton, StarIcon, CloseIcon } from "@/components/";
-import { Text, Layout, Button, Avatar, Modal, Card, Input, ButtonGroup } from "@ui-kitten/components";
-import { StyleSheet, ScrollView, Image, TouchableOpacity, View, StatusBar } from "react-native";
-import { useState, useEffect } from "react";
+import {AppLayout, Backbutton, StarIcon, CloseIcon} from '@/components/'
+import {
+  Text,
+  Layout,
+  Button,
+  Avatar,
+  Modal,
+  Card,
+  Input,
+  ButtonGroup,
+} from '@ui-kitten/components'
+import {
+  StyleSheet,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  View,
+  StatusBar,
+} from 'react-native'
+import {useState, useEffect} from 'react'
 
-const BarDetailScreen = ({ route, navigation }) => {
-  const [visible, setVisible] = useState(false);
-  const { barDetail } = route.params;
+const BarDetailScreen = ({route, navigation}) => {
+  const [visible, setVisible] = useState(false)
+  const {barDetail} = route.params
   const reviewList = [
-    { id: 2, review: 2 },
-    { id: 1, review: 5 },
-  ];
-  const [score, setScore] = useState();
-  const [textReview, setTextReview] = useState("");
+    {id: 2, review: 2},
+    {id: 1, review: 5},
+  ]
+  const [score, setScore] = useState()
+  const [textReview, setTextReview] = useState('')
 
   const submitReview = () => {
-    setVisible(false);
-    setScore(0);
-    setTextReview("");
-    console.log("submitReview", score, textReview);
-  };
+    setVisible(false)
+    setScore(0)
+    setTextReview('')
+    console.log('submitReview', score, textReview)
+  }
 
   useEffect(() => {
-    console.log(barDetail);
-  }, []);
+    console.log(barDetail)
+  }, [])
 
-  const ReviewStar = ({ time }) => {
-    let star = [];
+  const ReviewStar = ({time}) => {
+    let star = []
 
     for (let index = 0; index < time; index++) {
-      star.push(<StarIcon />);
+      star.push(<StarIcon />)
     }
 
-    return star;
-  };
+    return star
+  }
 
   return (
     <AppLayout>
@@ -94,8 +110,8 @@ const BarDetailScreen = ({ route, navigation }) => {
                 onPress={() => setVisible(true)}
                 style={[
                   {
-                    backgroundColor: 'black',
-                    borderColor: '#1f1f1f',
+                    backgroundColor: '#2e2e2e',
+                    borderColor: '#2e2e2e',
                     width: '40%',
                   },
                 ]}
@@ -107,12 +123,15 @@ const BarDetailScreen = ({ route, navigation }) => {
                   navigation.navigate('Bars', {
                     id: barDetail.id,
                     name: barDetail.name,
+                    image: barDetail.bannerImage,
                   })
                 }
                 style={{
                   width: '40%',
-                  backgroundColor: '#cccccc',
+                  backgroundColor: '#fff',
+                  borderColor: '#5c5c5c',
                   shadowColor: '#878787',
+                  paddingLeft: 20,
                   shadowOffset: {
                     width: 0,
                     height: 4,
@@ -123,7 +142,7 @@ const BarDetailScreen = ({ route, navigation }) => {
                 }}
                 status="control"
               >
-                จอง
+                จองตอนนี้❗️
               </Button>
             </Layout>
             {reviewList.map((review) => {
@@ -246,7 +265,7 @@ const BarDetailScreen = ({ route, navigation }) => {
       </Modal>
     </AppLayout>
   )
-};
+}
 
 const styles = StyleSheet.create({
   modal: {
@@ -281,4 +300,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default BarDetailScreen;
+export default BarDetailScreen

@@ -42,6 +42,7 @@ model Bar {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   Review       Review[]
+  Table        Table[]
 }
 
 model Review {
@@ -56,18 +57,14 @@ model Review {
   barId     Int
 }
 
-enum TableType {
-  NORMAL
-  NOTNORMAL
-}
-
 model Table {
-  id      Int       @id @default(autoincrement())
+  id      Int     @id @default(autoincrement())
   name    String
-  type    TableType
+  bar     Bar     @relation(fields: [barId], references: [id])
   minSeat Int
   maxSeat Int
   Order   Order[]
+  barId   Int
 }
 
 model Order {
