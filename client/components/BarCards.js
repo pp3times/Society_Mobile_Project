@@ -70,4 +70,4 @@ const BarCards = () => {
   );
 };
 
-export default BarCards;
+export default BarCards
