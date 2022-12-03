@@ -76,7 +76,7 @@ const SummaryScreen = () => {
             justifyContent: "space-between",
           }}
         >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View style={{ flexDirection: "row", alignItems: "center", marginTop: 10 }}>
             <Ionicons onPress={() => navigation.goBack()} name="arrow-back" size={24} color="black" style={{ marginLeft: 5 }} />
             <View style={{ marginLeft: 6 }}>
               <Text style={{ fontSize: 16, fontWeight: "600" }}>สรุปยอดจองโต๊ะ</Text>
@@ -184,7 +184,7 @@ const SummaryScreen = () => {
         >
           * กรุณามาก่อนเวลาจอง 5-10 นาที
         </Text>
-        <View style={{ marginVertical: 180 }} />
+        <View style={{ marginVertical: 150 }} />
         <View
           style={{
             alignItems: "center",

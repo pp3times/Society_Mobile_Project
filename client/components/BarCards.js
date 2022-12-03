@@ -5,6 +5,7 @@ import Header from "./Header";
 import { useNavigation } from "@react-navigation/native";
 import { BarsCards } from "./Context";
 import TicketComponent from "./TicketComponent";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const BarCards = () => {
   const data = bars;
@@ -28,7 +29,16 @@ const BarCards = () => {
         // }
         data={data}
         renderItem={({ item }) => (
-          <Pressable style={{ margin: 10, marginHorizontal: 15 }}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("Detail", {
+                id: item.id,
+                name: item.name,
+                image: item.image,
+              })
+            }
+            style={{ margin: 10, marginHorizontal: 15 }}
+          >
             <Image
               style={{
                 aspectRatio: 2 / 3,
@@ -48,34 +58,7 @@ const BarCards = () => {
               {item.name.substring(0.16) + "..."}
             </Text>
             <Text style={{ marginTop: 4, fontSize: 15, color: "gray" }}>{item.genre}</Text>
-            <Pressable
-              onPress={() =>
-                navigation.navigate("Bars", {
-                  id: item.id,
-                  name: item.name,
-                  image: item.image,
-                })
-              }
-              style={{
-                backgroundColor: "#FFC40C",
-                padding: 10,
-                borderRadius: 6,
-                marginRight: 10,
-                marginTop: 10,
-                width: 100, // เอาออกก็สวยอยู่เด้
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: "400",
-                  textAlign: "center",
-                }}
-              >
-                จองที่นั่ง
-              </Text>
-            </Pressable>
-          </Pressable>
+          </TouchableOpacity>
         )}
       />
     </View>

@@ -32,19 +32,28 @@ const ManageScreen = () => {
   const [type, setType] = useState("");
   const [numChair, setNumChair] = useState("");
   const [numTable, setNumTable] = useState("");
-  const token = SecureStore.getItemAsync("accesstoken");
+  const [uid, setUid] = useState("");
 
-  const headers = {
-    Authorization: `Bearer ${token}`,
+  const setDefault = async () => {
+    try {
+      const uid = await SecureStore.getItemAsync("uid");
+      setUid(uid);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const fetchTable = async () => {
+    try {
+      const res = await axios.get(`${BACKEND_URL}/api/bar/Table/${uid}`);
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
-    const fetchTable = async () => {
-      const uid = SecureStore.getItemAsync("uid");
-      console.log(uid);
-      // const res = await axios.get(`${BACKEND_URL}/api/bar/Table/${uid}`, headers);
-      // console.log(res);
-    };
+    setDefault();
     fetchTable();
   }, []);
 
@@ -70,6 +79,7 @@ const ManageScreen = () => {
       };
       const res = await axios.post(`${BACKEND_URL}/api/bar/Table`, data);
       console.log(res);
+      fetchTable();
     } catch (e) {
       console.log(e);
     }
@@ -79,6 +89,7 @@ const ManageScreen = () => {
     try {
       const res = await axios.delete(`${BACKEND_URL}/api/bar/Table/${id}`);
       console.log(res);
+      fetchTable();
     } catch (e) {
       console.log(e);
     }

@@ -1,21 +1,27 @@
-import { AppLayout, UploadIcon } from "@/components/";
+import { AppLayout, UploadIcon, Backbutton } from "@/components/";
 import { Text, Layout, Input, Button } from "@ui-kitten/components";
 import { Image, ScrollView, StyleSheet } from "react-native";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import * as ImagePicker from "expo-image-picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import axios from "axios";
+import { BACKEND_URL } from "@env";
 
 const BarRegisScreen = ({ navigation }) => {
   const [image, setImage] = useState(null);
+  const [timeOpen, setTimeOpen] = useState(new Date(1598051730000));
+  const [timeClose, setTimeClose] = useState(new Date(1598051730000));
 
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({});
-  const onSubmit = (data) => {
+
+  const onSubmit = async (data) => {
     // const datas = new FormData();
-    
+
     // datas.append("images", {
     //   name: image.fileName,
     //   type: image.type,
@@ -30,8 +36,28 @@ const BarRegisScreen = ({ navigation }) => {
     //   },
     //   datas, //pass datas directly
     // });
-    console.log(data);
-    navigation.navigate("Home");
+    try {
+      data.openTime = timeOpen;
+      data.closeTime = timeClose;
+      if (data.password !== data.confirmPassword) {
+        Alert.alert("สมัครสามาชิกผิดพลาด", "รหัสผ่านไม่ตรงกัน โปรดลองอีกครั้ง", [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+        ]);
+      } else {
+        delete data.confirmPassword;
+        const res = await axios.post(`${BACKEND_URL}/api/bar/create`, data);
+        const uid = res.data.data.id;
+        await SecureStore.setItemAsync("uid", uid);
+        navigation.navigate("admin");
+      }
+    } catch (e) {
+      console.log(e.response);
+    }
+    // navigation.navigate("Home");
   };
 
   const pickImage = async () => {
@@ -51,8 +77,18 @@ const BarRegisScreen = ({ navigation }) => {
     }
   };
 
+  const onChangeTimeOpen = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setTimeOpen(currentDate);
+  };
+  const onChangeTimeClose = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setTimeClose(currentDate);
+  };
+
   return (
     <AppLayout>
+      <Backbutton navigation={navigation} style={{ position: "absolute", zIndex: 99, top: "10%" }} />
       <Text style={{ fontSize: 25, fontWeight: "400", marginTop: 10 }}>สมัครสมาชิกร้าน</Text>
       <Layout style={{ width: "80%", flexDirection: "column", alignItems: "center", backgroundColor: "#101010", marginBottom: "30%" }}>
         <ScrollView style={{ width: "100%" }}>
@@ -64,6 +100,7 @@ const BarRegisScreen = ({ navigation }) => {
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
+                  autoCapitalize="none"
                   style={[styles.input, { backgroundColor: "black" }]}
                   status="control"
                   placeholder="อีเมล"
@@ -83,25 +120,7 @@ const BarRegisScreen = ({ navigation }) => {
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
-                  style={[styles.input, { backgroundColor: "black" }]}
-                  status="control"
-                  placeholder="เบอร์โทร"
-                  value={value}
-                  onChangeText={onChange}
-                />
-              )}
-              name="phone"
-            />
-            {errors.phone && <Text>This is required.</Text>}
-          </Layout>
-          <Layout style={{ backgroundColor: "#101010", width: "100%" }}>
-            <Controller
-              control={control}
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Input
+                  autoCapitalize="none"
                   style={[styles.input, { backgroundColor: "black" }]}
                   status="control"
                   placeholder="รหัสผ่าน"
@@ -109,9 +128,9 @@ const BarRegisScreen = ({ navigation }) => {
                   onChangeText={onChange}
                 />
               )}
-              name="phone"
+              name="password"
             />
-            {errors.phone && <Text>This is required.</Text>}
+            {errors.password && <Text>This is required.</Text>}
           </Layout>
           <Layout style={{ backgroundColor: "#101010", width: "100%" }}>
             <Controller
@@ -121,6 +140,7 @@ const BarRegisScreen = ({ navigation }) => {
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
+                  autoCapitalize="none"
                   style={[styles.input, { backgroundColor: "black" }]}
                   status="control"
                   placeholder="ยืนยันรหัสผ่าน"
@@ -141,6 +161,7 @@ const BarRegisScreen = ({ navigation }) => {
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
+                  autoCapitalize="none"
                   style={{ backgroundColor: "black", marginTop: 10 }}
                   status="control"
                   placeholder="ชื่อร้าน"
@@ -148,30 +169,32 @@ const BarRegisScreen = ({ navigation }) => {
                   onChangeText={onChange}
                 />
               )}
-              name="barname"
+              name="name"
             />
-            {errors.barname && <Text>This is required.</Text>}
+            {errors.name && <Text>This is required.</Text>}
           </Layout>
           <Layout style={{ width: "100%", flexDirection: "row", marginTop: 20, backgroundColor: "#101010", justifyContent: "space-between" }}>
-            <Layout style={{ backgroundColor: "#101010", width: "48%" }}>
-              <Controller
-                control={control}
-                rules={{
-                  required: true,
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <Input
-                    style={[{ backgroundColor: "black" }]}
-                    status="control"
-                    placeholder="เวลาเปิด-ปิด"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                  />
-                )}
-                name="time"
+            <Layout style={{ backgroundColor: "#101010", width: "24%" }}>
+              <DateTimePicker
+                style={{ borderWidth: 0.5, borderRadius: 4, color: "white", borderColor: "white", backgroundColor: "black" }}
+                testID="dateTimePicker"
+                value={timeOpen}
+                themeVariant="dark"
+                mode="time"
+                is24Hour="true"
+                onChange={onChangeTimeOpen}
               />
-              {errors.time && <Text>This is required.</Text>}
+            </Layout>
+            <Layout style={{ backgroundColor: "#101010", width: "24%" }}>
+              <DateTimePicker
+                style={{ borderWidth: 0.5, borderRadius: 4, color: "#ffffff", textColor: "white", borderColor: "white", backgroundColor: "black" }}
+                testID="dateTimePicker"
+                value={timeClose}
+                themeVariant="dark"
+                mode="time"
+                is24Hour="true"
+                onChange={onChangeTimeClose}
+              />
             </Layout>
 
             <Layout style={{ backgroundColor: "#101010", width: "48%" }}>
@@ -182,6 +205,7 @@ const BarRegisScreen = ({ navigation }) => {
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <Input
+                    autoCapitalize="none"
                     style={[{ backgroundColor: "black" }]}
                     status="control"
                     placeholder="ที่นั่ง"
@@ -190,9 +214,9 @@ const BarRegisScreen = ({ navigation }) => {
                     value={value}
                   />
                 )}
-                name="seat"
+                name="tableCount"
               />
-              {errors.seat && <Text>This is required.</Text>}
+              {errors.tableCount && <Text>This is required.</Text>}
             </Layout>
           </Layout>
           <Layout style={{ backgroundColor: "#101010", marginTop: 20 }}>
@@ -203,6 +227,7 @@ const BarRegisScreen = ({ navigation }) => {
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
+                  autoCapitalize="none"
                   style={[{ backgroundColor: "black", width: "100%" }]}
                   status="control"
                   placeholder="รายละเอียดของร้าน"
@@ -211,9 +236,9 @@ const BarRegisScreen = ({ navigation }) => {
                   value={value}
                 />
               )}
-              name="detail"
+              name="description"
             />
-            {errors.detail && <Text>This is required.</Text>}
+            {errors.description && <Text>This is required.</Text>}
           </Layout>
           <Layout style={{ backgroundColor: "#101010", marginTop: 20 }}>
             <Controller
@@ -223,6 +248,7 @@ const BarRegisScreen = ({ navigation }) => {
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
+                  autoCapitalize="none"
                   style={[{ backgroundColor: "black", width: "100%" }]}
                   status="control"
                   placeholder="ที่อยู่"
@@ -231,9 +257,9 @@ const BarRegisScreen = ({ navigation }) => {
                   value={value}
                 />
               )}
-              name="address"
+              name="Address"
             />
-            {errors.address && <Text>This is required.</Text>}
+            {errors.Address && <Text>This is required.</Text>}
           </Layout>
 
           <Layout style={{ width: "100%", flexDirection: "row", backgroundColor: "#101010", justifyContent: "space-between" }}>
@@ -245,6 +271,7 @@ const BarRegisScreen = ({ navigation }) => {
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <Input
+                    autoCapitalize="none"
                     style={[{ backgroundColor: "black" }]}
                     status="control"
                     placeholder="แขวง/อำเภอ"
@@ -265,6 +292,7 @@ const BarRegisScreen = ({ navigation }) => {
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <Input
+                    autoCapitalize="none"
                     style={[{ backgroundColor: "black" }]}
                     status="control"
                     placeholder="เขต/ตำบล"
@@ -273,9 +301,9 @@ const BarRegisScreen = ({ navigation }) => {
                     value={value}
                   />
                 )}
-                name="subdistrict"
+                name="sub_district"
               />
-              {errors.subdistrict && <Text>This is required.</Text>}
+              {errors.sub_district && <Text>This is required.</Text>}
             </Layout>
           </Layout>
           <Layout style={{ width: "100%", flexDirection: "row", marginTop: 20, backgroundColor: "#101010", justifyContent: "space-between" }}>
@@ -287,6 +315,7 @@ const BarRegisScreen = ({ navigation }) => {
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <Input
+                    autoCapitalize="none"
                     style={[{ backgroundColor: "black" }]}
                     status="control"
                     placeholder="จังหวัด"
@@ -307,6 +336,7 @@ const BarRegisScreen = ({ navigation }) => {
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <Input
+                    autoCapitalize="none"
                     style={[{ backgroundColor: "black" }]}
                     status="control"
                     placeholder="เบอร์โทรศัพท์"
@@ -315,9 +345,9 @@ const BarRegisScreen = ({ navigation }) => {
                     value={value}
                   />
                 )}
-                name="phone"
+                name="phoneNumber"
               />
-              {errors.phone && <Text>This is required.</Text>}
+              {errors.phoneNumber && <Text>This is required.</Text>}
             </Layout>
           </Layout>
           <Layout style={{ backgroundColor: "#101010", width: "100%", marginTop: 20 }}>

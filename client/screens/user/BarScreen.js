@@ -1,4 +1,4 @@
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { FlatList, Pressable, StyleSheet, Text, View, ScrollView } from "react-native";
 import React, { useState } from "react";
 import HorizontalDatepicker from "@awrminkhodaei/react-native-horizontal-datepicker";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -46,12 +46,7 @@ const BarScreen = () => {
             alignItems: "center",
             marginRight: 10,
           }}
-          ƒ
-        >
-          <Ionicons name="search" size={24} color="black" />
-          <Ionicons style={{ marginHorizontal: 10 }} name="filter-outline" size={24} color="black" />
-          <Ionicons name="share-outline" size={24} color="black" />
-        </View>
+        ></View>
       </View>
       <View
         style={{
@@ -64,6 +59,7 @@ const BarScreen = () => {
         <AntDesign name="Safety" size={24} color="orange" />
         <Text style={{ paddingLeft: 4 }}>Your safety is our priority</Text>
       </View>
+
       <HorizontalDatepicker
         mode="gregorian"
         startDate={new Date("2022-11-01")}
@@ -80,82 +76,86 @@ const BarScreen = () => {
         unselectedItemBackgroundColor="#ececec"
         flatListContainerStyle={styles.flatListContainerStyle}
       />
-      {tableData.map((item, index) => {
-        return (
-          <Pressable
-            onPress={() => {
-              setTable(item.name);
-              setSeatsData(item.tableData);
-              setMinSeat(item.minSeat);
-              setMaxSeat(item.maxSeat);
-              setTableName(item.name);
-              setTableId(item.id);
-            }}
-            style={{
-              margin: 10,
-              paddingVertical: 14,
-              backgroundColor: "#FFC40C",
-              paddingHorizontal: 10,
-              borderRadius: 6,
-            }}
-            key={index}
-          >
-            <Text
-              style={{
-                // padding: 10,
-                // backgroundColor: "red",
-                fontSize: 16,
-                fontWeight: "500",
+      <ScrollView>
+        {tableData.map((item, index) => {
+          return (
+            <Pressable
+              onPress={() => {
+                setTable(item.name);
+                setSeatsData(item.tableData);
+                setMinSeat(item.minSeat);
+                setMaxSeat(item.maxSeat);
+                setTableName(item.name);
+                setTableId(item.id);
               }}
+              style={{
+                margin: 10,
+                paddingVertical: 14,
+                backgroundColor: "#FFC40C",
+                paddingHorizontal: 10,
+                borderRadius: 6,
+              }}
+              key={index}
             >
-              {item.name}
-            </Text>
-            <Text style={{ fontSize: 14, fontWeight: "400" }}>ว่างทั้งหมด {item.tableCount} โต๊ะ</Text>
-            {table.includes(item.name) ? (
-              <FlatList
-                data={options}
-                renderItem={({ item }) => (
-                  <Pressable
-                    onPress={() =>
-                      navigation.navigate("Summary", {
-                        option: item,
-                        name: route.params.name,
-                        date: selectedDate.toDateString(),
-                        minSeat: minSeat,
-                        maxSeat: maxSeat,
-                        table: seatsData,
-                        tableName: tableName,
-                        image: route.params.image,
-                        tableId: tableId,
-                      })
-                    }
-                    style={{
-                      borderColor: "black",
-                      backgroundColor: "black",
-                      borderWidth: 0.5,
-                      // width: 100,
-                      borderRadius: 3,
-                      margin: 10,
-                      padding: 10,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        color: "white",
-                        fontWeight: "500",
-                        textAlign: "center",
-                      }}
-                    >
-                      {item}
-                    </Text>
-                  </Pressable>
-                )}
-              />
-            ) : null}
-          </Pressable>
-        );
-      })}
+              <Text
+                style={{
+                  // padding: 10,
+                  // backgroundColor: "red",
+                  fontSize: 16,
+                  fontWeight: "500",
+                }}
+              >
+                {item.name}
+              </Text>
+              <Text style={{ fontSize: 14, fontWeight: "400" }}>ว่างทั้งหมด {item.tableCount} โต๊ะ</Text>
+              {table.includes(item.name) ? (
+                <ScrollView>
+                  {options.map((item) => {
+                    return (
+                      <Pressable
+                        key={item}
+                        onPress={() =>
+                          navigation.navigate("Summary", {
+                            option: item,
+                            name: route.params.name,
+                            date: selectedDate.toDateString(),
+                            minSeat: minSeat,
+                            maxSeat: maxSeat,
+                            table: seatsData,
+                            tableName: tableName,
+                            image: route.params.image,
+                            tableId: tableId,
+                          })
+                        }
+                        style={{
+                          borderColor: "black",
+                          backgroundColor: "black",
+                          borderWidth: 0.5,
+                          // width: 100,
+                          borderRadius: 3,
+                          margin: 10,
+                          padding: 10,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            color: "white",
+                            fontWeight: "500",
+                            textAlign: "center",
+                          }}
+                        >
+                          {item}
+                        </Text>
+                      </Pressable>
+                    );
+                  })}
+                </ScrollView>
+              ) : null}
+            </Pressable>
+          );
+        })}
+      </ScrollView>
     </UserLayout>
   );
 };
