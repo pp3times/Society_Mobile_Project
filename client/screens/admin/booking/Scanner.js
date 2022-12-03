@@ -34,7 +34,7 @@ const ScanScreen = ({ navigation }) => {
   return (
     <>
       <AppLayout>
-        <Backbutton navigation={navigation} style={{ position: "absolute", zIndex: 99, top: "10%" }} />
+        <Backbutton navigation={navigation} style={{ position: "absolute", zIndex: 99, marginTop:10}} />
         <BarCodeScanner onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} style={StyleSheet.absoluteFillObject} />
         <Modal visible={visible} backdropStyle={styles.backdrop} onBackdropPress={() => setVisible(false)}>
           <Card disabled={true} style={{ backgroundColor: "#101010", width: "100%" }}>

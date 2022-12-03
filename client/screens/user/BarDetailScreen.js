@@ -1,11 +1,11 @@
 import { AppLayout, Backbutton, StarIcon, CloseIcon } from "@/components/";
 import { Text, Layout, Button, Avatar, Modal, Card, Input, ButtonGroup } from "@ui-kitten/components";
 import { StyleSheet, ScrollView, Image, TouchableOpacity, View, StatusBar } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const BarDetailScreen = ({ route, navigation }) => {
   const [visible, setVisible] = useState(false);
-  const { id, name, image } = route.params;
+  const { barDetail } = route.params;
   const reviewList = [
     { id: 2, review: 2 },
     { id: 1, review: 5 },
@@ -19,6 +19,10 @@ const BarDetailScreen = ({ route, navigation }) => {
     setTextReview("");
     console.log("submitReview", score, textReview);
   };
+
+  useEffect(() => {
+    console.log(barDetail);
+  }, []);
 
   const ReviewStar = ({ time }) => {
     let star = [];
@@ -38,30 +42,33 @@ const BarDetailScreen = ({ route, navigation }) => {
         <Image
           style={styles.img}
           source={{
-            uri: image,
+            uri: barDetail.bannerImage,
           }}
         />
         <Layout style={styles.content}>
-          <Text style={{ fontSize: "18", color: "black" }}>{name}</Text>
+          <Text style={{ fontSize: "18", color: "black" }}>{barDetail.name}</Text>
           <Layout style={{ backgroundColor: "#ececec", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text style={{ fontSize: "20", fontWeight: "bold", color: "black" }}>โสดซิง - ลาดกระบัง</Text>
+            <Text style={{ fontSize: "20", fontWeight: "bold", color: "black" }}>
+              {barDetail.name} - {barDetail.district}
+            </Text>
             <Layout style={{ backgroundColor: "#ececec", flexDirection: "column", alignItems: "center" }}>
               <Text style={{ fontSize: "12", color: "black" }}>จำนวนโต๊ะว่าง</Text>
-              <Text style={{ fontSize: "30", color: "black" }}>20</Text>
+              <Text style={{ fontSize: "30", color: "black" }}>{barDetail.tableCount}</Text>
               <Text style={{ fontSize: "12", color: "black" }}>ที่นั่ง</Text>
             </Layout>
           </Layout>
           <Text style={{ color: "black" }}>รายละเอียดร้าน</Text>
-          <Text style={{ marginTop: 10, color: "black" }}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever
-            since the 1500s
-          </Text>
+          <Text style={{ marginTop: 10, color: "black" }}>{barDetail.description}</Text>
           <Layout style={styles.box}>
             <Layout style={{ backgroundColor: "#ececec", flexDirection: "row", width: "100%", justifyContent: "space-between" }}>
               <Button onPress={() => setVisible(true)} style={[{ backgroundColor: "black", borderColor: "white", width: "40%" }]}>
                 รีวิวร้าน
               </Button>
-              <Button onPress={() => navigation.navigate("Bars", { id: id, name: name, image: image })} style={{ width: "40%" }} status="control">
+              <Button
+                onPress={() => navigation.navigate("Bars", { id: barDetail.id, name: barDetail.name })}
+                style={{ width: "40%" }}
+                status="control"
+              >
                 จอง
               </Button>
             </Layout>

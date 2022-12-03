@@ -1,19 +1,33 @@
 import { FlatList, Pressable, StyleSheet, Text, View, Image } from "react-native";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import bars from "../data/bars";
 import Header from "./Header";
+import { BACKEND_URL } from "@env";
 import { useNavigation } from "@react-navigation/native";
 import { BarsCards } from "./Context";
 import TicketComponent from "./TicketComponent";
+import axios from "axios";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const BarCards = () => {
-  const data = bars;
+  const [data, setData] = useState([]);
   const navigation = useNavigation();
   const { ticket } = useContext(BarsCards);
+  const getBar = async () => {
+    try {
+      const res = await axios.get(`${BACKEND_URL}/api/bar/all`);
+      console.log(res.data.data)
+      setData(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    console.log(ticket, "is ticket");
-    console.log(typeof ticket);
+    getBar();
+  }, []);
+  useEffect(() => {
+    // console.log(ticket, "is ticket");
+    // console.log(typeof ticket);
   }, [ticket]);
   return (
     <View>
@@ -29,23 +43,14 @@ const BarCards = () => {
         // }
         data={data}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("Detail", {
-                id: item.id,
-                name: item.name,
-                image: item.image,
-              })
-            }
-            style={{ margin: 10, marginHorizontal: 15 }}
-          >
+          <TouchableOpacity onPress={() => navigation.navigate("Detail", { barDetail: item })} style={{ margin: 10, marginHorizontal: 15 }}>
             <Image
               style={{
                 aspectRatio: 2 / 3,
                 height: 240,
                 borderRadius: 6,
               }}
-              source={{ url: item.image }}
+              source={{ url: `${item.bannerImage}` || "https://api.lorem.space/image/drink?w=150&h=150&hash=8B7BCDC2" }}
             />
             <Text
               style={{
@@ -55,9 +60,9 @@ const BarCards = () => {
                 marginTop: 10,
               }}
             >
-              {item.name.substring(0.16) + "..."}
+              {item.name}
             </Text>
-            <Text style={{ marginTop: 4, fontSize: 15, color: "gray" }}>{item.genre}</Text>
+            <Text style={{ marginTop: 4, fontSize: 15, color: "gray" }}>{item.description}</Text>
           </TouchableOpacity>
         )}
       />
