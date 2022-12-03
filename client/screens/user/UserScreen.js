@@ -75,7 +75,7 @@ const TabNavigator = () => (
 const UserScreen = () => {
   return (
     <Drawer.Navigator initialRouteName="main" drawerContent={(props) => <CustomDrawerContent {...props} />}>
-      <Drawer.Screen name="main" component={TabNavigator} />
+      <Drawer.Screen name="หน้าหลัก" component={TabNavigator} />
     </Drawer.Navigator>
   );
 };

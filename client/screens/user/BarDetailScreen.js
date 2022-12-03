@@ -38,7 +38,10 @@ const BarDetailScreen = ({ route, navigation }) => {
     <AppLayout>
       <StatusBar barStyle="dark-content" translucent={true} />
       <ScrollView style={styles.container}>
-        <Backbutton navigation={navigation} style={{ position: "absolute", zIndex: 99 }} />
+        <Backbutton
+          navigation={navigation}
+          style={{position: 'absolute', zIndex: 99}}
+        />
         <Image
           style={styles.img}
           source={{
@@ -46,27 +49,78 @@ const BarDetailScreen = ({ route, navigation }) => {
           }}
         />
         <Layout style={styles.content}>
-          <Text style={{ fontSize: "18", color: "black" }}>{barDetail.name}</Text>
-          <Layout style={{ backgroundColor: "#ececec", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Text style={{ fontSize: "20", fontWeight: "bold", color: "black" }}>
-              {barDetail.name} - {barDetail.district}
+          <Text style={{fontSize: '18', color: 'white'}}>{barDetail.name}</Text>
+          <Layout
+            style={{
+              backgroundColor: '#171717',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Text style={{fontSize: '20', fontWeight: 'bold', color: 'white'}}>
+              ร้าน {barDetail.name} - {barDetail.district}
             </Text>
-            <Layout style={{ backgroundColor: "#ececec", flexDirection: "column", alignItems: "center" }}>
-              <Text style={{ fontSize: "12", color: "black" }}>จำนวนโต๊ะว่าง</Text>
-              <Text style={{ fontSize: "30", color: "black" }}>{barDetail.tableCount}</Text>
-              <Text style={{ fontSize: "12", color: "black" }}>ที่นั่ง</Text>
+            <Layout
+              style={{
+                backgroundColor: '#171717',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <Text style={{fontSize: '12', color: 'white'}}>
+                จำนวนโต๊ะว่าง
+              </Text>
+              <Text style={{fontSize: '30', color: 'white'}}>
+                {barDetail.tableCount}
+              </Text>
+              <Text style={{fontSize: '12', color: 'white'}}>ที่นั่ง</Text>
             </Layout>
           </Layout>
-          <Text style={{ color: "black" }}>รายละเอียดร้าน</Text>
-          <Text style={{ marginTop: 10, color: "black" }}>{barDetail.description}</Text>
+          <Text style={{color: 'white'}}>รายละเอียดร้าน</Text>
+          <Text style={{marginTop: 10, color: 'white'}}>
+            {barDetail.description}
+          </Text>
           <Layout style={styles.box}>
-            <Layout style={{ backgroundColor: "#ececec", flexDirection: "row", width: "100%", justifyContent: "space-between" }}>
-              <Button onPress={() => setVisible(true)} style={[{ backgroundColor: "black", borderColor: "white", width: "40%" }]}>
+            <Layout
+              style={{
+                backgroundColor: '#171717',
+                flexDirection: 'row',
+                width: '100%',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Button
+                onPress={() => setVisible(true)}
+                style={[
+                  {
+                    backgroundColor: 'black',
+                    borderColor: '#1f1f1f',
+                    width: '40%',
+                  },
+                ]}
+              >
                 รีวิวร้าน
               </Button>
               <Button
-                onPress={() => navigation.navigate("Bars", { id: barDetail.id, name: barDetail.name })}
-                style={{ width: "40%" }}
+                onPress={() =>
+                  navigation.navigate('Bars', {
+                    id: barDetail.id,
+                    name: barDetail.name,
+                  })
+                }
+                style={{
+                  width: '40%',
+                  backgroundColor: '#cccccc',
+                  shadowColor: '#878787',
+                  shadowOffset: {
+                    width: 0,
+                    height: 4,
+                  },
+                  shadowOpacity: 0.55,
+                  shadowRadius: 14.78,
+                  elevation: 5,
+                }}
                 status="control"
               >
                 จอง
@@ -74,55 +128,113 @@ const BarDetailScreen = ({ route, navigation }) => {
             </Layout>
             {reviewList.map((review) => {
               return (
-                <Layout key={review.id} style={{ borderRadius: "10%", backgroundColor: "black", padding: 15, marginTop: 20 }}>
-                  <Layout style={{ backgroundColor: "black", flexDirection: "row", alignItems: "center" }}>
-                    <Text style={{ marginRight: 10 }}>คุณ thun</Text>
+                <Layout
+                  key={review.id}
+                  style={{
+                    borderRadius: '10%',
+                    backgroundColor: 'black',
+                    padding: 15,
+                    marginTop: 20,
+                  }}
+                >
+                  <Layout
+                    style={{
+                      backgroundColor: 'black',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Text style={{marginRight: 10}}>คุณ thun</Text>
                     <ReviewStar time={review.review} />
                   </Layout>
-                  <Text style={{ fontSize: 10, marginVertical: 10 }}>1 มกราคม 2565</Text>
-                  <Text>บรรยากาศเป็นกันเองมากครับ นั่งแล้วชิลดี เหมาะสำหรับมากับคู่รัก กลุ่มเพื่อน หรือมาคนเดียวก็ยังได้ครับ</Text>
+                  <Text style={{fontSize: 10, marginVertical: 10}}>
+                    1 มกราคม 2565
+                  </Text>
+                  <Text>
+                    บรรยากาศเป็นกันเองมากครับ นั่งแล้วชิลดี
+                    เหมาะสำหรับมากับคู่รัก กลุ่มเพื่อน หรือมาคนเดียวก็ยังได้ครับ
+                  </Text>
                 </Layout>
-              );
+              )
             })}
           </Layout>
         </Layout>
       </ScrollView>
       {/* modal */}
-      <Modal visible={visible} backdropStyle={styles.backdrop} onBackdropPress={() => setVisible(false)}>
-        <Card disabled={true} style={{ backgroundColor: "black", width: "100%" }}>
-          <Layout style={{ width: "100%", flexDirection: "row", justifyContent: "end", backgroundColor: "transparent", marginLeft: -15 }}>
+      <Modal
+        visible={visible}
+        backdropStyle={styles.backdrop}
+        onBackdropPress={() => setVisible(false)}
+      >
+        <Card disabled={true} style={{backgroundColor: 'black', width: '100%'}}>
+          <Layout
+            style={{
+              width: '100%',
+              flexDirection: 'row',
+              justifyContent: 'end',
+              backgroundColor: 'transparent',
+              marginLeft: -15,
+            }}
+          >
             <Button appearance="ghost" onPress={() => setVisible(false)}>
               <CloseIcon />
             </Button>
           </Layout>
           <Layout style={styles.modal}>
-            <Layout style={{ backgroundColor: "transparent", flexDirection: "row", alignItems: "center", marginBottom: 10 }}>
-              <Text style={{ fontSize: 15, marginRight: 15 }}>คะแนน</Text>
+            <Layout
+              style={{
+                backgroundColor: 'transparent',
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 10,
+              }}
+            >
+              <Text style={{fontSize: 15, marginRight: 15}}>คะแนน</Text>
               <ButtonGroup style={styles.buttonGroup} appearance="ghost">
-                <Button appearance="ghost" style={{ backgroundColor: score == 1 ? "#303030" : "black" }} onPress={() => setScore(1)}>
+                <Button
+                  appearance="ghost"
+                  style={{backgroundColor: score == 1 ? '#303030' : 'black'}}
+                  onPress={() => setScore(1)}
+                >
                   <StarIcon />
                 </Button>
-                <Button appearance="ghost" style={{ backgroundColor: score == 2 ? "#303030" : "black" }} onPress={() => setScore(2)}>
+                <Button
+                  appearance="ghost"
+                  style={{backgroundColor: score == 2 ? '#303030' : 'black'}}
+                  onPress={() => setScore(2)}
+                >
                   <StarIcon />
                 </Button>
-                <Button appearance="ghost" style={{ backgroundColor: score == 3 ? "#303030" : "black" }} onPress={() => setScore(3)}>
+                <Button
+                  appearance="ghost"
+                  style={{backgroundColor: score == 3 ? '#303030' : 'black'}}
+                  onPress={() => setScore(3)}
+                >
                   <StarIcon />
                 </Button>
-                <Button appearance="ghost" style={{ backgroundColor: score == 4 ? "#303030" : "black" }} onPress={() => setScore(4)}>
+                <Button
+                  appearance="ghost"
+                  style={{backgroundColor: score == 4 ? '#303030' : 'black'}}
+                  onPress={() => setScore(4)}
+                >
                   <StarIcon />
                 </Button>
-                <Button appearance="ghost" style={{ backgroundColor: score == 5 ? "#303030" : "black" }} onPress={() => setScore(5)}>
+                <Button
+                  appearance="ghost"
+                  style={{backgroundColor: score == 5 ? '#303030' : 'black'}}
+                  onPress={() => setScore(5)}
+                >
                   <StarIcon />
                 </Button>
               </ButtonGroup>
             </Layout>
-            <Text style={{ fontSize: 15, marginBottom: 10 }}>รีวิว</Text>
+            <Text style={{fontSize: 15, marginBottom: 10}}>รีวิว</Text>
             <Input
               onChangeText={(txt) => {
-                setTextReview(txt);
+                setTextReview(txt)
               }}
               multiline={true}
-              textStyle={{ minHeight: 100, width: 250 }}
+              textStyle={{minHeight: 100, width: 250}}
               status="control"
               placeholder="ข้อความ"
             />
@@ -133,40 +245,40 @@ const BarDetailScreen = ({ route, navigation }) => {
         </Card>
       </Modal>
     </AppLayout>
-  );
+  )
 };
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: "black",
+    backgroundColor: 'black',
     marginBottom: 20,
   },
   backdrop: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   container: {
-    width: "100%",
-    backgroundColor: "#ececec",
+    width: '100%',
+    backgroundColor: '#171717',
   },
   img: {
-    width: "100%",
+    width: '100%',
     height: 250,
   },
   content: {
-    marginTop: "5%",
-    flexDirection: "column",
-    justifyContent: "center",
-    paddingHorizontal: "5%",
-    backgroundColor: "#ececec",
+    marginTop: '5%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    paddingHorizontal: '5%',
+    backgroundColor: '#171717',
   },
   box: {
-    marginTop: "5%",
-    paddingTop: "5%",
+    marginTop: '5%',
+    paddingTop: '5%',
     borderTopWidth: 2,
-    borderTopColor: "black",
-    width: "100%",
-    backgroundColor: "#ececec",
+    borderTopColor: 'black',
+    width: '100%',
+    backgroundColor: '#171717',
   },
-});
+})
 
 export default BarDetailScreen;
