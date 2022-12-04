@@ -14,44 +14,35 @@ import {BarsCards} from './Context'
 import useAxiosFunction from '../hooks/useAxiosFunction'
 import axios from '../apis/jsonPlaceholder'
 import QRCode from 'react-native-qrcode-svg'
+import * as SecureStore from 'expo-secure-store'
 
 const TicketComponent = () => {
   const [data, error, loading, axiosFetch] = useAxiosFunction()
   const [dataTicket, setDataTicket] = useState('')
-  // let theData = []
-  // const getData = () => {
-  //   axiosFetch({
-  //     axiosInstance: axios,
-  //     method: 'GET',
-  //     url: '/api/bar/reservation/all',
-  //   })
-  // }
-
-  // useEffect(() => {
-  //   getData()
-
-  //   // eslint-disable-next-line
-  // }, [])
-  // // setDataTicket(data)
-  // useEffect(() => {
-  //   theData = data
-  // }, [data])
-  // const getFetch = async () => {
-  // 	const response = await fetch(
-  //     'http://45.77.255.88:8080/api/payment/payment',
-  //     {
-  //       method: 'POST',
-  //       body: JSON.stringify({
-  //         amount: Math.floor(total * 100),
-  //       }),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     }
-  //   )
-  //   const data = await response.json()
-  // }
-  const getFetch = async () => {
+  const [dateTime, setDateTime] = useState('')
+  const [ticketData, setTicketData] = useState('')
+  async function getValue(key) {
+    let result = await SecureStore.getItemAsync(key)
+    if (result) {
+      return result
+    }
+  }
+  const getFetchFirst = async () => {
+    console.log('UID IS : ', await getValue('uid'))
+    const uid = await getValue('uid')
+    axios
+      .get(`http://localhost:8080/api/bar/reservation/waiting/${Number(uid)}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data[0])
+        setTicketData(response.data.data[0])
+      })
+      .catch((error) => {
+        console.log(error.response)
+      })
     axios
       .get('http://localhost:8080/api/bar/reservation/all', {
         headers: {
@@ -59,25 +50,52 @@ const TicketComponent = () => {
         },
       })
       .then((response) => {
-        console.log(response)
+        // console.log(response)
         setDataTicket(response.data.data[0])
+        setDateTime(response.data.data[0].orderDate.substring(0, 10))
       })
       .catch((error) => {
         console.log(error.response)
       })
   }
   useEffect(() => {
-    getFetch()
+    getFetchFirst()
   }, [])
-  console.log(dataTicket.passCode)
+  // console.log(ticketData)
+
+  // const getFetch = async () => {
+  //   axios
+  //     .get('http://localhost:8080/api/bar/reservation/all', {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //     })
+  //     .then((response) => {
+  //       // console.log(response)
+  //       setDataTicket(response.data.data[0])
+  //       setDateTime(response.data.data[0].orderDate.substring(0, 10))
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.response)
+  //     })
+  // }
+  // useEffect(() => {
+  //   getFetch()
+  // }, [])
+  // console.log(dataTicket)
+  // const theDate = dataTicket.orderDate
+  console.log('Ticket', ticketData)
   const navigation = useNavigation()
   const {ticket} = useContext(BarsCards)
-  console.log(ticket, 'is ticket')
+  // console.log(ticket, 'is ticket')
   return (
     <SafeAreaView>
       <ImageBackground
         style={{aspectRatio: 5 / 2, height: 170}}
-        source={{url: ticket.image}}
+        // source={{url: ticket.image}}
+        source={{
+          url: 'https://cdn.discordapp.com/attachments/1006207117331546143/1049071145405653134/image.png',
+        }}
       >
         <Pressable
           style={{
@@ -99,13 +117,14 @@ const TicketComponent = () => {
               // marginTop: 10,
             }}
           >
-            <View>
+            <View style={{flexDirection: 'column'}}>
               <Text style={{fontSize: 14, fontWeight: '500', color: 'gray'}}>
                 ตั๋วของคุณ
               </Text>
               <Text style={{fontSize: 16, fontWeight: 'bold'}}>
-                ร้าน {ticket.name}
+                จองโต๊ะไว้ที่ {ticketData.name}
               </Text>
+              <View />
               <Text
                 style={{
                   fontSize: 16,
@@ -114,10 +133,10 @@ const TicketComponent = () => {
                   marginTop: 20,
                 }}
               >
-                จองโต๊ะ {ticket.tableName}
+                {dataTicket.name}
               </Text>
               <Text style={{marginTop: 0, fontSize: 15, fontWeight: '500'}}>
-                {ticket.date}
+                {dateTime}
               </Text>
             </View>
 

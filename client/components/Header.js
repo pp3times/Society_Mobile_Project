@@ -14,7 +14,9 @@ const Header = () => {
     <View>
       <ImageBackground
         style={{aspectRatio: 5 / 2, height: 200}}
-        source={{url: 'https://api.lorem.space/image/movie?w=1460&h=600'}}
+        source={{
+          url: 'https://cdn.discordapp.com/attachments/1006207117331546143/1049071145405653134/image.png',
+        }}
       >
         <Pressable
           style={{

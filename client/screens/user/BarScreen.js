@@ -55,10 +55,10 @@ const BarScreen = () => {
     getData()
     // eslint-disable-next-line
   }, [])
-  console.log('THIS IS PAYLOAD', barTable.payload)
-  console.log('TYPEOF PAYLOAD', typeof barTable.payload)
+  // console.log('THIS IS PAYLOAD', barTable.payload)
+  // console.log('TYPEOF PAYLOAD', typeof barTable.payload)
   const tableData = barTable.payload
-  console.log('COUNTING', tableData)
+  // console.log('COUNTING', tableData)
   const options = ['จองให้ตัวเอง', 'จองให้เพื่อน']
   return (
     <UserLayout>

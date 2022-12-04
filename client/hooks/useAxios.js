@@ -6,9 +6,9 @@ const useAxios = (configObj) => {
   const [response, setResponse] = useState([])
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(true)
-	const [reload, setReload] = useState(0);
+  const [reload, setReload] = useState(0)
 
-	const refetch = () => setReload(prev => prev + 1);
+  const refetch = () => setReload((prev) => prev + 1)
 
   useEffect(() => {
     const controller = new AbortController()
@@ -19,7 +19,7 @@ const useAxios = (configObj) => {
           ...requestConfig,
           signal: controller.signal,
         })
-        console.log(res)
+        // console.log(res)
         setResponse(res.data)
       } catch (err) {
         console.log(err.message)
@@ -34,7 +34,7 @@ const useAxios = (configObj) => {
     // useEffect cleanup function
     return () => controller.abort()
 
-		// eslint-disable-next-line
+    // eslint-disable-next-line
   }, [reload])
 
   return [response, error, loading, refetch]
