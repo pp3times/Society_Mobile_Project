@@ -29,7 +29,6 @@ const BottomTabBar = ({ navigation, state }) => (
   >
     <BottomNavigationTab title="จัดการร้าน" icon={SettingIcon} />
     <BottomNavigationTab title="การจอง" icon={BookIcon} />
-    <BottomNavigationTab title="ข้อมูลส่วนตัว" icon={UserIcon} />
   </BottomNavigation>
 );
 

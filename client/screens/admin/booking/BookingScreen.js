@@ -3,9 +3,11 @@ import { Layout, Text, Button, Modal, Card } from "@ui-kitten/components";
 import { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import axios from "axios";
+import { BACKEND_URL } from "@env";
+import * as SecureStore from "expo-secure-store";
 
 const BookingScreen = ({ route, navigation }) => {
-  const [uid, setUid] = useState("");
   const [tableLeft, setTableLeft] = useState("");
   const [orderBooking, setOrderBooking] = useState([]);
 
@@ -27,28 +29,19 @@ const BookingScreen = ({ route, navigation }) => {
   //   },
   // ];
 
-  const setDefault = async () => {
-    try {
-      const uid = await SecureStore.getItemAsync("uid");
-      setUid(uid);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   const fetchTable = async () => {
     try {
-      const res = await axios.get(`${BACKEND_URL}/api/bar/order/${uid}`);
-      console.log(res);
+      const uid = await SecureStore.getItemAsync("uid");
+      const res = await axios.get(`${BACKEND_URL}/api/bar/reservation/${uid}`);
+      console.log(res.data.data);
       // setTableLeft()
-      // setOrderBooking()
+      setOrderBooking(res.data.data)
     } catch (e) {
-      console.log(e);
+      console.log(e.response);
     }
   };
 
   useEffect(() => {
-    setDefault();
     fetchTable();
   }, []);
 
@@ -71,7 +64,10 @@ const BookingScreen = ({ route, navigation }) => {
                   style={{ backgroundColor: "#101010", borderWidth: 1, borderColor: "white", borderRadius: "10%", padding: 10, marginBottom: 10 }}
                 >
                   <Text>
-                    คุณ {books.nameCustomer} {books.type}
+                    คุณ {books.name}
+                  </Text>
+                  <Text>
+                    เวลา {Date(books.createdAt)}
                   </Text>
                 </Layout>
               );
