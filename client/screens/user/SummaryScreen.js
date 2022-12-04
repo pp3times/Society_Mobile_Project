@@ -6,28 +6,44 @@ import {
   Image,
   Pressable,
 } from 'react-native'
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {useNavigation, useRoute} from '@react-navigation/native'
 import {Ionicons} from '@expo/vector-icons'
 import {AntDesign} from '@expo/vector-icons'
 import {useStripe} from '@stripe/stripe-react-native'
 import {BarsCards as Context} from '@/components/Context'
 import UserLayout from '../../components/UserLayout'
+import useAxiosFunction from '../../hooks/useAxiosFunction'
+import axios from '../../apis/jsonPlaceholder'
 
 const SummaryScreen = () => {
   const {setTicket} = useContext(Context)
   const route = useRoute()
   const navigation = useNavigation()
+  const [order, error, loading, axiosFetch] = useAxiosFunction()
   const total = 10
   console.log(route.params)
   console.log(total)
   const stripe = useStripe()
+  const getData = () => {
+    axiosFetch({
+      axiosInstance: axios,
+      method: 'POST',
+      url: '/api/bar/reserve',
+      requestConfig: {
+        data: {
+          userId: route.params.userId,
+          tableId: route.params.tableId,
+          orderDate: route.params.date,
+        },
+      },
+    })
+  }
   const subscribe = async () => {
     const response = await fetch('http://localhost:8080/api/payment/payment', {
       method: 'POST',
       body: JSON.stringify({
         amount: Math.floor(total * 100),
-        // amount: Math.floor(total),
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -46,19 +62,19 @@ const SummaryScreen = () => {
     })
     if (presentSheet.error) return Alert.alert(presentSheet.error)
     else {
-      // occupied.push(...seats);
-      setTicket({
-        name: route.params.name,
-        option: route.params.option,
-        minSeat: route.params.minSeat,
-        maxSeat: route.params.maxSeat,
-        tableName: route.params.tableName,
-        date: route.params.date,
-        tableName: route.params.tableName,
-        total: total,
-        image: route.params.image,
-        tableId: route.params.tableId,
-      })
+      getData()
+      // setTicket({
+      //   name: route.params.name,
+      //   option: route.params.option,
+      //   minSeat: route.params.minSeat,
+      //   maxSeat: route.params.maxSeat,
+      //   tableName: route.params.tableName,
+      //   date: route.params.date,
+      //   tableName: route.params.tableName,
+      //   total: total,
+      //   image: route.params.image,
+      //   tableId: route.params.tableId,
+      // })
       navigation.navigate('Ticket', {
         name: route.params.name,
         option: route.params.option,
@@ -73,6 +89,13 @@ const SummaryScreen = () => {
       })
     }
   }
+
+  // useEffect(() => {
+  //   getData()
+  //   // eslint-disable-next-line
+  // }, [])
+  // occupied.push(...seats);
+
   return (
     <UserLayout>
       <SafeAreaView style={{backgroundColor: '#171717'}}>
@@ -179,7 +202,7 @@ const SummaryScreen = () => {
               DATE & TIME
             </Text>
             <Text style={{marginVertical: 4, fontSize: 16, color: 'white'}}>
-              {route.params.date}
+              {route.params.date.toDateString()}
             </Text>
             {/* <Text>{moment(route.params.date).utc().format("MM/DD/YYYY")}</Text> */}
           </View>

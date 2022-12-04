@@ -111,14 +111,47 @@ export const allBars = async () => {
 }
 
 export const createReservation = async (data) => {
+  const makeid = (length) => {
+    var result = ''
+    var characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    var charactersLength = characters.length
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    }
+    return result
+  }
+  const rnd = (() => {
+    const gen = (min, max) =>
+      max++ && [...Array(max - min)].map((s, i) => String.fromCharCode(min + i))
+
+    const sets = {
+      num: gen(48, 57),
+      alphaLower: gen(97, 122),
+      alphaUpper: gen(65, 90),
+      special: [...`~!@#$%^&*()_+-=[]\{}|;:'",./<>?`],
+    }
+
+    function* iter(len, set) {
+      if (set.length < 1) set = Object.values(sets).flat()
+      for (let i = 0; i < len; i++) yield set[(Math.random() * set.length) | 0]
+    }
+
+    return Object.assign(
+      (len, ...set) => [...iter(len, set.flat())].join(''),
+      sets
+    )
+  })()
   const barSchema = yup.object().shape({
     userId: yup.number().required().integer(),
     tableId: yup.number().required().integer(),
-    orderDate: yup.date().required(),
+    orderDate: yup.string().required(),
+    // passCode: yup.string().required(),
+    // status: yup.string().required(),
   })
 
   if (!(await barSchema.isValid(data))) {
-    throw new Error('Bad request')
+    throw new Error('Bad request!')
   }
 
   const {userId, tableId, orderDate} = data
@@ -128,6 +161,8 @@ export const createReservation = async (data) => {
       userId: userId,
       tableId: tableId,
       orderDate: orderDate,
+      passCode: rnd(20, rnd.alphaUpper, rnd.special, rnd.alphaLower, rnd.num),
+      status: 'WAITING',
     },
   })
 

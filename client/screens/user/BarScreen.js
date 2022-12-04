@@ -5,6 +5,7 @@ import {
   Text,
   View,
   ScrollView,
+  AsyncStorage,
 } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import HorizontalDatepicker from '@awrminkhodaei/react-native-horizontal-datepicker'
@@ -16,6 +17,7 @@ import tables from '../../data/table'
 import UserLayout from '../../components/UserLayout'
 import useAxiosFunction from '../../hooks/useAxiosFunction'
 import axios from '../../apis/jsonPlaceholder'
+import * as SecureStore from 'expo-secure-store'
 
 const BarScreen = () => {
   const route = useRoute()
@@ -28,18 +30,25 @@ const BarScreen = () => {
   const [minSeat, setMinSeat] = useState(0)
   const [tableId, setTableId] = useState(0)
   const [tableName, setTableName] = useState('')
+  const [userId, setUserId] = useState('')
   let monthDate = new Date()
   monthDate.setDate(monthDate.getDate() + 30)
   let dateString = monthDate.toISOString().split('T')[0]
   // const tableData = tables
   const [barTable, error, loading, axiosFetch] = useAxiosFunction()
-
+  async function getValue(key) {
+    let result = await SecureStore.getItemAsync(key)
+    if (result) {
+      return result
+    }
+  }
   const getData = () => {
     axiosFetch({
       axiosInstance: axios,
       method: 'GET',
       url: `/api/bar/table?id=${route.params.id}`,
     })
+    setUserId(getValue('uid'))
   }
 
   useEffect(() => {
@@ -206,12 +215,13 @@ const BarScreen = () => {
                                 navigation.navigate('Summary', {
                                   option: item,
                                   name: route.params.name,
-                                  date: selectedDate.toDateString(),
+                                  date: selectedDate,
                                   minSeat: minSeat,
                                   maxSeat: maxSeat,
                                   tableName: tableName,
                                   image: route.params.image,
                                   tableId: tableId,
+                                  userId: userId._z,
                                 })
                               }
                               style={{
