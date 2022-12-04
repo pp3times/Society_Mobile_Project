@@ -267,3 +267,33 @@ export const deleteTableService = async (tableId) => {
 
   return table
 }
+
+export const receiveTableService = async (passcode) => {
+  let order = await prisma.order.findFirst({
+    where: { passCode: passcode }
+  });
+
+  order = await prisma.order.update({
+    where: {
+      id: order.id
+    },
+    data: {
+      status: 'CHECKIN'
+    },
+    select: {
+      id: true,
+      orderDate: true,
+      status: true,
+      tableSeat: {
+        select: {
+          id: true,
+          name: true
+        }
+      }
+    }
+  });
+
+  console.log(order);
+
+  return order;
+}

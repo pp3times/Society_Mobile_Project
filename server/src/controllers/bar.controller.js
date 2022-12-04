@@ -11,6 +11,7 @@ import {
   deleteTableService,
   getAllTableService,
   getTableReservationService,
+  receiveTableService
 } from '../services/bar.service'
 import createHttpError from 'http-errors'
 
@@ -170,5 +171,27 @@ export const getTableReservation = async (req, res) => {
     })
   } catch (e) {
     return res.status(400).json({msg: e.message})
+  }
+}
+
+export const reciveTable = async (req, res) => {
+  try {
+    if (req.body.passcode === undefined) {
+      throw new Error('Missing Parameter: passcode');
+    }
+
+    const {passcode} = req.body;
+
+    console.log(`Passcode is ${passcode}`);
+
+    const response = await receiveTableService(passcode);
+
+    return res.status(200).json({
+      status: true,
+      message: 'Revived',
+      data: response
+    });
+  } catch(e) {
+    return res.status(400).json({msg: e.message});
   }
 }
