@@ -11,33 +11,48 @@ import {useNavigation, useRoute} from '@react-navigation/native'
 import {Ionicons} from '@expo/vector-icons'
 import {AntDesign} from '@expo/vector-icons'
 import {useStripe} from '@stripe/stripe-react-native'
-import {BarsCards as Context} from '@/components/Context'
+import {BarsCards as Context} from '../../components/Context'
 import UserLayout from '../../components/UserLayout'
-import useAxiosFunction from '../../hooks/useAxiosFunction'
-import axios from '../../apis/jsonPlaceholder'
+// import useAxiosFunction from '../../hooks/useAxiosFunction'
+// import axios from '../../apis/jsonPlaceholder'
+import axios from 'axios'
 
 const SummaryScreen = () => {
-  const {setTicket} = useContext(Context)
+  const {ticket, setTicket} = useContext(Context)
   const route = useRoute()
   const navigation = useNavigation()
-  const [order, error, loading, axiosFetch] = useAxiosFunction()
+  // const [order, error, loading, axiosFetch] = useAxiosFunction()
   const total = 10
-  console.log(route.params)
-  console.log(total)
+  console.log('Route PARAMS', route.params)
+  // console.log(total)
   const stripe = useStripe()
+  // const runTest = async () => {
+  //   try {
+  //     const data = {
+  //       userId: route.params.userId,
+  //       tableId: route.params.tableId,
+  //       orderDate: route.params.date,
+  //     }
+  //     const res = await axios.post(
+  //       'http://localhost:8080/api/bar/reserve',
+  //       data
+  //     )
+  //     console.log(res.data.data)
+  //   } catch (e) {
+  //     console.log(e)
+  //   }
+  // }
   const getData = () => {
-    axiosFetch({
-      axiosInstance: axios,
-      method: 'POST',
-      url: '/api/bar/reserve',
-      requestConfig: {
-        data: {
-          userId: route.params.userId,
-          tableId: route.params.tableId,
-          orderDate: route.params.date,
-        },
-      },
-    })
+    // axiosFetch({
+    //   axiosInstance: axios,
+    //   method: 'POST',
+    //   url: '/api/bar/reserve',
+    //   requestConfig: {
+    //     userId: route.params.userId,
+    //     tableId: route.params.tableId,
+    //     orderDate: route.params.date,
+    //   },
+    // })
   }
   const subscribe = async () => {
     const response = await fetch('http://localhost:8080/api/payment/payment', {
@@ -62,26 +77,53 @@ const SummaryScreen = () => {
     })
     if (presentSheet.error) return Alert.alert(presentSheet.error)
     else {
-      getData()
+      console.log(
+        'CHECK VALUE',
+        route.params.userId,
+        route.params.tableId,
+        route.params.date
+      )
+      axios
+
+        .post(
+          'http://localhost:8080/api/bar/reserve',
+          {
+            userId: Number(route.params.userId),
+            tableId: Number(route.params.tableId),
+            orderDate: route.params.date,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
       setTicket({
         name: route.params.name,
         option: route.params.option,
         minSeat: route.params.minSeat,
         maxSeat: route.params.maxSeat,
         tableName: route.params.tableName,
-        date: route.params.date,
+        date: route.params.date.toDateString(),
         tableName: route.params.tableName,
         total: total,
         image: route.params.image,
         tableId: route.params.tableId,
       })
+
       navigation.navigate('Ticket', {
         name: route.params.name,
         option: route.params.option,
         minSeat: route.params.minSeat,
         maxSeat: route.params.maxSeat,
         tableName: route.params.tableName,
-        date: route.params.date,
+        date: route.params.date.toDateString(),
         tableName: route.params.tableName,
         total: total,
         image: route.params.image,
@@ -93,7 +135,7 @@ const SummaryScreen = () => {
   // useEffect(() => {
   //   getData()
   //   // eslint-disable-next-line
-  // }, [])
+  // }, [ticket])
   // occupied.push(...seats);
 
   return (

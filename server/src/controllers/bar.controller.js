@@ -10,7 +10,7 @@ import {
   addTableService,
   deleteTableService,
   getAllTableService,
-  getTableReservationService
+  getTableReservationService,
 } from '../services/bar.service'
 import createHttpError from 'http-errors'
 
@@ -69,6 +69,7 @@ export const getAllBarsController = async (req, res) => {
 export const createReservationController = async (req, res) => {
   try {
     const reservation = await createReservation(req.body)
+    console.log(reservation)
     return res.status(200).json({
       status: true,
       message: 'Create Reservation Success',
@@ -107,7 +108,7 @@ export const allReview = async (req, res) => {
 
 export const updateBarStatus = async (req, res) => {
   try {
-    const bar = await updateBarStatusService(req.params.barId, req.body.status);
+    const bar = await updateBarStatusService(req.params.barId, req.body.status)
     return res.status(200).json({
       status: true,
       message: 'Set Bar Status Success',
@@ -120,7 +121,7 @@ export const updateBarStatus = async (req, res) => {
 
 export const addTable = async (req, res) => {
   try {
-    const response = await addTableService(req.body);
+    const response = await addTableService(req.body)
     return res.status(200).json({
       status: true,
       message: 'Add table Success',
@@ -133,7 +134,7 @@ export const addTable = async (req, res) => {
 
 export const deleteTable = async (req, res) => {
   try {
-    const response = await deleteTableService(req.body.tableId);
+    const response = await deleteTableService(req.body.tableId)
     return res.status(200).json({
       status: true,
       message: `Delete table ID ${req.body.tableId} Success`,
@@ -146,7 +147,7 @@ export const deleteTable = async (req, res) => {
 
 export const getAllTable = async (req, res) => {
   try {
-    const response = await getAllTableService(req.params.barId);
+    const response = await getAllTableService(req.params.barId)
     return res.status(200).json({
       status: true,
       message: `Get All Table Success`,
@@ -159,7 +160,9 @@ export const getAllTable = async (req, res) => {
 
 export const getTableReservation = async (req, res) => {
   try {
-    const response = await getTableReservationService(parseInt(req.params.barId));
+    const response = await getTableReservationService(
+      parseInt(req.params.barId)
+    )
     return res.status(200).json({
       status: true,
       message: `Get All Table Reservation Success`,

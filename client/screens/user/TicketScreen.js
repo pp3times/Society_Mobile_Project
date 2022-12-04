@@ -231,7 +231,7 @@ const TicketScreen = () => {
           </View>
 
           <Text style={{fontSize: 16, fontWeight: '500', textAlign: 'center'}}>
-            W33JNK3
+            {ticketId}
           </Text>
 
           <Text
