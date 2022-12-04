@@ -200,3 +200,21 @@ export const GetAllReviewService = async (barId) => {
 
   return reviews;
 }
+
+export const updateBarStatusService = async (barId, status) => {
+  const bar = await prisma.bar.update({
+    where: {
+      id: parseInt(barId)
+    },
+    data: {
+      isClose: status
+    },
+    select: {
+      name: true,
+      isClose: true,
+      updatedAt: true
+    }
+  });
+
+  return bar;
+}

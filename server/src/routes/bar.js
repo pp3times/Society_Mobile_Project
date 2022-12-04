@@ -9,5 +9,6 @@ router.post('/reserve', controller.createReservationController)
 router.get('/table', controller.getTableByIdControl)
 router.post('/review', controller.createReview)
 router.get('/review/:barId', controller.allReview)
+router.post('/status/:barId', controller.updateBarStatus)
 
 export default router
