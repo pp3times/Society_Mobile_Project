@@ -6,12 +6,10 @@ export const registerControl = async (req, res, next) => {
     const user = await register(req.body);
     let response = "";
     let status = false;
-    if (user === 1) {
-      response = "Email and Name is already used.";
-    } else if (user === 2) {
-      response = "This email is already used.";
-    } else if (user === 3) {
-      response = "This name is already used.";
+    if (user === 'This email was already used') {
+      response = user;
+    } else if (user === 'This name was already used') {
+      response = user;
     } else {
       response = user;
       status = true;

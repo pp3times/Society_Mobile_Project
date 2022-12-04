@@ -7,32 +7,36 @@ import createHttpError from "http-errors";
 import { signAccessToken } from "../utils/jwt";
 
 export const register = async (data) => {
-  const { email, name } = data;
-  let status = 0;
+  const {email, name, password, phoneNumber} = data;
+  
+  const isEmailUnique = await prisma.user.findUnique({ where: { email: email } }) === null;
+  const isNameUnique = await prisma.user.findUnique({ where: { name: name } }) === null;
 
-  const emailCheck = await prisma.user.findUnique({
-    where: { email: email },
-  });
-  const nameCheck = await prisma.user.findUnique({
-    where: { name: name },
-  });
-  console.log(emailCheck);
-  if (emailCheck && nameCheck) {
-    status = 1;
-  } else if (emailCheck) {
-    status = 2;
-  } else if (nameCheck) {
-    status = 3;
-  } else {
-    data.password = bcrypt.hashSync(data.password, 8);
-    const user = await prisma.user.create({
-      data,
-    });
-    data.accessToken = await signAccessToken(user);
-    status = data;
+  if (!isEmailUnique) {
+    return 'This email was already used';
   }
-  return status;
-};
+
+  if (!isNameUnique) {
+    return 'This name was already used';
+  }
+
+  const passwordHash = bcrypt.hashSync(password, 8);
+
+  const user = await prisma.user.create({
+    data: {
+      email: email,
+      name: name,
+      password: passwordHash,
+      phoneNumber: phoneNumber
+    }
+  });
+
+  const accessToken = await signAccessToken(user);
+
+  user.accessToken = accessToken;
+
+  return user;
+}
 
 export const login = async (data) => {
   const { email, password } = data;
