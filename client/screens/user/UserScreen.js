@@ -13,6 +13,7 @@ import UserInfoScreen from "./UserInfoScreen";
 import * as SecureStore from "expo-secure-store";
 import { createDrawerNavigator, DrawerToggleButton, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import BarDetailScreen from "./BarDetailScreen";
+import BookingScreen from "./BookingScreen";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
