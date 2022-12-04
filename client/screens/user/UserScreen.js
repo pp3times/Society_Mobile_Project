@@ -11,8 +11,9 @@ import TicketScreen from "./TicketScreen";
 import SummaryScreen from "./SummaryScreen";
 import UserInfoScreen from "./UserInfoScreen";
 import * as SecureStore from "expo-secure-store";
-import { createDrawerNavigator, DrawerToggleButton, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import BarDetailScreen from "./BarDetailScreen";
+import BookingScreen from "./BookingScreen";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -28,7 +29,7 @@ function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList label="" {...props} />
-      <DrawerItem inactiveTintColor='white' label="ออกจากระบบ" onPress={() => LogoutHandler(props.navigation)} />
+      <DrawerItem inactiveTintColor="white" label="ออกจากระบบ" onPress={() => LogoutHandler(props.navigation)} />
     </DrawerContentScrollView>
   );
 }
@@ -57,6 +58,7 @@ const BottomTabBar = ({ navigation, state }) => (
     }}
   >
     <BottomNavigationTab title="หน้าหลัก" icon={HomeIcon} />
+    <BottomNavigationTab title="การจอง" icon={BookIcon} />
     <BottomNavigationTab title="ข้อมูลส่วนตัว" icon={UserIcon} />
   </BottomNavigation>
 );
@@ -69,6 +71,7 @@ const TabNavigator = () => (
     }}
   >
     <Screen name="s1" component={UserStack} />
+    <Screen name="Book" component={BookingScreen} />
     <Screen name="User" component={UserInfoScreen} />
   </Navigator>
 );
@@ -80,7 +83,7 @@ const UserScreen = () => {
         headerStyle: { backgroundColor: "black" },
         headerTintColor: "white",
         drawerStyle: {
-          backgroundColor: '#171717',
+          backgroundColor: "#171717",
         },
         drawerLabelStyle: {
           color: "white",
