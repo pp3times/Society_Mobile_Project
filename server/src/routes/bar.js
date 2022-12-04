@@ -8,5 +8,6 @@ router.post('/create', controller.registerBarControl)
 router.post('/reserve', controller.createReservationController)
 router.get('/table', controller.getTableByIdControl)
 router.post('/review', controller.createReview)
+router.get('/review/:barId', controller.allReview)
 
 export default router

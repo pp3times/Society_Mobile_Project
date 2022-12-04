@@ -1,10 +1,10 @@
-const {PrismaClient} = require('@prisma/client')
+const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 require('dotenv').config()
 const bcrypt = require('bcryptjs')
 import createHttpError from 'http-errors'
-import {signAccessToken} from '../utils/jwt'
+import { signAccessToken } from '../utils/jwt'
 import * as yup from 'yup'
 
 export const create = async (data) => {
@@ -64,7 +64,7 @@ export const create = async (data) => {
 }
 
 export const login = async (data) => {
-  const {email, password} = data
+  const { email, password } = data
   const user = await prisma.bar.findUnique({
     where: {
       email,
@@ -83,7 +83,7 @@ export const login = async (data) => {
 
   const accessToken = await signAccessToken(user)
 
-  return {...user, accessToken}
+  return { ...user, accessToken }
 }
 
 export const allBars = async () => {
@@ -154,7 +154,7 @@ export const createReservation = async (data) => {
     throw new Error('Bad request!')
   }
 
-  const {userId, tableId, orderDate} = data
+  const { userId, tableId, orderDate } = data
 
   const reservation = await prisma.order.create({
     data: {
@@ -181,7 +181,7 @@ export const getTableById = async (data) => {
 }
 
 export const createReviewService = async (data) => {
-  const {userId, barId, score, message} = data;
+  const { userId, barId, score, message } = data;
 
   const review = await prisma.review.create({
     data: {
@@ -193,4 +193,10 @@ export const createReviewService = async (data) => {
   });
 
   return review;
+}
+
+export const GetAllReviewService = async (barId) => {
+  const reviews = await prisma.review.findMany({ where: { barId: barId } });
+
+  return reviews;
 }
