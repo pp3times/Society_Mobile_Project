@@ -6,11 +6,10 @@ import {
   ImageBackground,
   Pressable,
   ScrollView,
-} from "react-native";
-import React from "react";
+} from 'react-native'
+import React from 'react'
 
 const Header = () => {
-  
   return (
     <View>
       <ImageBackground
@@ -57,8 +56,8 @@ const Header = () => {
       <View style={{marginTop: 100}} />
     </View>
   )
-};
+}
 
-export default Header;
+export default Header
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({})
