@@ -311,7 +311,26 @@ export const getWaitingOrderService = async (userId) => {
 
   console.log(userId);
 
-  const orders = await prisma.$queryRaw`SELECT * FROM \`Order\` o LEFT JOIN \`Table\` t ON o.tableId = t.id WHERE o.userId = ${userId} AND o.status = 'WAITING' ORDER BY o.id DESC;`;
+  const orders = await prisma.$queryRaw`SELECT * FROM \`Order\` o LEFT JOIN \`Table\` t ON o.tableId = t.id LEFT JOIN \`Bar\` b ON t.barId = b.id WHERE o.userId = ${userId} AND o.status = 'WAITING' ORDER BY o.id DESC;`;
 
   return orders;
+}
+
+export const addImageService = async (barId, file) => {
+  console.log(file.mimetype, file.path);
+  const bar = await prisma.bar.update({
+    where: {
+      id: barId
+    },
+    data: {
+      bannerImage: file.path
+    },
+    select: {
+      id: true,
+      name: true,
+      bannerImage: true
+    }
+  });
+
+  return bar;
 }

@@ -12,7 +12,8 @@ import {
   getAllTableService,
   getTableReservationService,
   receiveTableService,
-  getWaitingOrderService
+  getWaitingOrderService,
+  addImageService
 } from '../services/bar.service'
 import createHttpError from 'http-errors'
 
@@ -202,6 +203,23 @@ export const getWaitingOrder = async (req, res) => {
     const userId = req.params.userId;
 
     const response = await getWaitingOrderService(userId);
+
+    return res.status(200).json({
+      status: true,
+      message: 'Get User`s Waiting Order Success',
+      data: response
+    });
+  } catch(e) {
+    return res.status(400).json({msg: e.message});
+  }
+}
+
+export const addImage = async (req, res) => {
+  try {
+    const file = req.file;
+    const barId = parseInt(req.body.barId);
+
+    const response = await addImageService(barId, file);
 
     return res.status(200).json({
       status: true,

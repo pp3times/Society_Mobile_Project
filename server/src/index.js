@@ -10,6 +10,8 @@ const app = express()
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
+const path = require('path')
+app.use('/public', express.static(path.join(__dirname, '../uploads')))
 app.use('/api', route)
 
 const PORT = process.env.API_PORT || 8080
