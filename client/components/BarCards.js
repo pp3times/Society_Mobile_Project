@@ -109,7 +109,7 @@ const BarCards = () => {
                   height: 240,
                   borderRadius: 6,
                 }}
-                source={{url: item.bannerImage}}
+                source={{url: `http://localhost:8080/${item.bannerImage}`}}
               />
               <Text
                 style={{
