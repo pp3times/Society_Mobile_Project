@@ -62,7 +62,7 @@ const BarScreen = () => {
               color: 'white',
             }}
           >
-            ร้าน {route.params.name}
+            จองโต๊ะร้าน {route.params.name}
           </Text>
         </View>
 
