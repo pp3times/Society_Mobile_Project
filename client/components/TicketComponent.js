@@ -18,39 +18,6 @@ import QRCode from 'react-native-qrcode-svg'
 const TicketComponent = () => {
   const [data, error, loading, axiosFetch] = useAxiosFunction()
   const [dataTicket, setDataTicket] = useState('')
-  // let theData = []
-  // const getData = () => {
-  //   axiosFetch({
-  //     axiosInstance: axios,
-  //     method: 'GET',
-  //     url: '/api/bar/reservation/all',
-  //   })
-  // }
-
-  // useEffect(() => {
-  //   getData()
-
-  //   // eslint-disable-next-line
-  // }, [])
-  // // setDataTicket(data)
-  // useEffect(() => {
-  //   theData = data
-  // }, [data])
-  // const getFetch = async () => {
-  // 	const response = await fetch(
-  //     'http://45.77.255.88:8080/api/payment/payment',
-  //     {
-  //       method: 'POST',
-  //       body: JSON.stringify({
-  //         amount: Math.floor(total * 100),
-  //       }),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     }
-  //   )
-  //   const data = await response.json()
-  // }
   const getFetch = async () => {
     axios
       .get('http://localhost:8080/api/bar/reservation/all', {
