@@ -1,6 +1,6 @@
 // import { PrismaClient } from '@prisma/client'
 // const prisma = new PrismaClient()
-import { getUsers, getUserById, getUserReservationService } from "../services/user.service";
+import { getUsers, getUserById, getUserReservationService, updateUserService, getUserService } from "../services/user.service";
 
 export const getUsersControl = async (req, res) => {
   try {
@@ -46,6 +46,23 @@ export const getUserReservation = async (req, res) => {
   }
 };
 
+export const updateUser = async (req, res) => {
+  try {
+    const response = await updateUserService(parseInt(req.params.userId), req.body);
+    res.status(200).json({ status: "200", data: response });
+  } catch (error) {
+    res.status(404).json({ msg: error.message });
+  }
+}
+
+export const getUser = async (req, res) => {
+  try {
+    const response = await getUserService(parseInt(req.params.userId));
+    res.status(200).json({ status: "200", data: response });
+  } catch (error) {
+    res.status(404).json({ msg: error.message });
+  }
+}
 // export const updateUser = async (req, res) => {
 //   const { name, phoneNumber, email, password } = req.body;
 //   try {

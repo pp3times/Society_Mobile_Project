@@ -41,3 +41,24 @@ export const getUserReservationService = async (userId) => {
   });
   return reservation;
 }
+
+export const updateUserService = async (userId, data) => {
+  const user = await prisma.user.update({
+    where: {
+      id: parseInt(userId)
+    },
+    data: data
+  });
+
+  return user;
+}
+
+export const getUserService = async (userId) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: parseInt(userId)
+    }
+  });
+
+  return user;
+}
