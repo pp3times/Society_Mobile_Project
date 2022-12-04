@@ -8,12 +8,29 @@ import {
   ScrollView,
 } from 'react-native'
 import {useNavigation, useRoute} from '@react-navigation/native'
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {Input} from '@ui-kitten/components'
 import {BarsCards} from './Context'
+import useAxiosFunction from '../hooks/useAxiosFunction'
+import axios from '../apis/jsonPlaceholder'
 import QRCode from 'react-native-qrcode-svg'
 
 const TicketComponent = () => {
+  const [data, error, loading, axiosFetch] = useAxiosFunction()
+
+  const getData = () => {
+    axiosFetch({
+      axiosInstance: axios,
+      method: 'GET',
+      url: '/api/bar/reservation/all',
+    })
+  }
+
+  useEffect(() => {
+    getData()
+    // eslint-disable-next-line
+  }, [])
+  console.log(data.data[0].passCode)
   const navigation = useNavigation()
   const distinct = [
     {
@@ -57,65 +74,54 @@ const TicketComponent = () => {
             width: '82%',
           }}
         >
-          <Text style={{fontSize: 14, fontWeight: '500', color: 'gray'}}>
-            ตั๋วของคุณ
-          </Text>
           <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginTop: 10,
+              // marginTop: 10,
             }}
           >
             <View>
+              <Text style={{fontSize: 14, fontWeight: '500', color: 'gray'}}>
+                ตั๋วของคุณ
+              </Text>
               <Text style={{fontSize: 16, fontWeight: 'bold'}}>
-                {ticket.name}
+                ร้าน {ticket.name}
               </Text>
               <Text
                 style={{
                   fontSize: 16,
                   fontWeight: '400',
                   color: 'gray',
-                  marginTop: 4,
+                  marginTop: 20,
                 }}
               >
-                {ticket.tableName}
+                จองโต๊ะ {ticket.tableName}
+              </Text>
+              <Text style={{marginTop: 0, fontSize: 15, fontWeight: '500'}}>
+                {ticket.date}
               </Text>
             </View>
-            {/* <Pressable
-              style={{
-                backgroundColor: '#FFC40C',
-                padding: 10,
-                borderRadius: 6,
-                marginRight: 10,
-              }}
-              onPress={navigation.canGoBack() ? navigation.goBack() : ''}
-            >
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: '400',
-                  textAlign: 'center',
-                }}
-              >
-                ดูการจอง
-              </Text>
-            </Pressable> */}
+
             <View
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: 5,
-                marginBottom: 20,
+                marginTop: 3,
+                // marginBottom: -10,
               }}
             >
-              <QRCode style={{width: 80, height: 80}} value={ticketId} />
+              {loading && <Text>กำลังดาวน์โหลดข้อมูล</Text>}
+              {!loading && error && <Text>{error}</Text>}
+              {!loading && !error && data && (
+                <QRCode
+                  style={{width: 40, height: 40}}
+                  value={data.data[0].passCode}
+                />
+              )}
             </View>
           </View>
-          <Text style={{marginTop: 8, fontSize: 15, fontWeight: '500'}}>
-            {ticket.date}
-          </Text>
         </Pressable>
       </ImageBackground>
       <View style={{marginTop: 100}} />
