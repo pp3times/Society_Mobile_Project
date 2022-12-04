@@ -37,7 +37,7 @@ const BarCards = () => {
   }, [ticket]);
 
   const handlerSearch = (input) => {
-    const result = bar.data.filter((item) => item.name.toLowerCase().includes(input));
+    const result = bar.data.filter((item) => item.name.toLowerCase().includes(input.toLowerCase()));
     setSearch(result);
   };
 
