@@ -42,6 +42,7 @@ const BarCards = () => {
   };
 
   return (
+<<<<<<< HEAD
     <View style={{ backgroundColor: "#101010", paddingBottom: "20%" }}>
       <View style={{ marginVertical: 10, flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <Input
@@ -52,6 +53,9 @@ const BarCards = () => {
           style={{ width: "100%" }}
         />
       </View>
+=======
+    <View style={{backgroundColor: '#101010'}}>
+>>>>>>> 6e44acb (feat: 🎸 loading, empty table and error state on table select)
       {loading && <Text>กำลังดาวน์โหลดข้อมูล</Text>}
       {!loading && error && <Text>{error}</Text>}
       {!loading && !error && bar && (

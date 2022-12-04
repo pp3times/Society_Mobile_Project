@@ -6,7 +6,7 @@ import {
   View,
   ScrollView,
 } from 'react-native'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import HorizontalDatepicker from '@awrminkhodaei/react-native-horizontal-datepicker'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import {useNavigation, useRoute} from '@react-navigation/native'
@@ -14,6 +14,8 @@ import {Ionicons} from '@expo/vector-icons'
 import {AntDesign} from '@expo/vector-icons'
 import tables from '../../data/table'
 import UserLayout from '../../components/UserLayout'
+import useAxiosFunction from '../../hooks/useAxiosFunction'
+import axios from '../../apis/jsonPlaceholder'
 
 const BarScreen = () => {
   const route = useRoute()
@@ -29,11 +31,26 @@ const BarScreen = () => {
   let monthDate = new Date()
   monthDate.setDate(monthDate.getDate() + 30)
   let dateString = monthDate.toISOString().split('T')[0]
-  const tableData = tables
+  // const tableData = tables
+  const [barTable, error, loading, axiosFetch] = useAxiosFunction()
+
+  const getData = () => {
+    axiosFetch({
+      axiosInstance: axios,
+      method: 'GET',
+      url: `/api/bar/table?id=${route.params.id}`,
+    })
+  }
+
+  useEffect(() => {
+    getData()
+    // eslint-disable-next-line
+  }, [])
+  console.log('THIS IS PAYLOAD', barTable.payload)
+  console.log('TYPEOF PAYLOAD', typeof barTable.payload)
+  const tableData = barTable.payload
+  console.log('COUNTING', tableData)
   const options = ['จองให้ตัวเอง', 'จองให้เพื่อน']
-  // console.log(table, "selected");
-  // console.log(selectedDate);
-  // console.log(new Date());
   return (
     <UserLayout>
       <View
@@ -107,88 +124,148 @@ const BarScreen = () => {
           style={{backgroundColor: '#171717'}}
         />
       </View>
-      <ScrollView style={{backgroundColor: '#171717'}}>
-        {tableData.map((item, index) => {
-          return (
-            <Pressable
-              onPress={() => {
-                setTable(item.name)
-                setSeatsData(item.tableData)
-                setMinSeat(item.minSeat)
-                setMaxSeat(item.maxSeat)
-                setTableName(item.name)
-                setTableId(item.id)
-              }}
+      {loading ? (
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '80%',
+            backgroundColor: '#171717',
+          }}
+        >
+          <Text style={{color: 'white'}}>กำลังดาวน์โหลดข้อมูล</Text>
+        </View>
+      ) : (
+        ''
+      )}
+      {!loading ? (
+        error ? (
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '80%',
+              backgroundColor: '#171717',
+            }}
+          >
+            <Text style={{color: 'white'}}>เกิดข้อผิดพลาด</Text>
+          </View>
+        ) : (
+          ''
+        )
+      ) : (
+        <Text></Text>
+      )}
+      {!loading ? (
+        !error ? (
+          tableData?.length ? (
+            <ScrollView style={{backgroundColor: '#171717'}}>
+              {tableData.map((item, index) => {
+                return (
+                  <Pressable
+                    onPress={() => {
+                      setTable(item.name)
+                      setSeatsData(item.tableData)
+                      setMinSeat(item.minSeat)
+                      setMaxSeat(item.maxSeat)
+                      setTableName(item.name)
+                      setTableId(item.id)
+                    }}
+                    style={{
+                      margin: 10,
+                      paddingVertical: 14,
+                      backgroundColor: '#303030',
+                      paddingHorizontal: 10,
+                      borderRadius: 6,
+                    }}
+                    key={index}
+                  >
+                    <Text
+                      style={{
+                        // padding: 10,
+                        // backgroundColor: "red",
+                        fontSize: 16,
+                        fontWeight: '500',
+                        color: 'white',
+                      }}
+                    >
+                      {item.name} สำหรับ {item.minSeat} - {item.maxSeat} ท่าน
+                    </Text>
+                    <Text
+                      style={{fontSize: 14, fontWeight: '400', color: 'white'}}
+                    >
+                      ว่างทั้งหมด {item.available} โต๊ะ
+                    </Text>
+                    {table.includes(item.name) ? (
+                      <ScrollView>
+                        {options.map((item) => {
+                          return (
+                            <Pressable
+                              key={item}
+                              onPress={() =>
+                                navigation.navigate('Summary', {
+                                  option: item,
+                                  name: route.params.name,
+                                  date: selectedDate.toDateString(),
+                                  minSeat: minSeat,
+                                  maxSeat: maxSeat,
+                                  tableName: tableName,
+                                  image: route.params.image,
+                                  tableId: tableId,
+                                })
+                              }
+                              style={{
+                                borderColor: 'black',
+                                backgroundColor: 'black',
+                                borderWidth: 0.5,
+                                // width: 100,
+                                borderRadius: 3,
+                                margin: 10,
+                                padding: 10,
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  fontSize: 16,
+                                  color: 'white',
+                                  fontWeight: '500',
+                                  textAlign: 'center',
+                                }}
+                              >
+                                {item}
+                              </Text>
+                            </Pressable>
+                          )
+                        })}
+                      </ScrollView>
+                    ) : null}
+                  </Pressable>
+                )
+              })}
+            </ScrollView>
+          ) : (
+            <View
               style={{
-                margin: 10,
-                paddingVertical: 14,
-                backgroundColor: '#303030',
-                paddingHorizontal: 10,
-                borderRadius: 6,
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '80%',
+                backgroundColor: '#171717',
               }}
-              key={index}
             >
-              <Text
-                style={{
-                  // padding: 10,
-                  // backgroundColor: "red",
-                  fontSize: 16,
-                  fontWeight: '500',
-                  color: 'white',
-                }}
-              >
-                {item.name}
-              </Text>
-              <Text style={{fontSize: 14, fontWeight: '400', color: 'white'}}>
-                ว่างทั้งหมด {item.tableCount} โต๊ะ
-              </Text>
-              {table.includes(item.name) ? (
-                <ScrollView>
-                  {options.map((item) => {
-                    return (
-                      <Pressable
-                        key={item}
-                        onPress={() =>
-                          navigation.navigate('Summary', {
-                            option: item,
-                            name: route.params.name,
-                            date: selectedDate.toDateString(),
-                            minSeat: minSeat,
-                            maxSeat: maxSeat,
-                            tableName: tableName,
-                            image: route.params.image,
-                            tableId: tableId,
-                          })
-                        }
-                        style={{
-                          borderColor: 'black',
-                          backgroundColor: 'black',
-                          borderWidth: 0.5,
-                          // width: 100,
-                          borderRadius: 3,
-                          margin: 10,
-                          padding: 10,
-                        }}
-                      >
-                        <Text
-                          style={{
-                            fontSize: 16,
-                            color: 'white',
-                            fontWeight: '500',
-                            textAlign: 'center',
-                          }}
-                        >
-                          {item}
-                        </Text>
-                      </Pressable>
-                    )
-                  })}
-                </ScrollView>
-              ) : null}
-            </Pressable>
+              <Text style={{color: 'white'}}>ร้านนี้ยังไม่มีโต๊ะ</Text>
+            </View>
           )
-        })}
-      </ScrollView>
+        ) : (
+          <Text></Text>
+        )
+      ) : (
+        <Text></Text>
+      )}
+      {/* {!loading && !error && !tableData && (
+        <View style={{backgroundColor: 'white'}}>
+          <Text style={{color: 'white'}}>ร้านนี้ยังไม่มีโต๊ะ</Text>
+        </View>
+      )} */}
     </UserLayout>
   )
 }
