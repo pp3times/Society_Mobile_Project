@@ -145,10 +145,10 @@ const BarDetailScreen = ({route, navigation}) => {
                 จองตอนนี้❗️
               </Button>
             </Layout>
-            {reviewList.map((review) => {
+            {reviewList.map((review, index) => {
               return (
                 <Layout
-                  key={review.id}
+                  key={index}
                   style={{
                     borderRadius: '10%',
                     backgroundColor: 'black',
