@@ -289,6 +289,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: '5%',
     backgroundColor: '#171717',
+    marginBottom: 20,
   },
   box: {
     marginTop: '5%',
