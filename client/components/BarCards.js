@@ -24,7 +24,7 @@ const BarCards = () => {
     }
   }
   const getFetch = async () => {
-    // console.log('UID IS : ', await getValue('uid'))
+    console.log('UID IS : ', await getValue('uid'))
     const uid = await getValue('uid')
     axios
       .get(`http://localhost:8080/api/bar/reservation/waiting/${Number(uid)}`, {
@@ -33,8 +33,8 @@ const BarCards = () => {
         },
       })
       .then((response) => {
-        // console.log(response)
-        setTicketData(response.data)
+        console.log(response.data.data[0])
+        setTicketData(response.data.data[0])
       })
       .catch((error) => {
         console.log(error.response)
