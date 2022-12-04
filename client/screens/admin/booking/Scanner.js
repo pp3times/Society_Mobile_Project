@@ -3,6 +3,10 @@ import { Text, Button, Modal, Card, Layout } from "@ui-kitten/components";
 import { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import axios from "axios";
+import { BACKEND_URL } from "@env";
+import * as SecureStore from "expo-secure-store";
+
 const ScanScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanData, setScanData] = useState([]);
@@ -18,11 +22,22 @@ const ScanScreen = ({ navigation }) => {
   const handleBarCodeScanned = ({ type, data }) => {
     if (data && type) {
       setVisible(true);
-      setScanData([data, type]);
+      getData(data);
+      console.log(data);
     } else {
       alert("scan is not successfully");
       setScanned(false);
     }
+  };
+
+  const getData = async (data) => {
+    try {
+      const datas = {
+        passcode: data,
+      };
+      const res = await axios.get(`${BACKEND_URL}/api/bar/reservation/recieve`, { data: datas });
+      console.log(res.data.data);
+    } catch (error) {}
   };
 
   if (hasPermission === null) {
@@ -34,14 +49,12 @@ const ScanScreen = ({ navigation }) => {
   return (
     <>
       <AppLayout>
-        <Backbutton navigation={navigation} style={{ position: "absolute", zIndex: 99, marginTop:10}} />
+        <Backbutton navigation={navigation} style={{ position: "absolute", zIndex: 99, marginTop: 10 }} />
         <BarCodeScanner onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} style={StyleSheet.absoluteFillObject} />
         <Modal visible={visible} backdropStyle={styles.backdrop} onBackdropPress={() => setVisible(false)}>
           <Card disabled={true} style={{ backgroundColor: "#101010", width: "100%" }}>
             <Layout style={{ width: "100%", flexDirection: "column", alignItems: "center", backgroundColor: "transparent", marginTop: 10 }}>
-              {scanData.map((item, index) => {
-                return <Text key={index}>{item}</Text>;
-              })}
+              <Text>{scanData}</Text>
             </Layout>
             <Layout style={{ width: "100%", flexDirection: "row", justifyContent: "center", backgroundColor: "transparent", marginTop: 10 }}>
               <Button
