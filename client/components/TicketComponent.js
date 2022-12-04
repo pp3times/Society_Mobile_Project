@@ -26,7 +26,7 @@ const TicketComponent = () => {
         },
       })
       .then((response) => {
-        console.log(response)
+        // console.log(response)
         setDataTicket(response.data.data[0])
       })
       .catch((error) => {
@@ -36,10 +36,10 @@ const TicketComponent = () => {
   useEffect(() => {
     getFetch()
   }, [])
-  console.log(dataTicket.passCode)
+  // console.log(dataTicket.passCode)
   const navigation = useNavigation()
   const {ticket} = useContext(BarsCards)
-  console.log(ticket, 'is ticket')
+  // console.log(ticket, 'is ticket')
   return (
     <SafeAreaView>
       <ImageBackground

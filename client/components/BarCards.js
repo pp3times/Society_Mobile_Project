@@ -1,7 +1,5 @@
 import {FlatList, Pressable, StyleSheet, Text, View, Image} from 'react-native'
 import React, {useContext, useEffect, useState} from 'react'
-// import bars from "../data/bars";
-// import axios from 'axios'
 import Header from './Header'
 import {useNavigation} from '@react-navigation/native'
 import {BarsCards} from './Context'
@@ -11,11 +9,41 @@ import useAxiosFunction from '../hooks/useAxiosFunction'
 import axios from '../apis/jsonPlaceholder'
 import {Input, Button, Icon} from '@ui-kitten/components'
 
+import * as SecureStore from 'expo-secure-store'
 
 const BarCards = () => {
   const navigation = useNavigation()
   const {ticket} = useContext(BarsCards)
   const [search, setSearch] = useState()
+
+  const [ticketData, setTicketData] = useState('')
+  async function getValue(key) {
+    let result = await SecureStore.getItemAsync(key)
+    if (result) {
+      return result
+    }
+  }
+  const getFetch = async () => {
+    // console.log('UID IS : ', await getValue('uid'))
+    const uid = await getValue('uid')
+    axios
+      .get(`http://localhost:8080/api/bar/reservation/waiting/${Number(uid)}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        // console.log(response)
+        setTicketData(response.data)
+      })
+      .catch((error) => {
+        console.log(error.response)
+      })
+  }
+  useEffect(() => {
+    getFetch()
+  }, [])
+  // console.log(ticketData)
 
   const [bar, error, loading, axiosFetch] = useAxiosFunction()
 
@@ -33,8 +61,8 @@ const BarCards = () => {
   }, [])
 
   useEffect(() => {
-    console.log(ticket, 'is ticket')
-    console.log(typeof ticket)
+    // console.log(ticket, 'is ticket')
+    // console.log(typeof ticket)
   }, [ticket])
 
   const handlerSearch = (input) => {
@@ -58,7 +86,7 @@ const BarCards = () => {
           autoCapitalize="none"
           onChangeText={(nextValue) => handlerSearch(nextValue)}
           status="control"
-          placeholder="Place your Text"
+          placeholder="Search"
           style={{width: '100%'}}
         />
       </View>
@@ -97,33 +125,6 @@ const BarCards = () => {
               <Text style={{marginTop: 4, fontSize: 15, color: '#f1f1f1'}}>
                 เหลือโต๊ะว่าง {item.tableCount} โต๊ะ
               </Text>
-              {/* <Pressable
-                onPress={() =>
-                  navigation.navigate('Bars', {
-                    id: item.id,
-                    name: item.name,
-                    image: item.image,
-                  })
-                }
-                style={{
-                  backgroundColor: '#FFC40C',
-                  padding: 10,
-                  borderRadius: 6,
-                  marginRight: 10,
-                  marginTop: 10,
-                  width: 100, // เอาออกก็สวยอยู่เด้
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: '400',
-                    textAlign: 'center',
-                  }}
-                >
-                  จองที่นั่ง
-                </Text>
-              </Pressable> */}
             </TouchableOpacity>
           )}
         />

@@ -16,7 +16,7 @@ const useAxiosFunction = () => {
         ...requestConfig,
         signal: ctrl.signal,
       })
-      console.log(res)
+      // console.log(res)
       setResponse(res.data)
     } catch (err) {
       console.log(err.message)
@@ -27,7 +27,7 @@ const useAxiosFunction = () => {
   }
 
   useEffect(() => {
-    console.log(controller)
+    // console.log(controller)
 
     // useEffect cleanup function
     return () => controller && controller.abort()
