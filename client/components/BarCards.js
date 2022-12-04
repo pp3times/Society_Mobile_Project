@@ -11,6 +11,7 @@ import useAxiosFunction from '../hooks/useAxiosFunction'
 import axios from '../apis/jsonPlaceholder'
 import {Input, Button, Icon} from '@ui-kitten/components'
 
+
 const BarCards = () => {
   const navigation = useNavigation()
   const {ticket} = useContext(BarsCards)
@@ -94,7 +95,7 @@ const BarCards = () => {
                 {item.name.substring(0.16) + '...'}
               </Text>
               <Text style={{marginTop: 4, fontSize: 15, color: '#f1f1f1'}}>
-                เหลือโต๊ะว่าง {item.tableCount} (⭐️ {item.rating})
+                เหลือโต๊ะว่าง {item.tableCount} โต๊ะ
               </Text>
               {/* <Pressable
                 onPress={() =>

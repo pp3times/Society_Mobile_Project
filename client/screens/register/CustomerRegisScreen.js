@@ -39,7 +39,7 @@ const CustomerRegisScreen = ({ navigation }) => {
             message: res.data.message,
           };
         }
-        const uid = res.data.message.id;
+        const uid = String(res.data.message.id);
         await SecureStore.setItemAsync("uid", uid);
         navigation.navigate("user");
       } catch (error) {

@@ -10,7 +10,6 @@ import BookingScreen from "./booking/BookingScreen";
 import * as SecureStore from "expo-secure-store";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 
-import barInfo from "./barInfo/barInfo";
 import ScanScreen from "./booking/Scanner";
 
 const Drawer = createDrawerNavigator();
@@ -58,7 +57,6 @@ const AdminTabs = () => {
     >
       <Screen name="Manage" component={ManageScreen} />
       <Screen name="Book" component={BookingStack} />
-      <Screen name="UserInfo" component={barInfo} />
     </Navigator>
   );
 };
