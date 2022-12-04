@@ -55,15 +55,18 @@ const SummaryScreen = () => {
     // })
   }
   const subscribe = async () => {
-    const response = await fetch('http://localhost:8080/api/payment/payment', {
-      method: 'POST',
-      body: JSON.stringify({
-        amount: Math.floor(total * 100),
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    const response = await fetch(
+      'http://45.77.255.88:8080/api/payment/payment',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          amount: Math.floor(total * 100),
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
     const data = await response.json()
 
     if (!response.ok) return Alert.alert(data.message)
@@ -86,7 +89,7 @@ const SummaryScreen = () => {
       axios
 
         .post(
-          'http://localhost:8080/api/bar/reserve',
+          'http://45.77.255.88:8080/api/bar/reserve',
           {
             userId: Number(route.params.userId),
             tableId: Number(route.params.tableId),

@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native'
 import {useNavigation, useRoute} from '@react-navigation/native'
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {Input} from '@ui-kitten/components'
 import {BarsCards} from './Context'
 import useAxiosFunction from '../hooks/useAxiosFunction'
@@ -17,20 +17,59 @@ import QRCode from 'react-native-qrcode-svg'
 
 const TicketComponent = () => {
   const [data, error, loading, axiosFetch] = useAxiosFunction()
+  const [dataTicket, setDataTicket] = useState('')
+  // let theData = []
+  // const getData = () => {
+  //   axiosFetch({
+  //     axiosInstance: axios,
+  //     method: 'GET',
+  //     url: '/api/bar/reservation/all',
+  //   })
+  // }
 
-  const getData = () => {
-    axiosFetch({
-      axiosInstance: axios,
-      method: 'GET',
-      url: '/api/bar/reservation/all',
-    })
+  // useEffect(() => {
+  //   getData()
+
+  //   // eslint-disable-next-line
+  // }, [])
+  // // setDataTicket(data)
+  // useEffect(() => {
+  //   theData = data
+  // }, [data])
+  // const getFetch = async () => {
+  // 	const response = await fetch(
+  //     'http://45.77.255.88:8080/api/payment/payment',
+  //     {
+  //       method: 'POST',
+  //       body: JSON.stringify({
+  //         amount: Math.floor(total * 100),
+  //       }),
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //     }
+  //   )
+  //   const data = await response.json()
+  // }
+  const getFetch = async () => {
+    axios
+      .get('http://45.77.255.88:8080/api/bar/reservation/all', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        console.log(response)
+        setDataTicket(response.data.data[0])
+      })
+      .catch((error) => {
+        console.log(error.response)
+      })
   }
-
   useEffect(() => {
-    getData()
-    // eslint-disable-next-line
+    getFetch()
   }, [])
-  console.log(data.data[0].passCode)
+  console.log(dataTicket.passCode)
   const navigation = useNavigation()
   const distinct = [
     {
@@ -117,7 +156,8 @@ const TicketComponent = () => {
               {!loading && !error && data && (
                 <QRCode
                   style={{width: 40, height: 40}}
-                  value={data.data[0].passCode}
+                  value={dataTicket.passCode}
+                  // value="test"
                 />
               )}
             </View>
