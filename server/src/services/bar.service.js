@@ -1,11 +1,11 @@
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+const {PrismaClient} = require('@prisma/client')
+const prisma = new PrismaClient()
 
-require("dotenv").config();
-const bcrypt = require("bcryptjs");
-import createHttpError from "http-errors";
-import { signAccessToken } from "../utils/jwt";
-import * as yup from 'yup';
+require('dotenv').config()
+const bcrypt = require('bcryptjs')
+import createHttpError from 'http-errors'
+import {signAccessToken} from '../utils/jwt'
+import * as yup from 'yup'
 
 export const create = async (data) => {
   const barSchema = yup.object().shape({
@@ -21,14 +21,26 @@ export const create = async (data) => {
     sub_district: yup.string().required(),
     province: yup.string().required(),
     phoneNumber: yup.string().required(),
-  });
+  })
 
-  if (!await barSchema.isValid(data)) {
-    throw new Error('Bad request');
+  if (!(await barSchema.isValid(data))) {
+    throw new Error('Bad request')
   }
 
-
-  const { name, email, password, tableCount, description, openTime, closeTime, Address, district, sub_district, province, phoneNumber } = data;
+  const {
+    name,
+    email,
+    password,
+    tableCount,
+    description,
+    openTime,
+    closeTime,
+    Address,
+    district,
+    sub_district,
+    province,
+    phoneNumber,
+  } = data
 
   const bar = await prisma.bar.create({
     data: {
@@ -44,35 +56,35 @@ export const create = async (data) => {
       sub_district: sub_district,
       province: province,
       phoneNumber: phoneNumber,
-      bannerImage: ''
-    }
-  });
+      bannerImage: '',
+    },
+  })
 
-  return bar;
-};
+  return bar
+}
 
 export const login = async (data) => {
-  const { email, password } = data;
+  const {email, password} = data
   const user = await prisma.bar.findUnique({
     where: {
       email,
     },
-  });
+  })
 
   if (!user) {
-    throw createHttpError.NotFound("User not registered");
+    throw createHttpError.NotFound('User not registered')
   }
 
-  const checkPassword = bcrypt.compareSync(password, user.password);
+  const checkPassword = bcrypt.compareSync(password, user.password)
   if (!checkPassword)
-    throw createError.Unauthorized("Email address or password not valid");
+    throw createError.Unauthorized('Email address or password not valid')
 
-  delete user.password;
+  delete user.password
 
-  const accessToken = await signAccessToken(user);
+  const accessToken = await signAccessToken(user)
 
-  return { ...user, accessToken };
-};
+  return {...user, accessToken}
+}
 
 export const allBars = async () => {
   const bars = await prisma.bar.findMany({
@@ -91,33 +103,44 @@ export const allBars = async () => {
       bannerImage: true,
       rating: true,
       isClose: true,
-      updatedAt: true
-    }
-  });
+      updatedAt: true,
+    },
+  })
 
-  return bars;
+  return bars
 }
 
 export const createReservation = async (data) => {
   const barSchema = yup.object().shape({
     userId: yup.number().required().integer(),
     tableId: yup.number().required().integer(),
-    orderDate: yup.date().required()
-  });
+    orderDate: yup.date().required(),
+  })
 
-  if (!await barSchema.isValid(data)) {
-    throw new Error('Bad request');
+  if (!(await barSchema.isValid(data))) {
+    throw new Error('Bad request')
   }
 
-  const { userId, tableId, orderDate } = data;
+  const {userId, tableId, orderDate} = data
 
   const reservation = await prisma.order.create({
     data: {
       userId: userId,
       tableId: tableId,
-      orderDate: orderDate
-    }
-  });
+      orderDate: orderDate,
+    },
+  })
 
-  return reservation;
+  return reservation
+}
+
+export const getTableById = async (data) => {
+  // const {id} = data
+  // console.log(data)
+  const response = await prisma.table.findMany({
+    where: {
+      barId: Number(data),
+    },
+  })
+  return response
 }
