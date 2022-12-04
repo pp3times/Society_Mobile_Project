@@ -208,7 +208,14 @@ export const getAllTableService = async (barId) => {
 }
 
 export const getTableReservationService = async (barId) => {
-  const orders = await prisma.$queryRaw`SELECT * FROM \`Order\` o LEFT JOIN \`Table\` t ON o.tableId = t.id WHERE t.barId = ${barId}`
+  let orders = null;
+  if (barId) {
+    console.log(true);
+    orders = await prisma.$queryRaw`SELECT * FROM \`Order\` o LEFT JOIN \`Table\` t ON o.tableId = t.id WHERE t.barId = ${barId}`;
+  } else {
+    console.log(false);
+    orders = await prisma.$queryRaw`SELECT * FROM \`Order\` o LEFT JOIN \`Table\` t ON o.tableId = t.id ORDER BY o.id DESC`;
+  }
 
   return orders;
 }
