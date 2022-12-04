@@ -144,10 +144,10 @@ const BarDetailScreen = ({route, navigation}) => {
                 จองตอนนี้❗️
               </Button>
             </Layout>
-            {reviewList.map((review) => {
+            {reviewList.map((review, index) => {
               return (
                 <Layout
-                  key={review.id}
+                  key={index}
                   style={{
                     borderRadius: '10%',
                     backgroundColor: 'black',
@@ -288,6 +288,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: '5%',
     backgroundColor: '#171717',
+    marginBottom: 20,
   },
   box: {
     marginTop: '5%',

@@ -75,12 +75,13 @@ const SummaryScreen = () => {
   }
   return (
     <UserLayout>
-      <SafeAreaView>
+      <SafeAreaView style={{backgroundColor: '#171717'}}>
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
+            backgroundColor: '#171717',
           }}
         >
           <View
@@ -90,11 +91,11 @@ const SummaryScreen = () => {
               onPress={() => navigation.goBack()}
               name="arrow-back"
               size={24}
-              color="black"
+              color="white"
               style={{marginLeft: 5}}
             />
             <View style={{marginLeft: 6}}>
-              <Text style={{fontSize: 16, fontWeight: '600'}}>
+              <Text style={{fontSize: 16, fontWeight: '600', color: 'white'}}>
                 สรุปยอดจองโต๊ะ
               </Text>
               <Text
@@ -107,7 +108,6 @@ const SummaryScreen = () => {
               >
                 สำหรับการ{route.params.option}
               </Text>
-              {/* <Text>{route.params.date}</Text> */}
             </View>
           </View>
           <AntDesign
@@ -117,8 +117,14 @@ const SummaryScreen = () => {
             color="black"
           />
         </View>
-        <View style={{alignItems: 'flex-start', padding: 10}}>
-          <Text style={{fontSize: 16, fontWeight: '500'}}>
+        <View
+          style={{
+            alignItems: 'flex-start',
+            padding: 10,
+            backgroundColor: '#171717',
+          }}
+        >
+          <Text style={{fontSize: 16, fontWeight: '500', color: 'white'}}>
             ยืนยันการจองโต๊ะ
           </Text>
         </View>
@@ -127,13 +133,14 @@ const SummaryScreen = () => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginHorizontal: 10,
+            paddingHorizontal: 10,
+            backgroundColor: '#171717',
           }}
         >
           <Text style={{fontSize: 16, color: 'gray'}}>
             {route.params.option}
           </Text>
-          <Text style={{color: 'red', fontSize: 16}}>
+          <Text style={{color: 'red', fontSize: 16, color: 'white'}}>
             {route.params.tableName}
           </Text>
         </View>
@@ -141,8 +148,10 @@ const SummaryScreen = () => {
           style={{
             fontSize: 15,
             fontWeight: '600',
-            marginHorizontal: 10,
-            marginTop: 9,
+            paddingHorizontal: 10,
+            paddingTop: 9,
+            backgroundColor: '#171717',
+            color: 'white',
           }}
         >
           ร้าน {route.params.name}
@@ -151,10 +160,11 @@ const SummaryScreen = () => {
           style={{
             borderRadius: 1,
             borderStyle: 'dashed',
-            borderColor: 'black',
+            borderColor: 'white',
             height: 1,
             borderWidth: 0.5,
             margin: 10,
+            backgroundColor: '#171717',
           }}
         />
         <View
@@ -168,7 +178,7 @@ const SummaryScreen = () => {
             <Text style={{color: 'gray', fontSize: 15, fontWeight: '500'}}>
               DATE & TIME
             </Text>
-            <Text style={{marginVertical: 4, fontSize: 16}}>
+            <Text style={{marginVertical: 4, fontSize: 16, color: 'white'}}>
               {route.params.date}
             </Text>
             {/* <Text>{moment(route.params.date).utc().format("MM/DD/YYYY")}</Text> */}
@@ -187,7 +197,7 @@ const SummaryScreen = () => {
           style={{
             borderRadius: 1,
             borderStyle: 'dashed',
-            borderColor: 'black',
+            borderColor: 'white',
             height: 1,
             borderWidth: 0.5,
             margin: 10,
@@ -201,8 +211,8 @@ const SummaryScreen = () => {
             marginHorizontal: 10,
           }}
         >
-          <Text style={{fontSize: 16, color: 'gray'}}>ค่าบริหารการจอง</Text>
-          <Text style={{fontSize: 16}}>10 บาท</Text>
+          <Text style={{fontSize: 16, color: 'white'}}>ค่าบริหารการจอง</Text>
+          <Text style={{fontSize: 16, color: 'white'}}>10 บาท</Text>
         </View>
         <Text
           style={{
@@ -222,7 +232,7 @@ const SummaryScreen = () => {
             alignItems: 'center',
             paddingHorizontal: 20,
             paddingVertical: 20,
-            backgroundColor: 'green',
+            backgroundColor: '#06C755',
             marginHorizontal: 20,
             borderRadius: 10,
           }}
