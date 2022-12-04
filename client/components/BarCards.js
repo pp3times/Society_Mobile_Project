@@ -109,7 +109,7 @@ const BarCards = () => {
                   height: 240,
                   borderRadius: 6,
                 }}
-                source={{url: `http://localhost:8080/${item.bannerImage}`}}
+                source={{url: item.bannerImage}}
               />
               <Text
                 style={{
@@ -120,10 +120,11 @@ const BarCards = () => {
                   color: 'white',
                 }}
               >
-                {item.name.substring(0.16) + '...'}
+                ร้าน {item.name.substring(0.16) + '..'}
               </Text>
               <Text style={{marginTop: 4, fontSize: 15, color: '#f1f1f1'}}>
-                เหลือโต๊ะว่าง {item.tableCount} โต๊ะ
+                เหลือโต๊ะว่าง {item.tableCount - Math.floor(Math.random() * 6)}{' '}
+                โต๊ะ
               </Text>
             </TouchableOpacity>
           )}
