@@ -76,7 +76,7 @@ const UserScreen = () => {
   return (
     <Drawer.Navigator
       initialRouteName="main"
-      screenOptions={{ headerStyle: { backgroundColor: "#101010" }, headerRight: () => <DrawerToggleButton />, headerTintColor: "white" }}
+      screenOptions={{ headerStyle: { backgroundColor: "#101010" }, headerTintColor: "white" }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen name="หน้าหลัก" component={TabNavigator} />
