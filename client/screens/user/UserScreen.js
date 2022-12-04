@@ -11,9 +11,8 @@ import TicketScreen from "./TicketScreen";
 import SummaryScreen from "./SummaryScreen";
 import UserInfoScreen from "./UserInfoScreen";
 import * as SecureStore from "expo-secure-store";
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
+import { createDrawerNavigator, DrawerToggleButton, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import BarDetailScreen from "./BarDetailScreen";
-import BookingScreen from "./BookingScreen";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -54,7 +53,10 @@ const BottomTabBar = ({ navigation, state }) => (
     style={[styles.bottomNavigation]}
     onSelect={(index) => {
       const screen = state.routeNames[index] == "s1" ? "Home" : "Booking";
-      navigation.navigate(state.routeNames[index], { screen: screen, initial: false });
+      navigation.navigate(state.routeNames[index], {
+        screen: screen,
+        initial: false,
+      });
     }}
   >
     <BottomNavigationTab title="หน้าหลัก" icon={HomeIcon} />
