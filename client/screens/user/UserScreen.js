@@ -79,10 +79,13 @@ const UserScreen = () => {
       screenOptions={{
         headerStyle: { backgroundColor: "black" },
         headerTintColor: "white",
+        drawerStyle: {
+          backgroundColor: '#171717',
+        },
         drawerLabelStyle: {
           color: "white",
         },
-        drawerActiveBackgroundColor: "black",
+        drawerActiveBackgroundColor: "gray",
         drawerInactiveTintColor: "black",
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
