@@ -45,17 +45,27 @@ const ManageScreen = () => {
 
   const handlerAddTable = async () => {
     try {
-      const uid = await SecureStore.getItemAsync("uid");
-      const data = {
-        barId: Number(uid),
-        name: type,
-        available: Number(numTable),
-        minSeat: Number(minSeat),
-        maxSeat: Number(maxSeat),
-      };
-      const res = await axios.post(`${BACKEND_URL}/api/bar/table`, data);
-      console.log(res.data.data);
-      setTable([...table, res.data.data]);
+      if (!type & !minSeat & !maxSeat & !numTable) {
+        Alert.alert("กรอกข้อมูลไม่ครบ", "", [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+        ]);
+      } else {
+        const uid = await SecureStore.getItemAsync("uid");
+        const data = {
+          barId: Number(uid),
+          name: type,
+          available: Number(numTable),
+          minSeat: Number(minSeat),
+          maxSeat: Number(maxSeat),
+        };
+        const res = await axios.post(`${BACKEND_URL}/api/bar/table`, data);
+        console.log(res.data.data);
+        setTable([...table, res.data.data]);
+      }
     } catch (e) {
       console.log(e);
     }

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView,StatusBar } from "react-native";
 import React from "react";
 import { Header, BarCards } from "@/components/";
 import UserLayout from "../../components/UserLayout";

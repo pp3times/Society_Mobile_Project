@@ -53,7 +53,7 @@ const TicketComponent = () => {
   // }
   const getFetch = async () => {
     axios
-      .get('http://45.77.255.88:8080/api/bar/reservation/all', {
+      .get('http://localhost:8080/api/bar/reservation/all', {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -71,28 +71,6 @@ const TicketComponent = () => {
   }, [])
   console.log(dataTicket.passCode)
   const navigation = useNavigation()
-  const distinct = [
-    {
-      id: 0,
-      name: 'ลาดกระบัง',
-    },
-    {
-      id: 1,
-      name: 'ลาดพร้าว',
-    },
-    {
-      id: 2,
-      name: 'สาทร',
-    },
-    {
-      id: 3,
-      name: 'อ่อนนุช',
-    },
-    {
-      id: 4,
-      name: 'รังสิต',
-    },
-  ]
   const {ticket} = useContext(BarsCards)
   console.log(ticket, 'is ticket')
   return (
@@ -165,28 +143,6 @@ const TicketComponent = () => {
         </Pressable>
       </ImageBackground>
       <View style={{marginTop: 100}} />
-      <ScrollView horizontal={true}>
-        {distinct.map((item, index) => {
-          return (
-            <View
-              key={index}
-              style={{
-                margin: 10,
-                borderColor: 'C0C0C0',
-                borderWidth: 0.2,
-                borderRadius: 4,
-                padding: 10,
-              }}
-            >
-              <Text
-                style={{textAlign: 'center', fontSize: 14, fontWeight: '500'}}
-              >
-                {item.name}
-              </Text>
-            </View>
-          )
-        })}
-      </ScrollView>
     </SafeAreaView>
   )
 }

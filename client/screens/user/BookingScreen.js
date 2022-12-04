@@ -8,37 +8,6 @@ import * as SecureStore from "expo-secure-store";
 
 const BookingScreen = ({ navigation }) => {
   const [bookingOrders, setBookingOrder] = useState([]);
-  //   const bookingOrders = [
-  //     {
-  //       order: [
-  //         { id: 1, barName: "Me smile", dateBook: "1 มกราคม 2565", number: "4-6" },
-  //         { id: 2, barName: "Me smile", dateBook: "1 มกราคม 2565", number: "4-6" },
-  //       ],
-  //       date: "30/10/2022",
-  //     },
-  //     {
-  //       order: [
-  //         { id: 3, barName: "Me smile", dateBook: "1 มกราคม 2565", number: "4-6" },
-  //         { id: 4, barName: "Me smile", dateBook: "1 มกราคม 2565", number: "4-6" },
-  //       ],
-  //       date: "28/10/2022",
-  //     },
-  //     {
-  //       order: [
-  //         { id: 5, barName: "Me smile", dateBook: "1 มกราคม 2565", number: "4-6" },
-  //         { id: 6, barName: "Me smile", dateBook: "1 มกราคม 2565", number: "4-6" },
-  //       ],
-  //       date: "27/10/2022",
-  //     },
-  //     {
-  //       order: [
-  //         { id: 7, barName: "Me smile", dateBook: "1 มกราคม 2565", number: "4-6" },
-  //         { id: 8, barName: "Me smile", dateBook: "1 มกราคม 2565", number: "4-6" },
-  //       ],
-  //       date: "26/10/2022",
-  //     },
-  //   ];
-
   const getReserve = async () => {
     try {
       const uid = await SecureStore.getItemAsync("uid");
@@ -64,7 +33,7 @@ const BookingScreen = ({ navigation }) => {
                   <Layout style={styles.cardBody}>
                     <Layout style={{ backgroundColor: "#303030" }}>
                       <Text>{reserve.bar.name}</Text>
-                      <Text>วันที่จอง : {order.orderDate}</Text>
+                      <Text>วันที่จอง : {Date(order.orderDate)}</Text>
                       <Text>ประเถทโต๊ะ : {reserve.name}</Text>
                     </Layout>
                   </Layout>
