@@ -27,3 +27,8 @@ export const createUser = async (data) => {
   });
   return user;
 };
+
+export const getUserReservationService = async (userId) => {
+  const reservation = await prisma.order.findMany({ where: { userId: userId } });
+  return reservation;
+}

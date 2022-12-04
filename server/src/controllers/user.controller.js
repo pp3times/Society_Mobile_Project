@@ -1,6 +1,6 @@
 // import { PrismaClient } from '@prisma/client'
 // const prisma = new PrismaClient()
-import { getUsers, getUserById } from "../services/user.service";
+import { getUsers, getUserById, getUserReservationService } from "../services/user.service";
 
 export const getUsersControl = async (req, res) => {
   try {
@@ -34,6 +34,15 @@ export const createUser = async (req, res) => {
     res.status(201).json({status: "201", payload: user});
   } catch (error) {
     res.status(400).json({ msg: error.message });
+  }
+};
+
+export const getUserReservation = async (req, res) => {
+  try {
+    const response = await getUserReservationService(parseInt(req.params.userId));
+    res.status(200).json({ status: "200", data: response });
+  } catch (error) {
+    res.status(404).json({ msg: error.message });
   }
 };
 
