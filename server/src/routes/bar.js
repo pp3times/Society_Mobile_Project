@@ -10,5 +10,6 @@ router.get('/table', controller.getTableByIdControl)
 router.post('/review', controller.createReview)
 router.get('/review/:barId', controller.allReview)
 router.post('/status/:barId', controller.updateBarStatus)
+router.post('/table', controller.addTable)
 
 export default router

@@ -218,3 +218,19 @@ export const updateBarStatusService = async (barId, status) => {
 
   return bar;
 }
+
+export const addTableService = async (data) => {
+  const { barId, name, minSeat, maxSeat, available } = data;
+  const table = await prisma.table.create({
+    data: {
+      barId: barId,
+      name: name,
+      minSeat: minSeat,
+      maxSeat: maxSeat,
+      available: available
+
+    }
+  });
+
+  return table;
+}

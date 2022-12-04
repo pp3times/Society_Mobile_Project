@@ -6,7 +6,8 @@ import {
   getTableById,
   createReviewService,
   GetAllReviewService,
-  updateBarStatusService
+  updateBarStatusService,
+  addTableService
 } from '../services/bar.service'
 import createHttpError from 'http-errors'
 
@@ -108,6 +109,19 @@ export const updateBarStatus = async (req, res) => {
       status: true,
       message: 'Set Bar Status Success',
       data: bar,
+    })
+  } catch (e) {
+    return res.status(400).json({msg: e.message})
+  }
+}
+
+export const addTable = async (req, res) => {
+  try {
+    const response = await addTableService(req.body);
+    return res.status(200).json({
+      status: true,
+      message: 'Add table Success',
+      data: response,
     })
   } catch (e) {
     return res.status(400).json({msg: e.message})
