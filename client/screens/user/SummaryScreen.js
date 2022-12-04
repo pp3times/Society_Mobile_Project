@@ -98,7 +98,7 @@ const SummaryScreen = () => {
 
   return (
     <UserLayout>
-      <SafeAreaView style={{backgroundColor: '#171717'}}>
+      <SafeAreaView style={{backgroundColor: '#171717', paddingHorizontal:10}}>
         <View
           style={{
             flexDirection: 'row',
@@ -133,12 +133,6 @@ const SummaryScreen = () => {
               </Text>
             </View>
           </View>
-          <AntDesign
-            style={{marginRight: 12}}
-            name="sharealt"
-            size={24}
-            color="black"
-          />
         </View>
         <View
           style={{
@@ -249,19 +243,19 @@ const SummaryScreen = () => {
         >
           * กรุณามาก่อนเวลาจอง 5-10 นาที
         </Text>
-        <View style={{marginVertical: 140}} />
-        <View style={{paddingBottom: 50}}>
-          <Pressable
-            onPress={subscribe}
-            style={{
-              alignItems: 'center',
-              paddingHorizontal: 20,
-              paddingVertical: 20,
-              backgroundColor: '#06C755',
-              marginHorizontal: 20,
-              borderRadius: 10,
-            }}
-          >
+        <View style={{marginVertical: 120}} />
+        <View
+          style={{
+            alignItems: 'center',
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+            backgroundColor: '#06C755',
+            marginHorizontal: 20,
+            marginVertical:50,
+            borderRadius: 10,
+          }}
+        >
+          <Pressable onPress={subscribe}>
             <Text style={{fontSize: 17, fontWeight: '600', color: 'white'}}>
               ชำระค่าจอง {total} บาท
             </Text>

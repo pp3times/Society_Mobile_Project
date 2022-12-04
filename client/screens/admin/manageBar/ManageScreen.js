@@ -59,10 +59,11 @@ const ManageScreen = () => {
 
   const onCheckedChange = async (isChecked) => {
     try {
+      const uid = await SecureStore.getItemAsync("uid");
       const data = {
         isOpen: isChecked,
       };
-      const res = await axios.post(`${BACKEND_URL}/api/bar/openBar`, data);
+      const res = await axios.post(`${BACKEND_URL}/api/bar/openBar/${uid}`, data);
       console.log(res);
       setChecked(isChecked);
     } catch (e) {
