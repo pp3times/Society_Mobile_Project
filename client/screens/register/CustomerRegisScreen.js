@@ -7,7 +7,7 @@ import Logo from "../../components/Svg/Logo";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import { BACKEND_URL } from "@env";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 
 const CustomerRegisScreen = ({ navigation }) => {
   const {
@@ -39,10 +39,9 @@ const CustomerRegisScreen = ({ navigation }) => {
             message: res.data.message,
           };
         }
-        const token = res.data.message.accessToken;
-        await AsyncStorage.setItem("accesstoken", token);
+        const uid = res.data.message.id;
+        await SecureStore.setItemAsync("uid", uid);
         navigation.navigate("user");
-        
       } catch (error) {
         console.log(error);
         Alert.alert("สมัครสามาชิกผิดพลาด", error.message, [

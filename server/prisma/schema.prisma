@@ -42,6 +42,7 @@ model Bar {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   Review       Review[]
+  Table        Table[]
 }
 
 model Review {
@@ -56,18 +57,20 @@ model Review {
   barId     Int
 }
 
-enum TableType {
-  NORMAL
-  NOTNORMAL
+model Table {
+  id        Int     @id @default(autoincrement())
+  name      String
+  bar       Bar     @relation(fields: [barId], references: [id])
+  minSeat   Int
+  maxSeat   Int
+  available Int     @default(0)
+  Order     Order[]
+  barId     Int
 }
 
-model Table {
-  id      Int       @id @default(autoincrement())
-  name    String
-  type    TableType
-  minSeat Int
-  maxSeat Int
-  Order   Order[]
+enum Status {
+  WAITING
+  CHECKIN
 }
 
 model Order {
@@ -76,6 +79,8 @@ model Order {
   userId    Int
   orderDate DateTime
   tableSeat Table    @relation(fields: [tableId], references: [id])
+  passCode  String
+  status    Status
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   tableId   Int

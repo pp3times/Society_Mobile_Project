@@ -34,13 +34,13 @@ const ScanScreen = ({ navigation }) => {
   return (
     <>
       <AppLayout>
-        <Backbutton navigation={navigation} style={{ position: "absolute", zIndex: 99, top: "10%" }} />
+        <Backbutton navigation={navigation} style={{ position: "absolute", zIndex: 99, marginTop:10}} />
         <BarCodeScanner onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} style={StyleSheet.absoluteFillObject} />
         <Modal visible={visible} backdropStyle={styles.backdrop} onBackdropPress={() => setVisible(false)}>
           <Card disabled={true} style={{ backgroundColor: "#101010", width: "100%" }}>
             <Layout style={{ width: "100%", flexDirection: "column", alignItems: "center", backgroundColor: "transparent", marginTop: 10 }}>
-              {scanData.map((item) => {
-                return <Text>{item}</Text>;
+              {scanData.map((item, index) => {
+                return <Text key={index}>{item}</Text>;
               })}
             </Layout>
             <Layout style={{ width: "100%", flexDirection: "row", justifyContent: "center", backgroundColor: "transparent", marginTop: 10 }}>

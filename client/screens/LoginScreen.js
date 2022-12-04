@@ -53,7 +53,14 @@ const LoginScreen = ({ navigation }) => {
     <AppLayout>
       {chooseLogin && (
         <Layout style={styles.nav}>
-          <Button appearance="ghost" onPress={() => setChooseLogin("")}>
+          <Button
+            appearance="ghost"
+            onPress={() => {
+              setChooseLogin("");
+              setEmail("");
+              setPassword("");
+            }}
+          >
             <BackIcon />
           </Button>
         </Layout>
@@ -61,7 +68,15 @@ const LoginScreen = ({ navigation }) => {
 
       <Logo style={styles.logo} />
       {!chooseLogin && (
-        <Layout style={{ flexDirection: "column", justifyContent: "center", alignItem: "center", width: "80%", backgroundColor: "#101010" }}>
+        <Layout
+          style={{
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItem: "center",
+            width: "80%",
+            backgroundColor: "#101010",
+          }}
+        >
           <Button
             onPress={() => {
               setChooseLogin("user");
@@ -87,7 +102,7 @@ const LoginScreen = ({ navigation }) => {
           style={[styles.input, { backgroundColor: "black" }]}
           size="large"
           status="control"
-          placeholder="Place your Email"
+          placeholder="กรุณากรอกอีเมล"
           value={email}
           autoCapitalize="none"
           onChangeText={(nextValue) => setEmail(nextValue)}
@@ -96,7 +111,7 @@ const LoginScreen = ({ navigation }) => {
           style={[styles.input, { backgroundColor: "black" }]}
           size="large"
           status="control"
-          placeholder="Place your Password"
+          placeholder="กรุณากรอกรหัสผ่าน"
           accessoryRight={renderIcon}
           value={password}
           autoCapitalize="none"

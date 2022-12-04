@@ -1,17 +1,10 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, Text, View, ImageBackground, Pressable, SafeAreaView, ScrollView } from "react-native";
 import React, { useContext } from "react";
+import { Input } from "@ui-kitten/components";
 import { BarsCards } from "./Context";
 
 const TicketComponent = () => {
-	const distinct = [
+  const distinct = [
     {
       id: 0,
       name: "ลาดกระบัง",
@@ -37,10 +30,7 @@ const TicketComponent = () => {
   console.log(ticket, "is ticket");
   return (
     <SafeAreaView>
-      <ImageBackground
-        style={{ aspectRatio: 5 / 2, height: 170 }}
-        source={{ url: ticket.image }}
-      >
+      <ImageBackground style={{ aspectRatio: 5 / 2, height: 170 }} source={{ url: ticket.image }}>
         <Pressable
           style={{
             position: "absolute",
@@ -53,9 +43,7 @@ const TicketComponent = () => {
             width: "82%",
           }}
         >
-          <Text style={{ fontSize: 14, fontWeight: "500", color: "gray" }}>
-            ตั๋วของคุณ
-          </Text>
+          <Text style={{ fontSize: 14, fontWeight: "500", color: "gray" }}>ตั๋วของคุณ</Text>
           <View
             style={{
               flexDirection: "row",
@@ -65,9 +53,7 @@ const TicketComponent = () => {
             }}
           >
             <View>
-              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                {ticket.name}
-              </Text>
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>{ticket.name}</Text>
               <Text
                 style={{
                   fontSize: 16,
@@ -98,9 +84,7 @@ const TicketComponent = () => {
               </Text>
             </Pressable>
           </View>
-          <Text style={{ marginTop: 8, fontSize: 15, fontWeight: "500" }}>
-            {ticket.date}
-          </Text>
+          <Text style={{ marginTop: 8, fontSize: 15, fontWeight: "500" }}>{ticket.date}</Text>
         </Pressable>
       </ImageBackground>
       <View style={{ marginTop: 100 }} />
@@ -117,11 +101,7 @@ const TicketComponent = () => {
                 padding: 10,
               }}
             >
-              <Text
-                style={{ textAlign: "center", fontSize: 14, fontWeight: "500" }}
-              >
-                {item.name}
-              </Text>
+              <Text style={{ textAlign: "center", fontSize: 14, fontWeight: "500" }}>{item.name}</Text>
             </View>
           );
         })}

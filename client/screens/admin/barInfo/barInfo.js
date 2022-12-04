@@ -10,14 +10,13 @@ const InfoBarScreen = ({ navigation }) => {
 
   const {
     control,
+    setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-    },
-  });
+  } = useForm({});
+
+  useEffect(() => {}, []);
+
   const onSubmit = (data) => {
     // const datas = new FormData();
 
@@ -82,7 +81,6 @@ const InfoBarScreen = ({ navigation }) => {
                 <Input
                   style={[{ backgroundColor: "black", width: "100%", marginTop: 10 }]}
                   status="control"
-                  placeholder="ชื่อร้าน"
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -104,7 +102,6 @@ const InfoBarScreen = ({ navigation }) => {
                 <Input
                   style={[{ backgroundColor: "black", width: "100%", marginTop: 10 }]}
                   status="control"
-                  placeholder="ชื่อร้าน"
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}

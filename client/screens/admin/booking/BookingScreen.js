@@ -5,24 +5,52 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 
 const BookingScreen = ({ route, navigation }) => {
-  let TableLeft = 0;
-  const orderBooking = [
-    {
-      id: 1,
-      nameCustomer: "loki",
-      type: "โต๊ะหน้าเวที",
-    },
-    {
-      id: 2,
-      nameCustomer: "loki",
-      type: "โต๊ะหน้าเวที",
-    },
-    {
-      id: 3,
-      nameCustomer: "loki",
-      type: "โต๊ะหน้าเวที",
-    },
-  ];
+  const [uid, setUid] = useState("");
+  const [tableLeft, setTableLeft] = useState("");
+  const [orderBooking, setOrderBooking] = useState([]);
+
+  // const orderBooking = [
+  //   {
+  //     id: 1,
+  //     nameCustomer: "loki",
+  //     type: "โต๊ะหน้าเวที",
+  //   },
+  //   {
+  //     id: 2,
+  //     nameCustomer: "loki",
+  //     type: "โต๊ะหน้าเวที",
+  //   },
+  //   {
+  //     id: 3,
+  //     nameCustomer: "loki",
+  //     type: "โต๊ะหน้าเวที",
+  //   },
+  // ];
+
+  const setDefault = async () => {
+    try {
+      const uid = await SecureStore.getItemAsync("uid");
+      setUid(uid);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const fetchTable = async () => {
+    try {
+      const res = await axios.get(`${BACKEND_URL}/api/bar/order/${uid}`);
+      console.log(res);
+      // setTableLeft()
+      // setOrderBooking()
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    setDefault();
+    fetchTable();
+  }, []);
 
   return (
     <AppLayout>
@@ -33,9 +61,9 @@ const BookingScreen = ({ route, navigation }) => {
         <Button onPress={() => navigation.navigate("BookScan", { id: 1 })} status="control">
           แสกน QR Code ลูกค้า
         </Button>
-        <Text style={{ marginVertical: 30, fontSize: 20, textAlign: "center" }}>จำนวนโต๊ะที่เหลือ {TableLeft} โต๊ะ</Text>
+        <Text style={{ marginVertical: 30, fontSize: 20, textAlign: "center" }}>จำนวนโต๊ะที่เหลือ {tableLeft} โต๊ะ</Text>
         <Layout style={{ backgroundColor: "#101010", borderTopWidth: 1, borderTopColor: "white", marginTop: 10, paddingTop: 20 }}>
-          <ScrollView style={{ height: '65%' }}>
+          <ScrollView style={{ height: "65%" }}>
             {orderBooking.map((books) => {
               return (
                 <Layout
