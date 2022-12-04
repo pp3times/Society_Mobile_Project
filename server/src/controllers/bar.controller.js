@@ -89,7 +89,7 @@ export const createReview = async (req, res) => {
 
 export const allReview = async (req, res) => {
   try {
-    const reviews = await GetAllReviewService(req.query.barId)
+    const reviews = await GetAllReviewService(req.params.barId)
     return res.status(200).json({
       status: true,
       message: 'Get All Reviews Success',

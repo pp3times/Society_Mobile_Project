@@ -196,7 +196,7 @@ export const createReviewService = async (data) => {
 }
 
 export const GetAllReviewService = async (barId) => {
-  const reviews = await prisma.review.findMany({ where: { barId: barId } });
+  const reviews = await prisma.review.findMany({ where: { barId: parseInt(barId) } });
 
   return reviews;
 }
