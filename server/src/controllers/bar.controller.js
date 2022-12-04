@@ -9,7 +9,8 @@ import {
   updateBarStatusService,
   addTableService,
   deleteTableService,
-  getAllTableService
+  getAllTableService,
+  getTableReservationService
 } from '../services/bar.service'
 import createHttpError from 'http-errors'
 
@@ -149,6 +150,19 @@ export const getAllTable = async (req, res) => {
     return res.status(200).json({
       status: true,
       message: `Get All Table Success`,
+      data: response,
+    })
+  } catch (e) {
+    return res.status(400).json({msg: e.message})
+  }
+}
+
+export const getTableReservation = async (req, res) => {
+  try {
+    const response = await getTableReservationService(parseInt(req.params.barId));
+    return res.status(200).json({
+      status: true,
+      message: `Get All Table Reservation Success`,
       data: response,
     })
   } catch (e) {

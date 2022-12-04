@@ -207,6 +207,12 @@ export const getAllTableService = async (barId) => {
   return tables;
 }
 
+export const getTableReservationService = async (barId) => {
+  const orders = await prisma.$queryRaw`SELECT * FROM \`Order\` o LEFT JOIN \`Table\` t ON o.tableId = t.id WHERE t.barId = ${barId}`
+
+  return orders;
+}
+
 export const updateBarStatusService = async (barId, status) => {
   const bar = await prisma.bar.update({
     where: {

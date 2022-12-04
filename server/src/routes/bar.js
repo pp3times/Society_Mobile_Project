@@ -13,5 +13,6 @@ router.post('/status/:barId', controller.updateBarStatus)
 router.post('/table', controller.addTable)
 router.delete('/table', controller.deleteTable)
 router.get('/table/:barId', controller.getAllTable)
+router.get('/reservation/:barId', controller.getTableReservation)
 
 export default router
