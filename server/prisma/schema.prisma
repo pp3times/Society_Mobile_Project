@@ -58,13 +58,14 @@ model Review {
 }
 
 model Table {
-  id      Int     @id @default(autoincrement())
-  name    String
-  bar     Bar     @relation(fields: [barId], references: [id])
-  minSeat Int
-  maxSeat Int
-  Order   Order[]
-  barId   Int
+  id        Int     @id @default(autoincrement())
+  name      String
+  bar       Bar     @relation(fields: [barId], references: [id])
+  minSeat   Int
+  maxSeat   Int
+  available Int     @default(0)
+  Order     Order[]
+  barId     Int
 }
 
 model Order {
