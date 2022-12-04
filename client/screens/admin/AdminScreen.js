@@ -72,7 +72,7 @@ function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
-      <DrawerItem label="ออกจากระบบ" onPress={() => LogoutHandler(props.navigation)} />
+      <DrawerItem inactiveTintColor="white" label="ออกจากระบบ" onPress={() => LogoutHandler(props.navigation)} />
     </DrawerContentScrollView>
   );
 }
@@ -83,12 +83,15 @@ const AdminScreen = ({ navigation }) => {
       initialRouteName="Home"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
-        headerStyle: { backgroundColor: "#101010" },
+        headerStyle: { backgroundColor: "black" },
         headerTintColor: "white",
+        drawerStyle: {
+          backgroundColor: "#171717",
+        },
         drawerLabelStyle: {
           color: "white",
         },
-        drawerActiveBackgroundColor: "black",
+        drawerActiveBackgroundColor: "gray",
         drawerInactiveTintColor: "black",
       }}
     >

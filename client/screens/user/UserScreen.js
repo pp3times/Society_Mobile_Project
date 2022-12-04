@@ -28,7 +28,7 @@ function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList label="" {...props} />
-      <DrawerItem label="ออกจากระบบ" onPress={() => LogoutHandler(props.navigation)} />
+      <DrawerItem inactiveTintColor='white' label="ออกจากระบบ" onPress={() => LogoutHandler(props.navigation)} />
     </DrawerContentScrollView>
   );
 }
