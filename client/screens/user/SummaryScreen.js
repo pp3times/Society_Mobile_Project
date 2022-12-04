@@ -63,18 +63,18 @@ const SummaryScreen = () => {
     if (presentSheet.error) return Alert.alert(presentSheet.error)
     else {
       getData()
-      // setTicket({
-      //   name: route.params.name,
-      //   option: route.params.option,
-      //   minSeat: route.params.minSeat,
-      //   maxSeat: route.params.maxSeat,
-      //   tableName: route.params.tableName,
-      //   date: route.params.date,
-      //   tableName: route.params.tableName,
-      //   total: total,
-      //   image: route.params.image,
-      //   tableId: route.params.tableId,
-      // })
+      setTicket({
+        name: route.params.name,
+        option: route.params.option,
+        minSeat: route.params.minSeat,
+        maxSeat: route.params.maxSeat,
+        tableName: route.params.tableName,
+        date: route.params.date,
+        tableName: route.params.tableName,
+        total: total,
+        image: route.params.image,
+        tableId: route.params.tableId,
+      })
       navigation.navigate('Ticket', {
         name: route.params.name,
         option: route.params.option,
