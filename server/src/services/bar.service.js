@@ -201,6 +201,12 @@ export const GetAllReviewService = async (barId) => {
   return reviews;
 }
 
+export const getAllTableService = async (barId) => {
+  const tables = await prisma.table.findMany({ where: { barId: parseInt(barId) } });
+
+  return tables;
+}
+
 export const updateBarStatusService = async (barId, status) => {
   const bar = await prisma.bar.update({
     where: {

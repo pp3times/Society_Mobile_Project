@@ -12,5 +12,6 @@ router.get('/review/:barId', controller.allReview)
 router.post('/status/:barId', controller.updateBarStatus)
 router.post('/table', controller.addTable)
 router.delete('/table', controller.deleteTable)
+router.get('/table/:barId', controller.getAllTable)
 
 export default router
