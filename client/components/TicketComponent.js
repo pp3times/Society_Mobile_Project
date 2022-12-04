@@ -14,12 +14,35 @@ import {BarsCards} from './Context'
 import useAxiosFunction from '../hooks/useAxiosFunction'
 import axios from '../apis/jsonPlaceholder'
 import QRCode from 'react-native-qrcode-svg'
+import * as SecureStore from 'expo-secure-store'
 
 const TicketComponent = () => {
   const [data, error, loading, axiosFetch] = useAxiosFunction()
   const [dataTicket, setDataTicket] = useState('')
   const [dateTime, setDateTime] = useState('')
-  const getFetch = async () => {
+  const [ticketData, setTicketData] = useState('')
+  async function getValue(key) {
+    let result = await SecureStore.getItemAsync(key)
+    if (result) {
+      return result
+    }
+  }
+  const getFetchFirst = async () => {
+    console.log('UID IS : ', await getValue('uid'))
+    const uid = await getValue('uid')
+    axios
+      .get(`http://localhost:8080/api/bar/reservation/waiting/${Number(uid)}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data[0])
+        setTicketData(response.data.data[0])
+      })
+      .catch((error) => {
+        console.log(error.response)
+      })
     axios
       .get('http://localhost:8080/api/bar/reservation/all', {
         headers: {
@@ -36,11 +59,32 @@ const TicketComponent = () => {
       })
   }
   useEffect(() => {
-    getFetch()
+    getFetchFirst()
   }, [])
-  console.log(dataTicket)
+  // console.log(ticketData)
+
+  // const getFetch = async () => {
+  //   axios
+  //     .get('http://localhost:8080/api/bar/reservation/all', {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //     })
+  //     .then((response) => {
+  //       // console.log(response)
+  //       setDataTicket(response.data.data[0])
+  //       setDateTime(response.data.data[0].orderDate.substring(0, 10))
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.response)
+  //     })
+  // }
+  // useEffect(() => {
+  //   getFetch()
+  // }, [])
+  // console.log(dataTicket)
   // const theDate = dataTicket.orderDate
-  console.log('TheDate', dateTime)
+  console.log('Ticket', ticketData)
   const navigation = useNavigation()
   const {ticket} = useContext(BarsCards)
   // console.log(ticket, 'is ticket')
@@ -78,7 +122,7 @@ const TicketComponent = () => {
                 ตั๋วของคุณ
               </Text>
               <Text style={{fontSize: 16, fontWeight: 'bold'}}>
-                จองโต๊ะไว้ที่ {dataTicket.name}
+                จองโต๊ะไว้ที่ {ticketData.name}
               </Text>
               <View />
               <Text
@@ -89,7 +133,7 @@ const TicketComponent = () => {
                   marginTop: 20,
                 }}
               >
-                โต๊ะ {dataTicket.name}
+                {dataTicket.name}
               </Text>
               <Text style={{marginTop: 0, fontSize: 15, fontWeight: '500'}}>
                 {dateTime}
