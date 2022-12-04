@@ -299,15 +299,19 @@ export const receiveTableService = async (passcode) => {
 }
 
 export const getWaitingOrderService = async (userId) => {
-  const orders = await prisma.order.findMany({
-    where: {
-      userId: userId,
-      status: 'WAITING'
-    },
-    orderBy: {
-      id: 'desc'
-    }
-  });
+  // const orders = await prisma.order.findMany({
+  //   where: {
+  //     userId: userId,
+  //     status: 'WAITING'
+  //   },
+  //   orderBy: {
+  //     id: 'desc'
+  //   }
+  // });
+
+  console.log(userId);
+
+  const orders = await prisma.$queryRaw`SELECT * FROM \`Order\` o LEFT JOIN \`Table\` t ON o.tableId = t.id WHERE o.userId = ${userId} AND o.status = 'WAITING' ORDER BY o.id DESC;`;
 
   return orders;
 }

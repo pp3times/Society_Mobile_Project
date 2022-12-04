@@ -199,7 +199,7 @@ export const reciveTable = async (req, res) => {
 
 export const getWaitingOrder = async (req, res) => {
   try {
-    const {userId} = req.params.userId;
+    const userId = req.params.userId;
 
     const response = await getWaitingOrderService(userId);
 
