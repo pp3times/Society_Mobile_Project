@@ -11,7 +11,8 @@ import {
   deleteTableService,
   getAllTableService,
   getTableReservationService,
-  receiveTableService
+  receiveTableService,
+  getWaitingOrderService
 } from '../services/bar.service'
 import createHttpError from 'http-errors'
 
@@ -189,6 +190,22 @@ export const reciveTable = async (req, res) => {
     return res.status(200).json({
       status: true,
       message: 'Revived',
+      data: response
+    });
+  } catch(e) {
+    return res.status(400).json({msg: e.message});
+  }
+}
+
+export const getWaitingOrder = async (req, res) => {
+  try {
+    const {userId} = req.params.userId;
+
+    const response = await getWaitingOrderService(userId);
+
+    return res.status(200).json({
+      status: true,
+      message: 'Get User`s Waiting Order Success',
       data: response
     });
   } catch(e) {

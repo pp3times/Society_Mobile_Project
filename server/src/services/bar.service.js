@@ -297,3 +297,17 @@ export const receiveTableService = async (passcode) => {
 
   return order;
 }
+
+export const getWaitingOrderService = async (userId) => {
+  const orders = await prisma.order.findMany({
+    where: {
+      userId: userId,
+      status: 'WAITING'
+    },
+    orderBy: {
+      id: 'desc'
+    }
+  });
+
+  return orders;
+}

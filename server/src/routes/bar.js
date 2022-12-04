@@ -15,5 +15,6 @@ router.delete('/table', controller.deleteTable)
 router.get('/table/:barId', controller.getAllTable)
 router.get('/reservation/:barId', controller.getTableReservation)
 router.post('/reservation/receive', controller.reciveTable)
+router.get('/reservation/waiting/:userId', controller.getWaitingOrder)
 
 export default router
