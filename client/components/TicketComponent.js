@@ -18,6 +18,7 @@ import QRCode from 'react-native-qrcode-svg'
 const TicketComponent = () => {
   const [data, error, loading, axiosFetch] = useAxiosFunction()
   const [dataTicket, setDataTicket] = useState('')
+  const [dateTime, setDateTime] = useState('')
   const getFetch = async () => {
     axios
       .get('http://localhost:8080/api/bar/reservation/all', {
@@ -28,6 +29,7 @@ const TicketComponent = () => {
       .then((response) => {
         // console.log(response)
         setDataTicket(response.data.data[0])
+        setDateTime(response.data.data[0].orderDate.substring(0, 10))
       })
       .catch((error) => {
         console.log(error.response)
@@ -36,7 +38,9 @@ const TicketComponent = () => {
   useEffect(() => {
     getFetch()
   }, [])
-  // console.log(dataTicket.passCode)
+  console.log(dataTicket)
+  // const theDate = dataTicket.orderDate
+  console.log('TheDate', dateTime)
   const navigation = useNavigation()
   const {ticket} = useContext(BarsCards)
   // console.log(ticket, 'is ticket')
@@ -44,7 +48,10 @@ const TicketComponent = () => {
     <SafeAreaView>
       <ImageBackground
         style={{aspectRatio: 5 / 2, height: 170}}
-        source={{url: ticket.image}}
+        // source={{url: ticket.image}}
+        source={{
+          url: 'https://cdn.discordapp.com/attachments/1006207117331546143/1049071145405653134/image.png',
+        }}
       >
         <Pressable
           style={{
@@ -66,13 +73,14 @@ const TicketComponent = () => {
               // marginTop: 10,
             }}
           >
-            <View>
+            <View style={{flexDirection: 'column'}}>
               <Text style={{fontSize: 14, fontWeight: '500', color: 'gray'}}>
                 ตั๋วของคุณ
               </Text>
               <Text style={{fontSize: 16, fontWeight: 'bold'}}>
-                ร้าน {ticket.name}
+                จองโต๊ะไว้ที่ {dataTicket.name}
               </Text>
+              <View />
               <Text
                 style={{
                   fontSize: 16,
@@ -81,10 +89,10 @@ const TicketComponent = () => {
                   marginTop: 20,
                 }}
               >
-                จองโต๊ะ {ticket.tableName}
+                โต๊ะ {dataTicket.name}
               </Text>
               <Text style={{marginTop: 0, fontSize: 15, fontWeight: '500'}}>
-                {ticket.date}
+                {dateTime}
               </Text>
             </View>
 

@@ -96,7 +96,7 @@ const BarCards = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          ListHeaderComponent={ticket ? TicketComponent : Header}
+          ListHeaderComponent={ticketData ? TicketComponent : Header}
           data={search || bar.data}
           renderItem={({item}) => (
             <TouchableOpacity
