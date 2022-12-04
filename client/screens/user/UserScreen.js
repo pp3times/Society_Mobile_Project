@@ -11,7 +11,7 @@ import TicketScreen from "./TicketScreen";
 import SummaryScreen from "./SummaryScreen";
 import UserInfoScreen from "./UserInfoScreen";
 import * as SecureStore from "expo-secure-store";
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
+import { createDrawerNavigator, DrawerToggleButton, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import BarDetailScreen from "./BarDetailScreen";
 
 const Drawer = createDrawerNavigator();
@@ -74,7 +74,11 @@ const TabNavigator = () => (
 );
 const UserScreen = () => {
   return (
-    <Drawer.Navigator initialRouteName="main" drawerContent={(props) => <CustomDrawerContent {...props} />}>
+    <Drawer.Navigator
+      initialRouteName="main"
+      screenOptions={{ headerStyle: { backgroundColor: "#101010" }, headerRight: () => <DrawerToggleButton />, headerTintColor: "white" }}
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+    >
       <Drawer.Screen name="หน้าหลัก" component={TabNavigator} />
     </Drawer.Navigator>
   );
@@ -85,6 +89,6 @@ export { UserScreen };
 const styles = StyleSheet.create({
   bottomNavigation: {
     paddingVertical: "5%",
-    backgroundColor: "white",
+    backgroundColor: "black",
   },
 });

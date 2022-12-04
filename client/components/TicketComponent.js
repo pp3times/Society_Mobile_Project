@@ -37,6 +37,7 @@ const TicketComponent = () => {
   console.log(ticket, "is ticket");
   return (
     <SafeAreaView>
+      Text
       <ImageBackground
         style={{ aspectRatio: 5 / 2, height: 170 }}
         source={{ url: ticket.image }}

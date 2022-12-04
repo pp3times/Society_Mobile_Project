@@ -13,18 +13,9 @@ const InfoBarScreen = ({ navigation }) => {
     setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    // defaultValues: {
-    //   barName: "hello",
-    //   numberSeat:
-    // },
-  });
+  } = useForm({});
 
-
-  useEffect(() => {
-    
-  }, []);
-
+  useEffect(() => {}, []);
 
   const onSubmit = (data) => {
     // const datas = new FormData();

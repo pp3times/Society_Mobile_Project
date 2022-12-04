@@ -52,7 +52,6 @@ const BarDetailScreen = ({route, navigation}) => {
 
   return (
     <AppLayout>
-      <StatusBar barStyle="dark-content" translucent={true} />
       <ScrollView style={styles.container}>
         <Backbutton
           navigation={navigation}
