@@ -164,7 +164,7 @@ const BarDetailScreen = ({ route, navigation }) => {
                     <Text style={{ marginRight: 10 }}>คุณ thun</Text>
                     <ReviewStar time={review.score} />
                   </Layout>
-                  <Text style={{ fontSize: 10, marginVertical: 10 }}>{review.createdAt}</Text>
+                  <Text style={{ fontSize: 10, marginVertical: 10 }}>{Date(review.createdAt)}</Text>
                   <Text>{review.comment}</Text>
                 </Layout>
               );

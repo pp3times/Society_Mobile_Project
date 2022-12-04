@@ -1,10 +1,10 @@
-const { PrismaClient } = require('@prisma/client')
+const {PrismaClient} = require('@prisma/client')
 const prisma = new PrismaClient()
 
 require('dotenv').config()
 const bcrypt = require('bcryptjs')
 import createHttpError from 'http-errors'
-import { signAccessToken } from '../utils/jwt'
+import {signAccessToken} from '../utils/jwt'
 import * as yup from 'yup'
 
 export const create = async (data) => {
@@ -64,7 +64,7 @@ export const create = async (data) => {
 }
 
 export const login = async (data) => {
-  const { email, password } = data
+  const {email, password} = data
   const user = await prisma.bar.findUnique({
     where: {
       email,
@@ -83,7 +83,7 @@ export const login = async (data) => {
 
   const accessToken = await signAccessToken(user)
 
-  return { ...user, accessToken }
+  return {...user, accessToken}
 }
 
 export const allBars = async () => {
@@ -111,6 +111,7 @@ export const allBars = async () => {
 }
 
 export const createReservation = async (data) => {
+  console.log(data)
   const makeid = (length) => {
     var result = ''
     var characters =
@@ -154,7 +155,7 @@ export const createReservation = async (data) => {
     throw new Error('Bad request!')
   }
 
-  const { userId, tableId, orderDate } = data
+  const {userId, tableId, orderDate} = data
 
   const reservation = await prisma.order.create({
     data: {
@@ -181,30 +182,33 @@ export const getTableById = async (data) => {
 }
 
 export const createReviewService = async (data) => {
-  const { userId, barId, score, message } = data;
+  const {userId, barId, score, message} = data
 
   const review = await prisma.review.create({
     data: {
-      userId, userId,
+      userId,
+      userId,
       barId: barId,
       score: score,
-      comment: message
-    }
-  });
+      comment: message,
+    },
+  })
 
-  return review;
+  return review
 }
 
 export const GetAllReviewService = async (barId) => {
-  const reviews = await prisma.review.findMany({ where: { barId: parseInt(barId) } });
+  const reviews = await prisma.review.findMany({
+    where: {barId: parseInt(barId)},
+  })
 
-  return reviews;
+  return reviews
 }
 
 export const getAllTableService = async (barId) => {
-  const tables = await prisma.table.findMany({ where: { barId: parseInt(barId) } });
+  const tables = await prisma.table.findMany({where: {barId: parseInt(barId)}})
 
-  return tables;
+  return tables
 }
 
 export const getTableReservationService = async (barId) => {
@@ -217,49 +221,49 @@ export const getTableReservationService = async (barId) => {
     orders = await prisma.$queryRaw`SELECT * FROM \`Order\` o LEFT JOIN \`Table\` t ON o.tableId = t.id ORDER BY o.id DESC`;
   }
 
-  return orders;
+  return orders
 }
 
 export const updateBarStatusService = async (barId, status) => {
   const bar = await prisma.bar.update({
     where: {
-      id: parseInt(barId)
+      id: parseInt(barId),
     },
     data: {
-      isClose: status
+      isClose: status,
     },
     select: {
       name: true,
       isClose: true,
-      updatedAt: true
-    }
-  });
+      updatedAt: true,
+    },
+  })
 
-  return bar;
+  return bar
 }
 
 export const addTableService = async (data) => {
-  const { barId, name, minSeat, maxSeat, available } = data;
+  const {barId, name, minSeat, maxSeat, available} = data
   const table = await prisma.table.create({
     data: {
       barId: barId,
       name: name,
       minSeat: minSeat,
       maxSeat: maxSeat,
-      available: available
+      available: available,
+    },
+  })
 
-    }
-  });
-
-  return table;
+  return table
 }
 
 export const deleteTableService = async (tableId) => {
+  console.log(tableId)
   const table = await prisma.table.delete({
     where: {
-      id: tableId
-    }
-  });
+      id: tableId,
+    },
+  })
 
-  return table;
+  return table
 }
