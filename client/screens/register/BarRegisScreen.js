@@ -20,22 +20,6 @@ const BarRegisScreen = ({ navigation }) => {
   } = useForm({});
 
   const onSubmit = async (data) => {
-    // const datas = new FormData();
-
-    // datas.append("images", {
-    //   name: image.fileName,
-    //   type: image.type,
-    //   uri: Platform.OS === "android" ? selectedImage.uri : selectedImage.uri.replace("file://", ""),
-    // });
-    // axios({
-    //   method: "POST",
-    //   url: API_NO_PARAM_CONFIG.createCampaign,
-    //   headers: {
-    //     Authorization: `Bearer ${e}`,
-    //     "Content-Type": "multipart/form-data", // add this
-    //   },
-    //   datas, //pass datas directly
-    // });
     try {
       data.openTime = timeOpen;
       data.closeTime = timeClose;
@@ -49,6 +33,21 @@ const BarRegisScreen = ({ navigation }) => {
         ]);
       } else {
         delete data.confirmPassword;
+        const datas = new FormData();
+        datas.append("images", {
+          name: image.fileName,
+          type: image.type,
+          uri: Platform.OS === "android" ? selectedImage.uri : selectedImage.uri.replace("file://", ""),
+        });
+
+        axios({
+          method: "POST",
+          url: `${BACKEND_URL}/api/bar/create`,
+          headers: {
+            "Content-Type": "multipart/form-data", // add this
+          },
+          datas, //pass datas directly
+        });
         const res = await axios.post(`${BACKEND_URL}/api/bar/create`, data);
         const uid = res.data.data.id;
         await SecureStore.setItemAsync("uid", uid);

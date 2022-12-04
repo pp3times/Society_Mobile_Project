@@ -9,7 +9,7 @@ import * as SecureStore from "expo-secure-store";
 
 const ScanScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
-  const [scanData, setScanData] = useState([]);
+  const [scanData, setScanData] = useState({});
   const [scanned, setScanned] = useState(false);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -23,7 +23,7 @@ const ScanScreen = ({ navigation }) => {
     if (data && type) {
       setVisible(true);
       getData(data);
-      console.log(data);
+      console.log(scanData);
     } else {
       alert("scan is not successfully");
       setScanned(false);
@@ -37,7 +37,10 @@ const ScanScreen = ({ navigation }) => {
       };
       const res = await axios.get(`${BACKEND_URL}/api/bar/reservation/recieve`, { data: datas });
       console.log(res.data.data);
-    } catch (error) {}
+      setScanData(res.data.data);
+    } catch (error) {
+      console.log(error.response);
+    }
   };
 
   if (hasPermission === null) {
@@ -54,7 +57,10 @@ const ScanScreen = ({ navigation }) => {
         <Modal visible={visible} backdropStyle={styles.backdrop} onBackdropPress={() => setVisible(false)}>
           <Card disabled={true} style={{ backgroundColor: "#101010", width: "100%" }}>
             <Layout style={{ width: "100%", flexDirection: "column", alignItems: "center", backgroundColor: "transparent", marginTop: 10 }}>
-              <Text>{scanData}</Text>
+              <Text>ยืนยันการจองโต๊ะเรียบร้อย</Text>
+              <Text>วันที่:{Date(scanData?.orderDate).substring(0, 14)}</Text>
+              <Text>เวลา:{Date(scanData?.orderDate).substring(15, 21)}</Text>
+              <Text>โต๊ะ : {scanData?.tableSeat}</Text>
             </Layout>
             <Layout style={{ width: "100%", flexDirection: "row", justifyContent: "center", backgroundColor: "transparent", marginTop: 10 }}>
               <Button

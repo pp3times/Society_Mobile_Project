@@ -33,9 +33,9 @@ const BookingScreen = ({ route, navigation }) => {
     try {
       const uid = await SecureStore.getItemAsync("uid");
       const res = await axios.get(`${BACKEND_URL}/api/bar/reservation/${uid}`);
-      console.log(res.data.data);
+      // console.log(res.data.data);
       // setTableLeft()
-      setOrderBooking(res.data.data)
+      setOrderBooking(res.data.data);
     } catch (e) {
       console.log(e.response);
     }
@@ -51,24 +51,19 @@ const BookingScreen = ({ route, navigation }) => {
         <Layout style={{ backgroundColor: "#101010", width: "100%", marginBottom: 20 }}>
           <Text style={{ fontSize: 40, fontWeight: "500", marginVertical: 20, textAlign: "center" }}>รายการจอง</Text>
         </Layout>
-        <Button onPress={() => navigation.navigate("BookScan", { id: 1 })} status="control">
+        <Button style={{ marginBottom: 20 }} onPress={() => navigation.navigate("BookScan", { id: 1 })} status="control">
           แสกน QR Code ลูกค้า
         </Button>
-        <Text style={{ marginVertical: 30, fontSize: 20, textAlign: "center" }}>จำนวนโต๊ะที่เหลือ {tableLeft} โต๊ะ</Text>
         <Layout style={{ backgroundColor: "#101010", borderTopWidth: 1, borderTopColor: "white", marginTop: 10, paddingTop: 20 }}>
           <ScrollView style={{ height: "65%" }}>
-            {orderBooking.map((books) => {
+            {orderBooking.map((books, index) => {
               return (
                 <Layout
-                  key={books.id}
+                  key={index}
                   style={{ backgroundColor: "#101010", borderWidth: 1, borderColor: "white", borderRadius: "10%", padding: 10, marginBottom: 10 }}
                 >
-                  <Text>
-                    คุณ {books.name}
-                  </Text>
-                  <Text>
-                    เวลา {Date(books.createdAt)}
-                  </Text>
+                  <Text>คุณ {books.name}</Text>
+                  <Text>เวลา {Date(books.createdAt)}</Text>
                 </Layout>
               );
             })}
