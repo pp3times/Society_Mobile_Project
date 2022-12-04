@@ -61,7 +61,10 @@ const BarCards = () => {
           ListHeaderComponent={ticket ? TicketComponent : Header}
           data={search || bar.data}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => navigation.navigate("Detail", { barDetail: item })} style={{ margin: 10, marginHorizontal: 15 }}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Detail", { barDetail: item })}
+              style={{ flexDirection: "column", alignItems: "center", margin: 10, marginHorizontal: 15 }}
+            >
               <Image
                 style={{
                   aspectRatio: 2 / 3,
