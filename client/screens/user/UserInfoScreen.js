@@ -15,21 +15,21 @@ const UserInfoScreen = ({ navigation }) => {
         <Layout style={styles.group}>
           <Text style={styles.head}>อัพเดตข้อมูลส่วนตัว</Text>
           <Input
-            style={[styles.input, { backgroundColor: "black" }]}
+            style={[styles.input, { backgroundColor: "white" }]}
             size="large"
             status="control"
             value={name}
             onChangeText={(nextValue) => setName(nextValue)}
           />
           <Input
-            style={[styles.input, { backgroundColor: "black" }]}
+            style={[styles.input, { backgroundColor: "white" }]}
             size="large"
             status="control"
             value={phone}
             onChangeText={(nextValue) => setPhone(nextValue)}
           />
           <Input
-            style={[styles.input, { backgroundColor: "black" }]}
+            style={[styles.input, { backgroundColor: "white" }]}
             size="large"
             status="control"
             value={email}
@@ -37,7 +37,7 @@ const UserInfoScreen = ({ navigation }) => {
           />
         </Layout>
         <Layout style={styles.group}>
-          <Button style={{ marginTop: "5%", width: "100%", backgroundColor: 'black' }} onPress={edit}>
+          <Button status="control" style={{ marginTop: "5%", width: "100%" }} onPress={edit}>
             แก้ไข
           </Button>
         </Layout>
@@ -50,28 +50,28 @@ const styles = StyleSheet.create({
   head: {
     fontSize: 30,
     fontWeight: "bold",
-    marginBottom: '5%',
-    color: 'black'
+    marginBottom: "5%",
+    color: "white",
   },
   title: {
     fontSize: 20,
     fontWeight: "medium",
   },
-  group:{
+  group: {
     width: "100%",
     alignItems: "center",
     flexDirection: "column",
-    backgroundColor: "#ececec",
+    backgroundColor: "#101010",
   },
   container: {
     flex: 1,
     width: "100%",
     paddingTop: "10%",
-    paddingBottom: '10%',
+    paddingBottom: "10%",
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "column",
-    backgroundColor: "#ececec",
+    backgroundColor: "#101010",
     paddingHorizontal: "5%",
   },
   input: {

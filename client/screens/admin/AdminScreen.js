@@ -82,7 +82,15 @@ const AdminScreen = ({ navigation }) => {
     <Drawer.Navigator
       initialRouteName="Home"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-      screenOptions={{ headerStyle: { backgroundColor: "#101010" }, headerTintColor: "white" }}
+      screenOptions={{
+        headerStyle: { backgroundColor: "#101010" },
+        headerTintColor: "white",
+        drawerLabelStyle: {
+          color: "white",
+        },
+        drawerActiveBackgroundColor: "black",
+        drawerInactiveTintColor: "black",
+      }}
     >
       <Drawer.Screen name="Home" component={AdminTabs} />
     </Drawer.Navigator>
