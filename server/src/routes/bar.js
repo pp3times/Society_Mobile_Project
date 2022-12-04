@@ -11,5 +11,6 @@ router.post('/review', controller.createReview)
 router.get('/review/:barId', controller.allReview)
 router.post('/status/:barId', controller.updateBarStatus)
 router.post('/table', controller.addTable)
+router.delete('/table', controller.deleteTable)
 
 export default router

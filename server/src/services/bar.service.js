@@ -234,3 +234,13 @@ export const addTableService = async (data) => {
 
   return table;
 }
+
+export const deleteTableService = async (tableId) => {
+  const table = await prisma.table.delete({
+    where: {
+      id: tableId
+    }
+  });
+
+  return table;
+}
