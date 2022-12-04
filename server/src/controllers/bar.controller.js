@@ -4,6 +4,7 @@ import {
   create,
   createReservation,
   getTableById,
+  createReviewService
 } from '../services/bar.service'
 import createHttpError from 'http-errors'
 
@@ -66,6 +67,19 @@ export const createReservationController = async (req, res) => {
       status: true,
       message: 'Create Reservation Success',
       data: reservation,
+    })
+  } catch (e) {
+    return res.status(400).json({msg: e.message})
+  }
+}
+
+export const createReview = async (req, res) => {
+  try {
+    const review = await createReviewService(req.body)
+    return res.status(200).json({
+      status: true,
+      message: 'Create Review Success',
+      data: review,
     })
   } catch (e) {
     return res.status(400).json({msg: e.message})

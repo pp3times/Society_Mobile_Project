@@ -179,3 +179,18 @@ export const getTableById = async (data) => {
   })
   return response
 }
+
+export const createReviewService = async (data) => {
+  const {userId, barId, score, message} = data;
+
+  const review = await prisma.review.create({
+    data: {
+      userId, userId,
+      barId: barId,
+      score: score,
+      comment: message
+    }
+  });
+
+  return review;
+}
