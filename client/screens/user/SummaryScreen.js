@@ -227,17 +227,18 @@ const SummaryScreen = () => {
           * กรุณามาก่อนเวลาจอง 5-10 นาที
         </Text>
         <View style={{marginVertical: 140}} />
-        <View
-          style={{
-            alignItems: 'center',
-            paddingHorizontal: 20,
-            paddingVertical: 20,
-            backgroundColor: '#06C755',
-            marginHorizontal: 20,
-            borderRadius: 10,
-          }}
-        >
-          <Pressable onPress={subscribe}>
+        <View style={{paddingBottom: 50}}>
+          <Pressable
+            onPress={subscribe}
+            style={{
+              alignItems: 'center',
+              paddingHorizontal: 20,
+              paddingVertical: 20,
+              backgroundColor: '#06C755',
+              marginHorizontal: 20,
+              borderRadius: 10,
+            }}
+          >
             <Text style={{fontSize: 17, fontWeight: '600', color: 'white'}}>
               ชำระค่าจอง {total} บาท
             </Text>
