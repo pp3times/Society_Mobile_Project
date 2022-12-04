@@ -323,7 +323,7 @@ export const addImageService = async (barId, file) => {
       id: barId
     },
     data: {
-      bannerImage: file.path
+      bannerImage: file.path.replace('\\','/')
     },
     select: {
       id: true,
