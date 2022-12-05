@@ -21,6 +21,7 @@ export const create = async (data) => {
     sub_district: yup.string().required(),
     province: yup.string().required(),
     phoneNumber: yup.string().required(),
+    bannerImage: yup.string().required(),
   })
 
   if (!(await barSchema.isValid(data))) {
@@ -40,6 +41,7 @@ export const create = async (data) => {
     sub_district,
     province,
     phoneNumber,
+    bannerImage,
   } = data
 
   const bar = await prisma.bar.create({
@@ -56,7 +58,7 @@ export const create = async (data) => {
       sub_district: sub_district,
       province: province,
       phoneNumber: phoneNumber,
-      bannerImage: '',
+      bannerImage: bannerImage,
     },
   })
 
@@ -212,13 +214,15 @@ export const getAllTableService = async (barId) => {
 }
 
 export const getTableReservationService = async (barId) => {
-  let orders = null;
+  let orders = null
   if (barId) {
-    console.log(true);
-    orders = await prisma.$queryRaw`SELECT * FROM \`Order\` o LEFT JOIN \`Table\` t ON o.tableId = t.id WHERE t.barId = ${barId}`;
+    console.log(true)
+    orders =
+      await prisma.$queryRaw`SELECT * FROM \`Order\` o LEFT JOIN \`Table\` t ON o.tableId = t.id WHERE t.barId = ${barId}`
   } else {
-    console.log(false);
-    orders = await prisma.$queryRaw`SELECT * FROM \`Order\` o LEFT JOIN \`Table\` t ON o.tableId = t.id ORDER BY o.id DESC`;
+    console.log(false)
+    orders =
+      await prisma.$queryRaw`SELECT * FROM \`Order\` o LEFT JOIN \`Table\` t ON o.tableId = t.id ORDER BY o.id DESC`
   }
 
   return orders
@@ -270,15 +274,15 @@ export const deleteTableService = async (tableId) => {
 
 export const receiveTableService = async (passcode) => {
   let order = await prisma.order.findFirst({
-    where: { passCode: passcode }
-  });
+    where: {passCode: passcode},
+  })
 
   order = await prisma.order.update({
     where: {
-      id: order.id
+      id: order.id,
     },
     data: {
-      status: 'CHECKIN'
+      status: 'CHECKIN',
     },
     select: {
       id: true,
@@ -287,15 +291,15 @@ export const receiveTableService = async (passcode) => {
       tableSeat: {
         select: {
           id: true,
-          name: true
-        }
-      }
-    }
-  });
+          name: true,
+        },
+      },
+    },
+  })
 
-  console.log(order);
+  console.log(order)
 
-  return order;
+  return order
 }
 
 export const getWaitingOrderService = async (userId) => {
@@ -309,28 +313,29 @@ export const getWaitingOrderService = async (userId) => {
   //   }
   // });
 
-  console.log(userId);
+  console.log(userId)
 
-  const orders = await prisma.$queryRaw`SELECT * FROM \`Order\` o LEFT JOIN \`Table\` t ON o.tableId = t.id LEFT JOIN \`Bar\` b ON t.barId = b.id WHERE o.userId = ${userId} AND o.status = 'WAITING' ORDER BY o.id DESC;`;
+  const orders =
+    await prisma.$queryRaw`SELECT * FROM \`Order\` o LEFT JOIN \`Table\` t ON o.tableId = t.id LEFT JOIN \`Bar\` b ON t.barId = b.id WHERE o.userId = ${userId} AND o.status = 'WAITING' ORDER BY o.id DESC;`
 
-  return orders;
+  return orders
 }
 
 export const addImageService = async (barId, file) => {
-  console.log(file.mimetype, file.path);
+  console.log(file.mimetype, file.path)
   const bar = await prisma.bar.update({
     where: {
-      id: barId
+      id: barId,
     },
     data: {
-      bannerImage: file.path.replace('\\','/')
+      bannerImage: file.path.replace('\\', '/'),
     },
     select: {
       id: true,
       name: true,
-      bannerImage: true
-    }
-  });
+      bannerImage: true,
+    },
+  })
 
-  return bar;
+  return bar
 }
