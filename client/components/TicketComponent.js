@@ -37,7 +37,7 @@ const TicketComponent = () => {
         },
       })
       .then((response) => {
-        console.log(response.data.data[0])
+        // console.log(response.data.data[0])
         setTicketData(response.data.data[0])
       })
       .catch((error) => {
