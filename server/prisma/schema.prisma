@@ -36,7 +36,7 @@ model Bar {
   sub_district String
   province     String
   phoneNumber  String
-  bannerImage  String
+  bannerImage  String   @default("https://cdn.discordapp.com/attachments/1006207117331546143/1049071145405653134/image.png")
   rating       Float    @default(0)
   isClose      Boolean  @default(false)
   createdAt    DateTime @default(now())
