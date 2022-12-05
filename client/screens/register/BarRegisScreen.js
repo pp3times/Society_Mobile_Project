@@ -3,17 +3,17 @@ import { Text, Layout, Input, Button } from "@ui-kitten/components";
 import { Image, ScrollView, StyleSheet } from "react-native";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import * as ImagePicker from "expo-image-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import axios from "axios";
 import { BACKEND_URL } from "@env";
+import * as SecureStore from "expo-secure-store";
 
 const BarRegisScreen = ({ navigation }) => {
-  const [image, setImage] = useState(null);
   const [timeOpen, setTimeOpen] = useState(new Date(1598051730000));
   const [timeClose, setTimeClose] = useState(new Date(1598051730000));
 
   const {
+    watch,
     control,
     handleSubmit,
     formState: { errors },
@@ -21,8 +21,6 @@ const BarRegisScreen = ({ navigation }) => {
 
   const onSubmit = async (data) => {
     try {
-      data.openTime = timeOpen;
-      data.closeTime = timeClose;
       if (data.password !== data.confirmPassword) {
         Alert.alert("สมัครสามาชิกผิดพลาด", "รหัสผ่านไม่ตรงกัน โปรดลองอีกครั้ง", [
           {
@@ -33,46 +31,16 @@ const BarRegisScreen = ({ navigation }) => {
         ]);
       } else {
         delete data.confirmPassword;
-        const datas = new FormData();
-        datas.append("images", {
-          name: image.fileName,
-          type: image.type,
-          uri: Platform.OS === "android" ? selectedImage.uri : selectedImage.uri.replace("file://", ""),
-        });
-
-        axios({
-          method: "POST",
-          url: `${BACKEND_URL}/api/bar/create`,
-          headers: {
-            "Content-Type": "multipart/form-data", // add this
-          },
-          datas, //pass datas directly
-        });
-        const res = await axios.post(`${BACKEND_URL}/api/bar/create`, data);
+        data.openTime = timeOpen;
+        data.closeTime = timeClose;
+        data.tableCount = Number(data.tableCount);
+        const res = await axios.post(`http://localhost:8080/api/bar/create`, data);
         const uid = res.data.data.id;
-        await SecureStore.setItemAsync("uid", uid);
+        await SecureStore.setItemAsync("uid", `${uid}`);
         navigation.navigate("admin");
       }
     } catch (e) {
-      console.log(e.response);
-    }
-    // navigation.navigate("Home");
-  };
-
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-      console.log();
+      console.log(e.response.data);
     }
   };
 
@@ -350,10 +318,26 @@ const BarRegisScreen = ({ navigation }) => {
             </Layout>
           </Layout>
           <Layout style={{ backgroundColor: "#101010", width: "100%", marginTop: 20 }}>
-            <Button appearance="outline" status="basic" accessoryRight={UploadIcon} style={{ backgroundColor: "black" }} onPress={pickImage}>
-              รูปภาพร้าน
-            </Button>
-            {image && <Image source={{ uri: image }} style={{ width: "100%", height: 200 }} />}
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  autoCapitalize="none"
+                  style={[{ backgroundColor: "black" }]}
+                  status="control"
+                  placeholder="ลิงค์รูปภาพ"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+              name="bannerImage"
+            />
+            {errors.bannerImage && <Text>This is required.</Text>}
+            {watch("bannerImage") && <Image source={{ uri: `${watch("bannerImage")}` }} style={{ width: "100%", height: 200 }} />}
           </Layout>
           <Button style={{ marginTop: "5%", width: "100%" }} onPress={handleSubmit(onSubmit)} status="control">
             สมัครสมาชิกร้าน

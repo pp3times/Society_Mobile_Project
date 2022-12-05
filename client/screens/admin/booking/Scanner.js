@@ -30,16 +30,18 @@ const ScanScreen = ({ navigation }) => {
     }
   };
 
-  const getData = async (data) => {
+  const getData = async (code) => {
     try {
-      const datas = {
-        passcode: data,
+      const data = {
+        passcode: `${code}`,
       };
-      const res = await axios.get(`${BACKEND_URL}/api/bar/reservation/recieve`, { data: datas });
+      console.log(data);
+      const res = await axios.post(`${BACKEND_URL}/api/bar/reservation/receive`, data);
       console.log(res.data.data);
       setScanData(res.data.data);
+      setVisible(true);
     } catch (error) {
-      console.log(error.response);
+      console.log(error.message);
     }
   };
 
@@ -55,14 +57,14 @@ const ScanScreen = ({ navigation }) => {
         <Backbutton navigation={navigation} style={{ position: "absolute", zIndex: 99, marginTop: 10 }} />
         <BarCodeScanner onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} style={StyleSheet.absoluteFillObject} />
         <Modal visible={visible} backdropStyle={styles.backdrop} onBackdropPress={() => setVisible(false)}>
-          <Card disabled={true} style={{ backgroundColor: "#101010", width: "100%" }}>
+          <Card disabled={true} style={{ backgroundColor: "#101010", width: "100%",paddingBottom:20 }}>
             <Layout style={{ width: "100%", flexDirection: "column", alignItems: "center", backgroundColor: "transparent", marginTop: 10 }}>
-              <Text>ยืนยันการจองโต๊ะเรียบร้อย</Text>
-              <Text>วันที่:{Date(scanData?.orderDate).substring(0, 14)}</Text>
-              <Text>เวลา:{Date(scanData?.orderDate).substring(15, 21)}</Text>
-              <Text>โต๊ะ : {scanData?.tableSeat}</Text>
+              <Text style={{ marginBottom: 20, fontSize:25 }}>ยืนยันการจองโต๊ะเรียบร้อย</Text>
+              <Text style={{ fontSize:20 }}>วันที่:{Date(scanData?.orderDate).substring(0, 15)}</Text>
+              <Text style={{ fontSize:20 }}>เวลา:{Date(scanData?.orderDate).substring(15, 21)}</Text>
+              <Text style={{ fontSize:20 }}>โต๊ะ : {scanData?.tableSeat?.name}</Text>
             </Layout>
-            <Layout style={{ width: "100%", flexDirection: "row", justifyContent: "center", backgroundColor: "transparent", marginTop: 10 }}>
+            <Layout style={{ width: "100%", flexDirection: "row", justifyContent: "center", backgroundColor: "transparent", marginTop: 20 }}>
               <Button
                 status="control"
                 size="large"

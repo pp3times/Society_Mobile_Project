@@ -9,6 +9,7 @@ import * as SecureStore from "expo-secure-store";
 const ManageScreen = () => {
   const [table, setTable] = useState([]);
   const [checked, setChecked] = useState(false);
+  const [barName, setBarName] = useState("");
 
   const [type, setType] = useState("");
   const [minSeat, setMinSeat] = useState("");
@@ -26,7 +27,13 @@ const ManageScreen = () => {
     }
   };
 
+  const gerBarName = async () => {
+    const name = await SecureStore.getItemAsync("name");
+    setBarName(name);
+  };
+
   useEffect(() => {
+    gerBarName();
     fetchTable();
   }, []);
 
@@ -99,7 +106,7 @@ const ManageScreen = () => {
     <AppLayout>
       <Layout style={{ backgroundColor: "#101010", flexDirection: "column", width: "90%", paddingBottom: 200 }}>
         <Layout style={{ borderBottomWidth: 1, borderBottomColor: "white", backgroundColor: "#101010", width: "100%", marginBottom: 20 }}>
-          <Text style={{ fontSize: 40, fontWeight: "500", marginVertical: 20, textAlign: "center" }}>จัดการร้าน</Text>
+          <Text style={{ fontSize: 40, fontWeight: "500", marginVertical: 20, textAlign: "center" }}>ร้าน {barName}</Text>
         </Layout>
         <Layout style={{ flexDirection: "row", backgroundColor: "#101010", alignItems: "center", justifyConetent: "start", width: "100%" }}>
           <Toggle status="control" checked={checked} onChange={onCheckedChange} />

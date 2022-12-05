@@ -21,8 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSLocationUsageDescription":
-          "The app needs permission to access your location, if you want to be located on the map.",
+        "NSLocationUsageDescription": "The app needs permission to access your location, if you want to be located on the map.",
         "NSLocationWhenInUseUsageDescription": "The app needs permission to access your location, if you want to be located on the map",
         "NSLocationAlwaysUsageDescription": "The app needs permission to access your location, if you want to be located on the map",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "The app needs permission to access your location, if you want to be located on the map",
@@ -39,13 +38,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "The app accesses your photos to let you share them with your friends."
-        }
-      ]
-    ]
+    "plugins": []
   }
 }

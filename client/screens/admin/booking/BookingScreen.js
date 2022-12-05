@@ -6,6 +6,7 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import axios from "axios";
 import { BACKEND_URL } from "@env";
 import * as SecureStore from "expo-secure-store";
+import { Reload } from "../../../components/GetIcon";
 
 const BookingScreen = ({ route, navigation }) => {
   const [tableLeft, setTableLeft] = useState("");
@@ -54,7 +55,10 @@ const BookingScreen = ({ route, navigation }) => {
         <Button style={{ marginBottom: 20 }} onPress={() => navigation.navigate("BookScan", { id: 1 })} status="control">
           แสกน QR Code ลูกค้า
         </Button>
-        <Layout style={{ backgroundColor: "#101010", borderTopWidth: 1, borderTopColor: "white", marginTop: 10, paddingTop: 20 }}>
+        <Layout style={{ backgroundColor: "#101010", borderTopWidth: 1, borderTopColor: "white", marginTop: 10 }}>
+          <Button status="control" appearance="ghost" accessoryLeft={<Reload/>} style={{ marginVertical: 20 }} onPress={fetchTable}>
+            reload
+          </Button>
           <ScrollView style={{ height: "65%" }}>
             {orderBooking.map((books, index) => {
               return (

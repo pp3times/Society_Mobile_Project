@@ -21,8 +21,10 @@ const LoginScreen = ({ navigation }) => {
       const res = await axios.post(`${BACKEND_URL}/api/auth/${chooseLogin == "user" ? "login" : "barlog"}`, data);
       const token = res.data.data.accessToken;
       const uid = res.data.data.id;
+      const name = res.data.data.name;
       await SecureStore.setItemAsync("accesstoken", token);
       await SecureStore.setItemAsync("uid", `${uid}`);
+      await SecureStore.setItemAsync("name", `${name}`);
       if (chooseLogin == "admin") {
         await navigation.navigate("admin");
       } else {

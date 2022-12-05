@@ -8,6 +8,7 @@ import {signAccessToken} from '../utils/jwt'
 import * as yup from 'yup'
 
 export const create = async (data) => {
+  console.log(data)
   const barSchema = yup.object().shape({
     name: yup.string().required(),
     email: yup.string().email().required(),
