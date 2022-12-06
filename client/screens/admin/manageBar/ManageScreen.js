@@ -44,6 +44,7 @@ const ManageScreen = () => {
         status: isChecked,
       };
       const res = await axios.post(`${BACKEND_URL}/api/bar/status/${uid}`, data);
+      console.log(res.data.data);
       setChecked(isChecked);
     } catch (e) {
       console.log(e);
@@ -110,7 +111,7 @@ const ManageScreen = () => {
         </Layout>
         <Layout style={{ flexDirection: "row", backgroundColor: "#101010", alignItems: "center", justifyConetent: "start", width: "100%" }}>
           <Toggle status="control" checked={checked} onChange={onCheckedChange} />
-          <Text style={{ marginLeft: 10 }}>เปิด / ปิดร้าน</Text>
+          <Text style={{ marginLeft: 10 }}>ปิด / เปิดร้าน</Text>
         </Layout>
         <ScrollView>
           <Layout style={{ backgroundColor: "#101010", marginBottom: 10 }}>

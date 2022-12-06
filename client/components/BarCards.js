@@ -97,8 +97,10 @@ const BarCards = () => {
           data={search || bar.data}
           renderItem={({ item }) => (
             <TouchableOpacity
-              onPress={() => navigation.navigate("Detail", { barDetail: item })}
-              style={{ margin: 10, marginHorizontal: 15 }}
+              onPress={() => {
+                item.isClose == 1 && navigation.navigate("Detail", { barDetail: item });
+              }}
+              style={{ margin: 10, marginHorizontal: 15, opacity: item.isClose == 1 ? 1 : 0.2 }}
             >
               <Image
                 style={{
